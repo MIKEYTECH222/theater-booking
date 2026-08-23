@@ -1,1 +1,206 @@
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #111827;
+    color: white;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #9ca3af;
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+/* المسرح */
+
+.stage {
+    width: 75%;
+    max-width: 650px;
+    margin: 0 auto 50px;
+    padding: 18px;
+    background: #374151;
+    border-radius: 0 0 25px 25px;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* المقاعد */
+
+.seats {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.seat {
+    width: 55px;
+    height: 55px;
+    border: none;
+    border-radius: 12px 12px 7px 7px;
+    background: #22c55e;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.seat:hover {
+    transform: translateY(-4px);
+    filter: brightness(1.15);
+}
+
+/* المقعد المختار */
+
+.seat.selected {
+    background: #3b82f6;
+    transform: translateY(-4px);
+}
+
+/* المقعد المحجوز */
+
+.seat.reserved {
+    background: #ef4444;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* دليل الألوان */
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 35px 0;
+    flex-wrap: wrap;
+}
+
+.legend span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.legend i {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.available {
+    background: #22c55e;
+}
+
+.selected {
+    background: #3b82f6;
+}
+
+.reserved {
+    background: #ef4444;
+}
+
+/* صندوق الحجز */
+
+.booking-box {
+    background: #1f2937;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.booking-box h2 {
+    margin-bottom: 15px;
+}
+
+#selectedSeat {
+    color: #9ca3af;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #374151;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+input::placeholder {
+    color: #9ca3af;
+}
+
+#bookButton {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#bookButton:hover {
+    background: #1d4ed8;
+}
+
+/* الموبايل */
+
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .stage {
+        width: 90%;
+    }
+
+    .row {
+        gap: 6px;
+    }
+
+    .seat {
+        width: 43px;
+        height: 43px;
+        font-size: 12px;
+    }
+
+    .booking-box {
+        padding: 20px 15px;
+    }
+}
