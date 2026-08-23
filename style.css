@@ -6,9 +6,7 @@
 }
 
 body {
-    font-family: Arial, Tahoma, sans-serif;
-
-    min-height: 100vh;
+    font-family: Arial, "Tahoma", sans-serif;
 
     background:
         radial-gradient(
@@ -25,28 +23,19 @@ body {
 
     color: #172033;
 
-    padding: 30px 10px 50px;
+    min-height: 100vh;
+
+    padding: 30px 12px 50px;
 }
-
-
-/* =========================
-   Container
-========================= */
 
 .container {
     width: 100%;
-
     max-width: 1100px;
-
     margin: auto;
-
     text-align: center;
 }
 
-
-/* =========================
-   Header
-========================= */
+/* Header */
 
 .hero {
     margin-bottom: 35px;
@@ -55,55 +44,42 @@ body {
 .badge {
     display: inline-block;
 
-    padding: 9px 18px;
-
-    border-radius: 999px;
-
     background: #ffffff;
-
     color: #5b5cf0;
 
     border: 1px solid #e6e8ff;
 
-    font-size: 14px;
+    padding: 9px 18px;
+    border-radius: 999px;
 
+    font-size: 14px;
     font-weight: bold;
 
     margin-bottom: 14px;
 
     box-shadow:
-        0 8px 25px
-        rgba(80, 90, 180, 0.08);
+        0 8px 25px rgba(80, 90, 180, 0.08);
 }
 
 h1 {
     font-size: 42px;
-
     margin-bottom: 8px;
 }
 
 .subtitle {
     color: #6b7280;
-
     font-size: 19px;
 }
 
-
-/* =========================
-   Stage
-========================= */
+/* Stage */
 
 .stage {
     width: 78%;
-
     max-width: 760px;
 
-    margin: 0 auto 38px;
+    margin: 0 auto 40px;
 
     padding: 18px;
-
-    border-radius:
-        0 0 28px 28px;
 
     background:
         linear-gradient(
@@ -114,8 +90,9 @@ h1 {
 
     color: white;
 
-    font-size: 23px;
+    border-radius: 0 0 28px 28px;
 
+    font-size: 23px;
     font-weight: bold;
 
     box-shadow:
@@ -123,81 +100,59 @@ h1 {
         rgba(99, 102, 241, 0.25);
 }
 
-
-/* =========================
-   Seats title
-========================= */
+/* Seats title */
 
 .seats-title {
-    margin-bottom: 18px;
-
     font-size: 22px;
+    font-weight: bold;
+
+    margin-bottom: 16px;
 
     color: #374151;
 }
 
-
-/* =========================
-   Seats container
-========================= */
+/* Seats */
 
 .seats {
-    width: 100%;
-
     display: flex;
-
     flex-direction: column;
 
     align-items: center;
 
-    gap: 14px;
+    gap: 15px;
+
+    width: 100%;
 }
-
-
-/* =========================
-   Row
-========================= */
 
 .row {
-    width: 100%;
-
     display: flex;
 
+    align-items: center;
     justify-content: center;
 
-    align-items: center;
+    gap: 8px;
 
-    gap: 7px;
+    width: 100%;
 }
 
-
-/* =========================
-   Aisle
-========================= */
+/* الممر */
 
 .aisle {
     width: 55px;
-
     min-width: 55px;
-
-    height: 54px;
+    height: 55px;
 }
 
-
-/* =========================
-   Priests label
-========================= */
+/* Label فوق أول صف */
 
 .priests-label {
     display: block;
 
     width: fit-content;
 
-    margin: 0 auto 2px;
+    margin: 4px auto 2px;
 
     padding: 10px 24px;
-
-    border-radius: 999px;
 
     background:
         linear-gradient(
@@ -206,92 +161,77 @@ h1 {
             #ffedd5
         );
 
-    border: 1px solid #fed7aa;
-
     color: #9a3412;
 
-    font-size: 16px;
+    border: 1px solid #fed7aa;
 
+    border-radius: 999px;
+
+    font-size: 16px;
     font-weight: bold;
 
     box-shadow:
-        0 6px 18px
-        rgba(234, 88, 12, 0.08);
+        0 6px 18px rgba(234, 88, 12, 0.08);
 }
 
-
-/* =========================
-   Seat
-========================= */
+/* Seats */
 
 .seat {
     width: 58px;
-
     height: 54px;
 
     border: none;
 
-    border-radius:
-        14px 14px 8px 8px;
+    border-radius: 14px 14px 8px 8px;
 
     background: #b8f7cf;
 
     color: #176b3a;
 
-    font-size: 13px;
-
     font-weight: bold;
+    font-size: 13px;
 
     cursor: pointer;
 
     transition:
-        0.2s ease;
+        transform 0.2s,
+        filter 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
 }
-
-
-/* Hover */
 
 .seat:hover:not(:disabled) {
     transform:
         translateY(-4px)
         scale(1.03);
 
+    filter: brightness(1.03);
+
     box-shadow:
         0 8px 18px
         rgba(34, 197, 94, 0.16);
 }
 
-
-/* Selected */
-
 .seat.selected {
     background: #93c5fd;
-
     color: #164e82;
 
-    transform:
-        translateY(-4px);
+    transform: translateY(-4px);
 
     box-shadow:
         0 9px 20px
         rgba(59, 130, 246, 0.18);
 }
 
-
-/* Reserved */
-
 .seat.reserved {
     background: #fecaca;
-
     color: #991b1b;
 
     cursor: not-allowed;
-
-    opacity: 0.82;
+    opacity: 0.8;
 }
 
-
-/* Locked */
+/* أول صف */
 
 .seat.locked {
     background: #e5e7eb;
@@ -301,29 +241,26 @@ h1 {
     cursor: not-allowed;
 
     opacity: 0.95;
-}
-
-.seat.locked:hover {
-    transform: none;
 
     box-shadow: none;
 }
 
+.seat.locked:hover {
+    transform: none;
+    filter: none;
+}
 
-/* =========================
-   Legend
-========================= */
+/* Legend */
 
 .legend {
     display: flex;
 
     justify-content: center;
-
     align-items: center;
 
     flex-wrap: wrap;
 
-    gap: 16px 25px;
+    gap: 18px 25px;
 
     margin: 35px 0;
 }
@@ -342,7 +279,6 @@ h1 {
 
 .legend i {
     width: 15px;
-
     height: 15px;
 
     display: inline-block;
@@ -354,7 +290,7 @@ h1 {
     background: #b8f7cf;
 }
 
-.selected-color {
+.selected {
     background: #93c5fd;
 }
 
@@ -366,30 +302,25 @@ h1 {
     background: #e5e7eb;
 }
 
-
-/* =========================
-   Booking Box
-========================= */
+/* Booking */
 
 .booking-box {
-    max-width: 520px;
-
-    margin:
-        25px auto;
+    background:
+        rgba(255, 255, 255, 0.92);
 
     padding: 28px;
 
     border-radius: 24px;
 
-    background:
-        rgba(255, 255, 255, 0.94);
+    max-width: 520px;
 
-    border:
-        1px solid #edf0f7;
+    margin: 25px auto;
 
     box-shadow:
         0 15px 45px
         rgba(80, 90, 180, 0.08);
+
+    border: 1px solid #edf0f7;
 }
 
 .booking-box h2 {
@@ -397,19 +328,14 @@ h1 {
 }
 
 #selectedSeat {
-    min-height: 28px;
+    color: #6b7280;
 
     margin-bottom: 20px;
 
-    color: #6b7280;
+    line-height: 1.9;
 
-    line-height: 1.8;
+    min-height: 28px;
 }
-
-
-/* =========================
-   Inputs
-========================= */
 
 input {
     width: 100%;
@@ -444,10 +370,7 @@ input::placeholder {
     color: #9ca3af;
 }
 
-
-/* =========================
-   Book button
-========================= */
+/* Book button */
 
 #bookButton {
     width: 100%;
@@ -473,28 +396,26 @@ input::placeholder {
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        opacity 0.2s;
 }
 
 #bookButton:hover:not(:disabled) {
-    transform:
-        translateY(-2px);
+    transform: translateY(-2px);
 
     box-shadow:
         0 10px 25px
-        rgba(99, 102, 241, 0.20);
+        rgba(99, 102, 241, 0.2);
 }
 
 #bookButton:disabled {
     opacity: 0.6;
-
     cursor: not-allowed;
 }
 
-
-/* =========================
-   Invitation
-========================= */
+/* Invitation */
 
 .invitation-section {
     display: none;
@@ -505,16 +426,15 @@ input::placeholder {
 
     padding: 28px 20px;
 
+    background: white;
+
     border-radius: 24px;
-
-    background: #ffffff;
-
-    border:
-        1px solid #edf0f7;
 
     box-shadow:
         0 15px 45px
         rgba(80, 90, 180, 0.08);
+
+    border: 1px solid #edf0f7;
 }
 
 .invitation-section h2 {
@@ -523,7 +443,6 @@ input::placeholder {
 
 .invitation-section p {
     color: #6b7280;
-
     margin-bottom: 20px;
 }
 
@@ -564,26 +483,21 @@ input::placeholder {
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
 #downloadInvitation:hover {
     background: #16a34a;
 
-    transform:
-        translateY(-2px);
+    transform: translateY(-2px);
 }
 
-
-/* =========================
-   Mobile
-========================= */
+/* Mobile */
 
 @media (max-width: 760px) {
 
     body {
-        padding:
-            20px 5px 40px;
+        padding: 20px 6px 40px;
     }
 
     h1 {
@@ -599,7 +513,7 @@ input::placeholder {
 
         font-size: 20px;
 
-        margin-bottom: 28px;
+        margin-bottom: 30px;
     }
 
     .row {
@@ -608,32 +522,29 @@ input::placeholder {
 
     .seat {
         width: 43px;
-
         height: 43px;
 
         font-size: 9px;
+
+        border-radius:
+            9px 9px 5px 5px;
     }
 
     .aisle {
-        width: 24px;
-
-        min-width: 24px;
-
+        width: 25px;
+        min-width: 25px;
         height: 43px;
     }
 
     .priests-label {
         font-size: 13px;
+        padding: 9px 16px;
+    }
 
-        padding:
-            9px 16px;
+    .booking-box {
+        padding: 20px 15px;
     }
 }
-
-
-/* =========================
-   Small phones
-========================= */
 
 @media (max-width: 470px) {
 
@@ -643,7 +554,6 @@ input::placeholder {
 
     .seat {
         width: 31px;
-
         height: 38px;
 
         font-size: 8px;
@@ -651,15 +561,8 @@ input::placeholder {
 
     .aisle {
         width: 15px;
-
         min-width: 15px;
-
         height: 38px;
-    }
-
-    .booking-box {
-        padding:
-            20px 15px;
     }
 }
 ```
