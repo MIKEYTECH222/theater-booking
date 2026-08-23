@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -15,24 +16,37 @@
     <div class="container">
 
         <div class="hero">
-            <div class="badge">✨ أسرة السمائيين</div>
 
-            <h1>أسرة السمائيين</h1>
+            <div class="badge">
+                ✨ أسرة السمائيين
+            </div>
+
+            <h1>
+                أسرة السمائيين
+            </h1>
 
             <p class="subtitle">
-                حفلة نهاية الأنشطة
+                حفلة نهاية الأنشطة لأسرة السمائيين
             </p>
+
         </div>
 
-        <!-- المسرح -->
+
         <div class="stage">
             🎭 المسرح
         </div>
 
-        <!-- المقاعد -->
-        <div class="seats" id="seats"></div>
 
-        <!-- دليل الألوان -->
+        <div class="seats-title">
+            اختر مقاعدك
+        </div>
+
+        <div
+            class="seats"
+            id="seats">
+        </div>
+
+
         <div class="legend">
 
             <span>
@@ -50,12 +64,19 @@
                 محجوز
             </span>
 
+            <span>
+                <i class="locked-color"></i>
+                خاص بالآباء الكهنة
+            </span>
+
         </div>
 
-        <!-- صندوق الحجز -->
+
         <div class="booking-box">
 
-            <h2>اختار مقاعدك 🎟️</h2>
+            <h2>
+                🎟️ بيانات الحجز
+            </h2>
 
             <p id="selectedSeat">
                 لم يتم اختيار أي مقعد
@@ -64,13 +85,15 @@
             <input
                 type="text"
                 id="name"
-                placeholder="اكتب اسمك"
+                placeholder="اكتب الاسم"
+                autocomplete="name"
             >
 
             <input
                 type="tel"
                 id="phone"
                 placeholder="رقم الهاتف"
+                autocomplete="tel"
             >
 
             <button id="bookButton">
@@ -79,13 +102,17 @@
 
         </div>
 
-        <!-- الدعوة -->
-        <div class="invitation-section" id="invitationSection">
 
-            <h2>🎉 دعوتك جاهزة!</h2>
+        <div
+            class="invitation-section"
+            id="invitationSection">
+
+            <h2>
+                🎉 دعوتك جاهزة!
+            </h2>
 
             <p>
-                تقدر تحمل الدعوة على موبايلك
+                احفظها على موبايلك واحتفظ بها للحفلة
             </p>
 
             <canvas
@@ -102,8 +129,10 @@
 
     </div>
 
-    <script src="script.js?v=5"></script>
+
+    <script src="script.js?v=6"></script>
 
 </body>
 
 </html>
+```
