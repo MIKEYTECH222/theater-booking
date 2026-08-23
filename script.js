@@ -14,6 +14,11 @@ const headers = {
     "Content-Type": "application/json"
 };
 
+
+// =================================
+// Elements
+// =================================
+
 const seatsContainer =
     document.getElementById("seats");
 
@@ -36,136 +41,158 @@ let selectedSeats = [];
 
 
 // =================================
-// إنشاء 99 كرسي
-// 5 ناحية + ممر + 6 ناحية
-// 9 صفوف
-// الصف الأول مقفول
+// Create 99 seats
+// 9 rows
+// 5 seats + aisle + 6 seats
 // =================================
 
 const rows =
     "ABCDEFGHI".split("");
 
-rows.forEach((letter, rowIndex) => {
+rows.forEach(
+    (letter, rowIndex) => {
 
-    const row =
-        document.createElement("div");
+        /*
+         * أول حاجة:
+         * نعمل صف خاص بالآباء الكهنة
+         * ويظهر مباشرة فوق A1 إلى A11
+         */
 
-    row.className = "row";
+        if (rowIndex === 0) {
+
+            const priestsLabel =
+                document.createElement("div");
+
+            priestsLabel.className =
+                "priests-label";
+
+            priestsLabel.textContent =
+                "🔒 خاص بالآباء الكهنة";
+
+            seatsContainer.appendChild(
+                priestsLabel
+            );
+        }
 
 
-    if (rowIndex === 0) {
-
-        const priestsLabel =
+        // إنشاء صف المقاعد
+        const row =
             document.createElement("div");
 
-        priestsLabel.className =
-            "priests-label";
-
-        priestsLabel.textContent =
-            "🔒 خاص بالآباء الكهنة";
-
-        seatsContainer.appendChild(
-            priestsLabel
-        );
-    }
+        row.className =
+            "row";
 
 
-    // 5 كراسي
-    for (
-        let number = 1;
-        number <= 5;
-        number++
-    ) {
+        // =================================
+        // الناحية الأولى: 5 كراسي
+        // =================================
 
-        const seat =
-            document.createElement("button");
+        for (
+            let number = 1;
+            number <= 5;
+            number++
+        ) {
 
-        seat.className =
-            "seat";
+            const seat =
+                document.createElement("button");
 
-        seat.dataset.seat =
-            `${letter}${number}`;
+            seat.className =
+                "seat";
 
-        seat.textContent =
-            `${letter}${number}`;
+            seat.dataset.seat =
+                `${letter}${number}`;
+
+            seat.textContent =
+                `${letter}${number}`;
 
 
-        if (rowIndex === 0) {
+            // الصف الأول مقفول
+            if (rowIndex === 0) {
 
-            seat.classList.add(
-                "locked"
-            );
+                seat.classList.add(
+                    "locked"
+                );
 
-            seat.disabled =
-                true;
+                seat.disabled =
+                    true;
 
-            seat.title =
-                "خاص بالآباء الكهنة";
+                seat.title =
+                    "خاص بالآباء الكهنة";
+            }
+
+
+            row.appendChild(seat);
         }
 
 
-        row.appendChild(seat);
-    }
+        // =================================
+        // الممر
+        // =================================
+
+        const aisle =
+            document.createElement("div");
+
+        aisle.className =
+            "aisle";
+
+        row.appendChild(aisle);
 
 
-    // الممر
-    const aisle =
-        document.createElement("div");
+        // =================================
+        // الناحية الثانية: 6 كراسي
+        // =================================
 
-    aisle.className =
-        "aisle";
+        for (
+            let number = 6;
+            number <= 11;
+            number++
+        ) {
 
-    row.appendChild(aisle);
+            const seat =
+                document.createElement("button");
 
+            seat.className =
+                "seat";
 
-    // 6 كراسي
-    for (
-        let number = 6;
-        number <= 11;
-        number++
-    ) {
+            seat.dataset.seat =
+                `${letter}${number}`;
 
-        const seat =
-            document.createElement("button");
-
-        seat.className =
-            "seat";
-
-        seat.dataset.seat =
-            `${letter}${number}`;
-
-        seat.textContent =
-            `${letter}${number}`;
+            seat.textContent =
+                `${letter}${number}`;
 
 
-        if (rowIndex === 0) {
+            // الصف الأول مقفول
+            if (rowIndex === 0) {
 
-            seat.classList.add(
-                "locked"
-            );
+                seat.classList.add(
+                    "locked"
+                );
 
-            seat.disabled =
-                true;
+                seat.disabled =
+                    true;
 
-            seat.title =
-                "خاص بالآباء الكهنة";
+                seat.title =
+                    "خاص بالآباء الكهنة";
+            }
+
+
+            row.appendChild(seat);
         }
 
 
-        row.appendChild(seat);
+        // إضافة الصف كاملًا
+        seatsContainer.appendChild(row);
     }
+);
 
 
-    seatsContainer.appendChild(row);
-});
-
-
+// كل المقاعد
 const seats =
     document.querySelectorAll(".seat");
 
 
 // =================================
-// تحديث المقاعد المختارة
+// Selected seats text
 // =================================
 
 function updateSelectedSeatsText() {
@@ -186,7 +213,7 @@ function updateSelectedSeatsText() {
 
 
 // =================================
-// تحميل المقاعد المحجوزة
+// Load reserved seats
 // =================================
 
 async function loadReservedSeats() {
@@ -251,6 +278,7 @@ async function loadReservedSeats() {
             }
         );
 
+
     } catch (error) {
 
         console.error(
@@ -262,7 +290,7 @@ async function loadReservedSeats() {
 
 
 // =================================
-// اختيار أكثر من كرسي
+// Seat selection
 // =================================
 
 seats.forEach(
@@ -272,6 +300,7 @@ seats.forEach(
             "click",
             () => {
 
+                // مقفول
                 if (
                     seat.classList.contains(
                         "locked"
@@ -281,6 +310,7 @@ seats.forEach(
                 }
 
 
+                // محجوز
                 if (
                     seat.classList.contains(
                         "reserved"
@@ -294,6 +324,7 @@ seats.forEach(
                     seat.dataset.seat;
 
 
+                // إلغاء الاختيار
                 if (
                     selectedSeats.includes(
                         seatNumber
@@ -314,6 +345,7 @@ seats.forEach(
 
                 } else {
 
+                    // اختيار كرسي
                     selectedSeats.push(
                         seatNumber
                     );
@@ -332,7 +364,7 @@ seats.forEach(
 
 
 // =================================
-// إنشاء الدعوة
+// Create Invitation
 // =================================
 
 function createInvitation(
@@ -360,6 +392,7 @@ function createInvitation(
     );
 
 
+    // الخلفية
     const background =
         ctx.createLinearGradient(
             0,
@@ -367,7 +400,6 @@ function createInvitation(
             width,
             height
         );
-
 
     background.addColorStop(
         0,
@@ -384,7 +416,6 @@ function createInvitation(
         "#fff0fb"
     );
 
-
     ctx.fillStyle =
         background;
 
@@ -396,8 +427,8 @@ function createInvitation(
     );
 
 
-    ctx.globalAlpha =
-        0.45;
+    // ديكور
+    ctx.globalAlpha = 0.45;
 
     ctx.fillStyle =
         "#bfdbfe";
@@ -449,9 +480,9 @@ function createInvitation(
     ctx.globalAlpha = 1;
 
 
+    // العنوان
     ctx.textAlign =
         "center";
-
 
     ctx.fillStyle =
         "#6366f1";
@@ -505,13 +536,6 @@ function createInvitation(
     );
 
 
-    ctx.fillStyle =
-        "#6366f1";
-
-    ctx.font =
-        "bold 68px Arial";
-
-
     let displayName =
         name;
 
@@ -527,6 +551,12 @@ function createInvitation(
     }
 
 
+    ctx.fillStyle =
+        "#6366f1";
+
+    ctx.font =
+        "bold 68px Arial";
+
     ctx.fillText(
         displayName,
         width / 2,
@@ -534,6 +564,7 @@ function createInvitation(
     );
 
 
+    // كارت المقاعد
     const cardX =
         100;
 
@@ -638,7 +669,7 @@ function createInvitation(
 
 
 // =================================
-// تحميل الدعوة
+// Download invitation
 // =================================
 
 downloadInvitation.addEventListener(
@@ -662,7 +693,7 @@ downloadInvitation.addEventListener(
 
 
 // =================================
-// تأكيد الحجز
+// Booking
 // =================================
 
 bookButton.addEventListener(
@@ -760,9 +791,7 @@ bookButton.addEventListener(
 
             if (!response.ok) {
 
-                console.error(
-                    result
-                );
+                console.error(result);
 
 
                 const resultText =
@@ -821,6 +850,7 @@ bookButton.addEventListener(
                 [...selectedSeats];
 
 
+            // تحويل المقاعد لمحجوز
             bookedSeats.forEach(
                 seatNumber => {
 
@@ -847,12 +877,14 @@ bookButton.addEventListener(
             );
 
 
+            // إنشاء الدعوة
             createInvitation(
                 name,
                 bookedSeats
             );
 
 
+            // إظهار الدعوة
             invitationSection.style.display =
                 "block";
 
@@ -909,7 +941,7 @@ bookButton.addEventListener(
 
 
 // =================================
-// تشغيل الموقع
+// Start
 // =================================
 
 loadReservedSeats();
