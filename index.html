@@ -15,8 +15,11 @@
 
     <div class="container">
 
-        <!-- Header -->
-        <div class="hero">
+        <!-- =========================
+             Header
+        ========================== -->
+
+        <section class="hero">
 
             <div class="badge">
                 ✨ أسرة السمائيين
@@ -30,29 +33,38 @@
                 حفلة نهاية الأنشطة لأسرة السمائيين
             </p>
 
-        </div>
+        </section>
 
 
-        <!-- Stage -->
+        <!-- =========================
+             Stage
+        ========================== -->
+
         <div class="stage">
             🎭 المسرح
         </div>
 
 
-        <!-- Seats title -->
-        <div class="seats-title">
-            اختر مقاعدك
-        </div>
+        <!-- =========================
+             Seats title
+        ========================== -->
+
+        <h2 class="seats-title">
+            اختر مقاعدك 🎟️
+        </h2>
 
 
-        <!-- Seats -->
-        <div
-            class="seats"
-            id="seats">
-        </div>
+        <!-- =========================
+             Seats
+        ========================== -->
+
+        <div id="seats" class="seats"></div>
 
 
-        <!-- Legend -->
+        <!-- =========================
+             Legend
+        ========================== -->
+
         <div class="legend">
 
             <span>
@@ -61,7 +73,7 @@
             </span>
 
             <span>
-                <i class="selected"></i>
+                <i class="selected-color"></i>
                 تم اختياره
             </span>
 
@@ -78,11 +90,14 @@
         </div>
 
 
-        <!-- Booking box -->
-        <div class="booking-box">
+        <!-- =========================
+             Booking box
+        ========================== -->
+
+        <section class="booking-box">
 
             <h2>
-                🎟️ بيانات الحجز
+                بيانات الحجز
             </h2>
 
             <p id="selectedSeat">
@@ -90,15 +105,15 @@
             </p>
 
             <input
-                type="text"
                 id="name"
+                type="text"
                 placeholder="اكتب الاسم"
                 autocomplete="name"
             >
 
             <input
-                type="tel"
                 id="phone"
+                type="tel"
                 placeholder="رقم الهاتف"
                 autocomplete="tel"
             >
@@ -107,38 +122,44 @@
                 تأكيد الحجز
             </button>
 
-        </div>
+        </section>
 
 
-        <!-- Invitation -->
-        <div
+        <!-- =========================
+             Invitation
+        ========================== -->
+
+        <section
+            id="invitationSection"
             class="invitation-section"
-            id="invitationSection">
+        >
 
             <h2>
                 🎉 دعوتك جاهزة!
             </h2>
 
             <p>
-                احفظها على موبايلك واحتفظ بها للحفلة
+                احفظ الدعوة على موبايلك
             </p>
 
             <canvas
                 id="invitationCanvas"
                 width="1080"
-                height="1920">
-            </canvas>
+                height="1920"
+            ></canvas>
 
             <button id="downloadInvitation">
                 📥 تحميل الدعوة
             </button>
 
-        </div>
+        </section>
 
     </div>
 
 
-    <script src="script.js?v=7"></script>
+    <!-- JavaScript -->
+
+    <script src="script.js?v=9"></script>
 
 </body>
 
