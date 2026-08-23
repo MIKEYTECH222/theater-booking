@@ -31,11 +31,11 @@ body {
 .container {
     width: 100%;
     max-width: 1100px;
-
     margin: auto;
-
     text-align: center;
 }
+
+/* Header */
 
 .hero {
     margin-bottom: 35px;
@@ -45,13 +45,11 @@ body {
     display: inline-block;
 
     background: #ffffff;
-
     color: #5b5cf0;
 
     border: 1px solid #e6e8ff;
 
     padding: 9px 18px;
-
     border-radius: 999px;
 
     font-size: 14px;
@@ -72,6 +70,8 @@ h1 {
     color: #6b7280;
     font-size: 19px;
 }
+
+/* Stage */
 
 .stage {
     width: 78%;
@@ -96,8 +96,11 @@ h1 {
     font-weight: bold;
 
     box-shadow:
-        0 15px 35px rgba(99, 102, 241, 0.25);
+        0 15px 35px
+        rgba(99, 102, 241, 0.25);
 }
+
+/* Seats title */
 
 .seats-title {
     font-size: 22px;
@@ -107,6 +110,8 @@ h1 {
 
     color: #374151;
 }
+
+/* Seats */
 
 .seats {
     display: flex;
@@ -130,11 +135,46 @@ h1 {
     width: 100%;
 }
 
+/* الممر */
+
 .aisle {
     width: 55px;
     min-width: 55px;
     height: 55px;
 }
+
+/* Label فوق أول صف */
+
+.priests-label {
+    display: block;
+
+    width: fit-content;
+
+    margin: 4px auto 2px;
+
+    padding: 10px 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed,
+            #ffedd5
+        );
+
+    color: #9a3412;
+
+    border: 1px solid #fed7aa;
+
+    border-radius: 999px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    box-shadow:
+        0 6px 18px rgba(234, 88, 12, 0.08);
+}
+
+/* Seats */
 
 .seat {
     width: 58px;
@@ -149,7 +189,6 @@ h1 {
     color: #176b3a;
 
     font-weight: bold;
-
     font-size: 13px;
 
     cursor: pointer;
@@ -175,7 +214,6 @@ h1 {
 
 .seat.selected {
     background: #93c5fd;
-
     color: #164e82;
 
     transform: translateY(-4px);
@@ -187,13 +225,13 @@ h1 {
 
 .seat.reserved {
     background: #fecaca;
-
     color: #991b1b;
 
     cursor: not-allowed;
-
     opacity: 0.8;
 }
+
+/* أول صف */
 
 .seat.locked {
     background: #e5e7eb;
@@ -202,7 +240,7 @@ h1 {
 
     cursor: not-allowed;
 
-    opacity: 0.9;
+    opacity: 0.95;
 
     box-shadow: none;
 }
@@ -212,31 +250,7 @@ h1 {
     filter: none;
 }
 
-.priests-label {
-    margin-top: 5px;
-    margin-bottom: -2px;
-
-    padding: 10px 22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff7ed,
-            #ffedd5
-        );
-
-    color: #9a3412;
-
-    border: 1px solid #fed7aa;
-
-    border-radius: 999px;
-
-    font-size: 15px;
-    font-weight: bold;
-
-    box-shadow:
-        0 8px 20px rgba(234, 88, 12, 0.07);
-}
+/* Legend */
 
 .legend {
     display: flex;
@@ -288,6 +302,8 @@ h1 {
     background: #e5e7eb;
 }
 
+/* Booking */
+
 .booking-box {
     background:
         rgba(255, 255, 255, 0.92);
@@ -328,7 +344,8 @@ input {
 
     margin-bottom: 12px;
 
-    border: 1px solid #e5e7eb;
+    border:
+        1px solid #e5e7eb;
 
     border-radius: 13px;
 
@@ -352,6 +369,8 @@ input:focus {
 input::placeholder {
     color: #9ca3af;
 }
+
+/* Book button */
 
 #bookButton {
     width: 100%;
@@ -396,6 +415,8 @@ input::placeholder {
     cursor: not-allowed;
 }
 
+/* Invitation */
+
 .invitation-section {
     display: none;
 
@@ -422,12 +443,12 @@ input::placeholder {
 
 .invitation-section p {
     color: #6b7280;
-
     margin-bottom: 20px;
 }
 
 #invitationCanvas {
     width: 100%;
+
     max-width: 360px;
 
     height: auto;
@@ -471,6 +492,8 @@ input::placeholder {
     transform: translateY(-2px);
 }
 
+/* Mobile */
+
 @media (max-width: 760px) {
 
     body {
@@ -487,6 +510,7 @@ input::placeholder {
 
     .stage {
         width: 92%;
+
         font-size: 20px;
 
         margin-bottom: 30px;
@@ -514,9 +538,7 @@ input::placeholder {
 
     .priests-label {
         font-size: 13px;
-
-        padding:
-            9px 16px;
+        padding: 9px 16px;
     }
 
     .booking-box {
