@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -15,19 +14,39 @@
 
     <div class="container">
 
-        <h1>أسرة السمائيين</h1>
+        <!-- العنوان -->
+        <section class="hero">
 
-        <p class="subtitle">
-            حفلة نهاية الأنشطة لأسرة السمائيين
-        </p>
+            <div class="badge">
+                ✨ أسرة السمائيين
+            </div>
+
+            <h1>
+                أسرة السمائيين
+            </h1>
+
+            <p class="subtitle">
+                حفلة نهاية الأنشطة لأسرة السمائيين
+            </p>
+
+        </section>
+
 
         <!-- المسرح -->
         <div class="stage">
-            المسرح
+            🎭 المسرح
         </div>
 
-        <!-- المقاعد -->
-        <div class="seats" id="seats"></div>
+
+        <!-- عنوان المقاعد -->
+        <h2 class="seats-title">
+            اختر مقاعدك 🎟️
+        </h2>
+
+
+        <!-- هنا JavaScript هيعمل الـ99 كرسي -->
+        <div id="seats" class="seats"></div>
+
 
         <!-- دليل الألوان -->
         <div class="legend">
@@ -38,49 +57,82 @@
             </span>
 
             <span>
-                <i class="selected"></i>
+                <i class="selected-color"></i>
                 تم اختياره
             </span>
 
             <span>
-                <i class="reserved"></i>
+                <i class="reserved-color"></i>
                 محجوز
             </span>
 
         </div>
 
-        <!-- الحجز -->
-        <div class="booking-box">
 
-            <h2>اختيار المقاعد</h2>
+        <!-- بيانات الحجز -->
+        <section class="booking-box">
+
+            <h2>
+                🎟️ بيانات الحجز
+            </h2>
 
             <p id="selectedSeat">
                 لم يتم اختيار أي مقعد
             </p>
 
             <input
-                type="text"
                 id="name"
-                placeholder="اكتب اسمك"
+                type="text"
+                placeholder="اكتب الاسم"
+                autocomplete="name"
             >
 
             <input
-                type="tel"
                 id="phone"
+                type="tel"
                 placeholder="رقم الهاتف"
+                autocomplete="tel"
             >
 
             <button id="bookButton">
                 تأكيد الحجز
             </button>
 
-        </div>
+        </section>
+
+
+        <!-- الدعوة -->
+        <section
+            id="invitationSection"
+            class="invitation-section"
+        >
+
+            <h2>
+                🎉 دعوتك جاهزة!
+            </h2>
+
+            <p>
+                احفظ الدعوة على موبايلك
+            </p>
+
+            <canvas
+                id="invitationCanvas"
+                width="1080"
+                height="1920"
+            ></canvas>
+
+            <button id="downloadInvitation">
+                📥 تحميل الدعوة
+            </button>
+
+        </section>
 
     </div>
 
-    <script src="script.js?v=9"></script>
+
+    <!-- JavaScript -->
+    <script src="script.js?v=12"></script>
 
 </body>
 
 </html>
-```
