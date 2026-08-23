@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>حجز مقاعد المسرح</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🎭 حجز مقاعد المسرح</h1>
+
+        <p class="subtitle">
+            حفلة نهاية الأنشطة
+        </p>
+
+        <div class="stage">
+            المسرح
+        </div>
+
+        <div class="seats" id="seats">
+
+            <!-- الصف A -->
+            <div class="row">
+                <button class="seat" data-seat="A1">A1</button>
+                <button class="seat" data-seat="A2">A2</button>
+                <button class="seat" data-seat="A3">A3</button>
+                <button class="seat" data-seat="A4">A4</button>
+                <button class="seat" data-seat="A5">A5</button>
+                <button class="seat" data-seat="A6">A6</button>
+            </div>
+
+            <!-- الصف B -->
+            <div class="row">
+                <button class="seat" data-seat="B1">B1</button>
+                <button class="seat" data-seat="B2">B2</button>
+                <button class="seat" data-seat="B3">B3</button>
+                <button class="seat" data-seat="B4">B4</button>
+                <button class="seat" data-seat="B5">B5</button>
+                <button class="seat" data-seat="B6">B6</button>
+            </div>
+
+            <!-- الصف C -->
+            <div class="row">
+                <button class="seat" data-seat="C1">C1</button>
+                <button class="seat" data-seat="C2">C2</button>
+                <button class="seat" data-seat="C3">C3</button>
+                <button class="seat" data-seat="C4">C4</button>
+                <button class="seat" data-seat="C5">C5</button>
+                <button class="seat" data-seat="C6">C6</button>
+            </div>
+
+            <!-- الصف D -->
+            <div class="row">
+                <button class="seat" data-seat="D1">D1</button>
+                <button class="seat" data-seat="D2">D2</button>
+                <button class="seat" data-seat="D3">D3</button>
+                <button class="seat" data-seat="D4">D4</button>
+                <button class="seat" data-seat="D5">D5</button>
+                <button class="seat" data-seat="D6">D6</button>
+            </div>
+
+        </div>
+
+        <div class="legend">
+            <span><i class="available"></i> متاح</span>
+            <span><i class="selected"></i> تم اختياره</span>
+            <span><i class="reserved"></i> محجوز</span>
+        </div>
+
+        <div class="booking-box">
+
+            <h2>اختيار المقعد</h2>
+
+            <p id="selectedSeat">
+                لم يتم اختيار أي مقعد
+            </p>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="اكتب اسمك"
+            >
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="رقم الهاتف"
+            >
+
+            <button id="bookButton">
+                تأكيد الحجز
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
