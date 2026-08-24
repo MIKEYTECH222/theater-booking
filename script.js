@@ -6,10 +6,10 @@
 const ROWS = 9;
 
 // عدد الكراسي في الشمال
-const LEFT_SEATS = 6;
+const LEFT_SEATS = 5;
 
 // عدد الكراسي في اليمين
-const RIGHT_SEATS = 5;
+const RIGHT_SEATS = 6;
 
 
 // ============================================
