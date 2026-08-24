@@ -9,7 +9,7 @@ const ROWS = 9;
 const LEFT_SEATS = 6;
 
 // عدد الكراسي في اليمين
-const RIGHT_SEATS = 6;
+const RIGHT_SEATS = 5;
 
 
 // ============================================
