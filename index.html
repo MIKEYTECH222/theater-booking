@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -13,173 +13,155 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <!-- HEADER -->
-    <section class="hero">
-        <div class="badge">✨ أسرة السمائيين</div>
+        <!-- =========================
+             Header
+        ========================== -->
 
-        <h1>أسرة السمائيين</h1>
+        <section class="hero">
 
-        <p class="subtitle">
-            حفلة نهاية الأنشطة لأسرة السمائيين
-        </p>
-    </section>
+            <div class="badge">
+                ✨ أسرة السمائيين
+            </div>
+
+            <h1>
+                أسرة السمائيين
+            </h1>
+
+            <p class="subtitle">
+                حفلة نهاية الأنشطة لأسرة السمائيين
+            </p>
+
+        </section>
 
 
-    <!-- STAGE -->
-    <div class="stage">
-        🎭 المسرح
+        <!-- =========================
+             Stage
+        ========================== -->
+
+        <div class="stage">
+            🎭 المسرح
+        </div>
+
+
+        <!-- =========================
+             Seats title
+        ========================== -->
+
+        <h2 class="seats-title">
+            اختر مقاعدك 🎟️
+        </h2>
+
+
+        <!-- =========================
+             Seats
+        ========================== -->
+
+        <div id="seats" class="seats"></div>
+
+
+        <!-- =========================
+             Legend
+        ========================== -->
+
+        <div class="legend">
+
+            <span>
+                <i class="available"></i>
+                متاح
+            </span>
+
+            <span>
+                <i class="selected-color"></i>
+                تم اختياره
+            </span>
+
+            <span>
+                <i class="reserved"></i>
+                محجوز
+            </span>
+
+            <span>
+                <i class="locked-color"></i>
+                خاص بالآباء الكهنة
+            </span>
+
+        </div>
+
+
+        <!-- =========================
+             Booking box
+        ========================== -->
+
+        <section class="booking-box">
+
+            <h2>
+                بيانات الحجز
+            </h2>
+
+            <p id="selectedSeat">
+                لم يتم اختيار أي مقعد
+            </p>
+
+            <input
+                id="name"
+                type="text"
+                placeholder="اكتب الاسم"
+                autocomplete="name"
+            >
+
+            <input
+                id="phone"
+                type="tel"
+                placeholder="رقم الهاتف"
+                autocomplete="tel"
+            >
+
+            <button id="bookButton">
+                تأكيد الحجز
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             Invitation
+        ========================== -->
+
+        <section
+            id="invitationSection"
+            class="invitation-section"
+        >
+
+            <h2>
+                🎉 دعوتك جاهزة!
+            </h2>
+
+            <p>
+                احفظ الدعوة على موبايلك
+            </p>
+
+            <canvas
+                id="invitationCanvas"
+                width="1080"
+                height="1920"
+            ></canvas>
+
+            <button id="downloadInvitation">
+                📥 تحميل الدعوة
+            </button>
+
+        </section>
+
     </div>
 
 
-    <!-- SPECIAL AREA -->
-    <section class="special-area">
+    <!-- JavaScript -->
 
-        <div class="special-title">
-            🔒 خاص بالآباء الكهنة والخدام
-        </div>
-
-        <!-- SPECIAL ROW 1 -->
-        <div class="special-row">
-
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-
-            <div class="special-aisle"></div>
-
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-
-        </div>
-
-
-        <!-- SPECIAL ROW 2 -->
-        <div class="special-row">
-
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-
-            <div class="special-aisle"></div>
-
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-            <div class="special-seat"></div>
-
-        </div>
-
-    </section>
-
-
-    <!-- NORMAL SEATS -->
-
-    <h2 class="seats-title">
-        اختر مقاعدك 🎟️
-    </h2>
-
-    <div id="seats" class="seats"></div>
-
-
-    <!-- LEGEND -->
-
-    <div class="legend">
-
-        <span>
-            <i class="available"></i>
-            متاح
-        </span>
-
-        <span>
-            <i class="selected-color"></i>
-            تم اختياره
-        </span>
-
-        <span>
-            <i class="reserved-color"></i>
-            محجوز
-        </span>
-
-    </div>
-
-
-    <!-- BOOKING -->
-
-    <section class="booking-box">
-
-        <h2>
-            🎟️ بيانات الحجز
-        </h2>
-
-        <p id="selectedSeat">
-            لم يتم اختيار أي مقعد
-        </p>
-
-        <p id="phoneLimitMessage" class="phone-limit-message">
-            الحد الأقصى للحجز: كرسيان لكل رقم هاتف
-        </p>
-
-        <input
-            id="name"
-            type="text"
-            placeholder="اكتب الاسم"
-            autocomplete="name"
-        >
-
-        <input
-            id="phone"
-            type="tel"
-            placeholder="رقم الهاتف"
-            autocomplete="tel"
-        >
-
-        <button id="bookButton">
-            تأكيد الحجز
-        </button>
-
-    </section>
-
-
-    <!-- INVITATION -->
-
-    <section
-        id="invitationSection"
-        class="invitation-section"
-    >
-
-        <h2>
-            🎉 دعوتك جاهزة!
-        </h2>
-
-        <p>
-            احفظ الدعوة على موبايلك
-        </p>
-
-        <canvas
-            id="invitationCanvas"
-            width="1080"
-            height="1920"
-        ></canvas>
-
-        <button id="downloadInvitation">
-            📥 تحميل الدعوة
-        </button>
-
-    </section>
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="script.js?v=15"></script>
+    <script src="script.js?v=9"></script>
 
 </body>
+
 </html>
 ```
