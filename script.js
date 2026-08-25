@@ -3,6 +3,7 @@
 // ============================================
 
 // عدد الصفوف
+// أنت زودت صف → 10 صفوف
 const ROWS = 10;
 
 // عدد الكراسي في الشمال
@@ -167,7 +168,7 @@ function createSeats() {
         }
 
 
-        // Add complete row
+        // إضافة الصف بالكامل
         seatsContainer.appendChild(
             row
         );
@@ -281,7 +282,7 @@ function setupSeatSelection() {
                 "click",
                 () => {
 
-                    // لو محجوز
+                    // لو الكرسي محجوز
                     if (
                         seat.classList.contains(
                             "reserved"
@@ -295,7 +296,7 @@ function setupSeatSelection() {
 
 
                     // =================================
-                    // إلغاء الاختيار
+                    // UNSELECT
                     // =================================
 
                     if (
@@ -318,18 +319,18 @@ function setupSeatSelection() {
 
 
                     // =================================
-                    // اختيار كرسي جديد
+                    // SELECT
                     // =================================
 
                     else {
 
-                        // الحد الأقصى كرسيين
+                        // أقصى اختيار في الحجز الواحد
                         if (
                             selectedSeats.length >= 2
                         ) {
 
                             alert(
-                                "مسموح باختيار كرسيين فقط لكل حجز."
+                                "مسموح باختيار كرسيين فقط."
                             );
 
                             return;
@@ -481,7 +482,7 @@ function createInvitation(
 
 
     // ==================================
-    // Text
+    // TEXT
     // ==================================
 
     ctx.textAlign =
@@ -732,7 +733,7 @@ if (bookButton) {
 
 
             // =================================
-            // NO SEATS
+            // VALIDATION
             // =================================
 
             if (
@@ -747,10 +748,6 @@ if (bookButton) {
             }
 
 
-            // =================================
-            // MAX 2 SEATS
-            // =================================
-
             if (
                 selectedSeats.length > 2
             ) {
@@ -763,10 +760,6 @@ if (bookButton) {
             }
 
 
-            // =================================
-            // NO NAME
-            // =================================
-
             if (!name) {
 
                 alert(
@@ -776,10 +769,6 @@ if (bookButton) {
                 return;
             }
 
-
-            // =================================
-            // NO PHONE
-            // =================================
 
             if (!phone) {
 
@@ -799,19 +788,13 @@ if (bookButton) {
                 true;
 
             bookButton.textContent =
-                "جاري التحقق والحجز...";
+                "جاري الحجز...";
 
 
             try {
 
                 // =================================
-                // CALL SUPABASE FUNCTION
-                // =================================
-                //
-                // بدل ما نحجز مباشرة في bookings،
-                // بنستدعي book_seats
-                // عشان Supabase يطبق حد الكرسيين.
-                //
+                // CALL book_seats RPC
                 // =================================
 
                 const response =
@@ -822,10 +805,15 @@ if (bookButton) {
                             method: "POST",
 
                             headers: {
-                                ...headers,
+                                "apikey":
+                                    SUPABASE_KEY,
 
-                                "Prefer":
-                                    "return=representation"
+                                "Authorization":
+                                    "Bearer " +
+                                    SUPABASE_KEY,
+
+                                "Content-Type":
+                                    "application/json"
                             },
 
                             body:
@@ -843,13 +831,15 @@ if (bookButton) {
                     );
 
 
-                // نقرأ الرد كنص أولًا
-                // عشان نقدر نتعامل مع أخطاء
-                // PostgreSQL بشكل صحيح.
-
+                // قراءة الرد
                 const resultText =
                     await response.text();
 
+
+                console.log(
+                    "Supabase status:",
+                    response.status
+                );
 
                 console.log(
                     "Supabase response:",
@@ -867,16 +857,7 @@ if (bookButton) {
                         resultText.toLowerCase();
 
 
-                    console.error(
-                        "Supabase booking error:",
-                        resultText
-                    );
-
-
-                    // =================================
-                    // PHONE LIMIT
-                    // =================================
-
+                    // حد الهاتف
                     if (
                         errorText.includes(
                             "phone_limit"
@@ -892,10 +873,7 @@ if (bookButton) {
                     }
 
 
-                    // =================================
-                    // SEAT TAKEN
-                    // =================================
-
+                    // كرسي محجوز
                     if (
                         errorText.includes(
                             "seat_taken"
@@ -917,8 +895,7 @@ if (bookButton) {
                         await loadReservedSeats();
 
 
-                        selectedSeats =
-                            [];
+                        selectedSeats = [];
 
 
                         document
@@ -942,10 +919,7 @@ if (bookButton) {
                     }
 
 
-                    // =================================
-                    // NO SEATS
-                    // =================================
-
+                    // لا يوجد كراسي
                     if (
                         errorText.includes(
                             "no_seats"
@@ -960,13 +934,19 @@ if (bookButton) {
                     }
 
 
-                    // =================================
-                    // OTHER ERROR
-                    // =================================
-
-                    throw new Error(
+                    // أي خطأ آخر
+                    console.error(
+                        "Supabase booking error:",
                         resultText
                     );
+
+
+                    alert(
+                        "حصل خطأ من Supabase:\n\n" +
+                        resultText
+                    );
+
+                    return;
                 }
 
 
@@ -978,10 +958,7 @@ if (bookButton) {
                     [...selectedSeats];
 
 
-                // =================================
-                // CONVERT TO RESERVED
-                // =================================
-
+                // تحويل الكراسي إلى محجوزة
                 bookedSeats.forEach(
                     (seatNumber) => {
 
@@ -1009,20 +986,14 @@ if (bookButton) {
                 );
 
 
-                // =================================
-                // CREATE INVITATION
-                // =================================
-
+                // إنشاء الدعوة
                 createInvitation(
                     name,
                     bookedSeats
                 );
 
 
-                // =================================
-                // SHOW INVITATION
-                // =================================
-
+                // إظهار الدعوة
                 if (
                     invitationSection
                 ) {
@@ -1037,27 +1008,18 @@ if (bookButton) {
                 }
 
 
-                // =================================
-                // CLEAR SELECTION
-                // =================================
-
-                selectedSeats =
-                    [];
+                // تصفير الاختيار
+                selectedSeats = [];
 
 
-                // =================================
-                // CLEAR INPUTS
-                // =================================
-
+                // مسح البيانات
                 document
                     .getElementById("name")
-                    .value =
-                    "";
+                    .value = "";
 
                 document
                     .getElementById("phone")
-                    .value =
-                    "";
+                    .value = "";
 
 
                 updateSelectedSeatsText();
@@ -1076,10 +1038,9 @@ if (bookButton) {
                     error
                 );
 
-
                 alert(
-                    "حصل خطأ أثناء الحجز.\n\n" +
-                    "راجع Console لمعرفة الخطأ."
+                    "حصل خطأ أثناء الحجز:\n\n" +
+                    error.message
                 );
 
 
