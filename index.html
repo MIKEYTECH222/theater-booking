@@ -4,11 +4,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>أسرة السمائيين</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
 
 <body>
@@ -16,7 +23,7 @@
     <div class="container">
 
         <!-- =========================
-             Header
+             HEADER
         ========================== -->
 
         <section class="hero">
@@ -37,7 +44,7 @@
 
 
         <!-- =========================
-             Stage
+             STAGE
         ========================== -->
 
         <div class="stage">
@@ -46,23 +53,69 @@
 
 
         <!-- =========================
-             Seats title
+             SPECIAL AREA
+             TWO ROWS WITHOUT NUMBERS
+        ========================== -->
+
+        <section class="special-area">
+
+            <div class="special-title">
+                🔒 خاص بالآباء الكهنة والخدام
+            </div>
+
+            <div class="special-row">
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+
+                <div class="special-aisle"></div>
+
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+            </div>
+
+            <div class="special-row">
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+
+                <div class="special-aisle"></div>
+
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+                <div class="special-seat"></div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             NORMAL SEATS
         ========================== -->
 
         <h2 class="seats-title">
             اختر مقاعدك 🎟️
         </h2>
 
-
-        <!-- =========================
-             Seats
-        ========================== -->
-
-        <div id="seats" class="seats"></div>
+        <div
+            id="seats"
+            class="seats"
+        ></div>
 
 
         <!-- =========================
-             Legend
+             LEGEND
         ========================== -->
 
         <div class="legend">
@@ -78,30 +131,32 @@
             </span>
 
             <span>
-                <i class="reserved"></i>
+                <i class="reserved-color"></i>
                 محجوز
-            </span>
-
-            <span>
-                <i class="locked-color"></i>
-                خاص بالآباء الكهنة
             </span>
 
         </div>
 
 
         <!-- =========================
-             Booking box
+             BOOKING BOX
         ========================== -->
 
         <section class="booking-box">
 
             <h2>
-                بيانات الحجز
+                🎟️ بيانات الحجز
             </h2>
 
             <p id="selectedSeat">
                 لم يتم اختيار أي مقعد
+            </p>
+
+            <p
+                id="phoneLimitMessage"
+                class="phone-limit-message"
+            >
+                الحد الأقصى للحجز: كرسيان لكل رقم هاتف
             </p>
 
             <input
@@ -126,7 +181,7 @@
 
 
         <!-- =========================
-             Invitation
+             INVITATION
         ========================== -->
 
         <section
@@ -157,9 +212,7 @@
     </div>
 
 
-    <!-- JavaScript -->
-
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=13"></script>
 
 </body>
 
