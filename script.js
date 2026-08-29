@@ -4,7 +4,9 @@
 ================================================== */
 
 const ROWS = 9;
+
 const LEFT_SEATS = 5;
+
 const RIGHT_SEATS = 6;
 
 const MAX_SELECTED_SEATS = 2;
@@ -59,7 +61,11 @@ function createSeats() {
 
     seatsContainer.innerHTML = "";
 
-    for (let row = 1; row <= ROWS; row++) {
+    for (
+        let row = 1;
+        row <= ROWS;
+        row++
+    ) {
 
         const rowElement =
             document.createElement("div");
@@ -68,9 +74,7 @@ function createSeats() {
             "seat-row";
 
 
-        /* =========================
-           LEFT SIDE
-        ========================== */
+        /* LEFT */
 
         for (
             let seat = 1;
@@ -78,34 +82,34 @@ function createSeats() {
             seat++
         ) {
 
-            const seatNumber =
-                `${row}-${seat}`;
+            const number = seat;
+
+            const seatId =
+                `${row}-${number}`;
 
             rowElement.appendChild(
                 createSeat(
-                    seatNumber,
-                    row,
-                    seat
+                    seatId,
+                    number
                 )
             );
         }
 
 
-        /* =========================
-           CENTER AISLE
-        ========================== */
+        /* AISLE */
 
         const aisle =
             document.createElement("div");
 
-        aisle.className = "aisle";
+        aisle.className =
+            "aisle";
 
-        rowElement.appendChild(aisle);
+        rowElement.appendChild(
+            aisle
+        );
 
 
-        /* =========================
-           RIGHT SIDE
-        ========================== */
+        /* RIGHT */
 
         for (
             let seat = 1;
@@ -113,14 +117,16 @@ function createSeats() {
             seat++
         ) {
 
-            const seatNumber =
-                `${row}-${seat + LEFT_SEATS}`;
+            const number =
+                LEFT_SEATS + seat;
+
+            const seatId =
+                `${row}-${number}`;
 
             rowElement.appendChild(
                 createSeat(
-                    seatNumber,
-                    row,
-                    seat + LEFT_SEATS
+                    seatId,
+                    number
                 )
             );
         }
@@ -134,12 +140,11 @@ function createSeats() {
 
 
 /* ==================================================
-   CREATE ONE SEAT
+   CREATE SEAT
 ================================================== */
 
 function createSeat(
-    seatNumber,
-    row,
+    seatId,
     number
 ) {
 
@@ -148,26 +153,29 @@ function createSeat(
 
     button.type = "button";
 
-    button.className = "seat available";
+    button.className =
+        "seat";
 
-    button.textContent = number;
+
+    button.textContent =
+        number;
+
 
     button.dataset.seat =
-        seatNumber;
+        seatId;
 
 
-    /* =========================
-       RESERVED
-    ========================== */
+    /* RESERVED */
 
     if (
         reservedSeats.includes(
-            seatNumber
+            seatId
         )
     ) {
 
-        button.className =
-            "seat reserved";
+        button.classList.add(
+            "reserved"
+        );
 
         button.disabled = true;
 
@@ -175,40 +183,53 @@ function createSeat(
     }
 
 
-    /* =========================
-       CLICK
-    ========================== */
+    /* SELECTED */
+
+    if (
+        selectedSeats.includes(
+            seatId
+        )
+    ) {
+
+        button.classList.add(
+            "selected"
+        );
+    }
+
 
     button.addEventListener(
         "click",
-        () => selectSeat(
-            seatNumber,
-            button
-        )
+        function () {
+
+            toggleSeat(
+                seatId,
+                button
+            );
+
+        }
     );
+
 
     return button;
 }
 
 
 /* ==================================================
-   SELECT SEAT
+   TOGGLE SEAT
 ================================================== */
 
-function selectSeat(
-    seatNumber,
+function toggleSeat(
+    seatId,
     button
 ) {
 
     const index =
         selectedSeats.indexOf(
-            seatNumber
+            seatId
         );
 
 
-    /* =========================
-       REMOVE SEAT
-    ========================== */
+    /* REMOVE */
 
     if (index !== -1) {
 
@@ -221,15 +242,13 @@ function selectSeat(
             "selected"
         );
 
-        updateSelectedText();
+        updateSelectedSeats();
 
         return;
     }
 
 
-    /* =========================
-       MAX SEATS
-    ========================== */
+    /* MAX */
 
     if (
         selectedSeats.length >=
@@ -238,34 +257,32 @@ function selectSeat(
 
         showMessage(
             "مسموح بحجز مقعدين فقط.",
-            "error"
+            false
         );
 
         return;
     }
 
 
-    /* =========================
-       ADD SEAT
-    ========================== */
+    /* ADD */
 
     selectedSeats.push(
-        seatNumber
+        seatId
     );
 
     button.classList.add(
         "selected"
     );
 
-    updateSelectedText();
+    updateSelectedSeats();
 }
 
 
 /* ==================================================
-   UPDATE SELECTED TEXT
+   UPDATE SELECTED
 ================================================== */
 
-function updateSelectedText() {
+function updateSelectedSeats() {
 
     if (
         selectedSeats.length === 0
@@ -279,17 +296,18 @@ function updateSelectedText() {
 
 
     selectedSeatText.textContent =
-        `المقاعد المختارة: ${selectedSeats.join(" ، ")}`;
+        "المقاعد المختارة: " +
+        selectedSeats.join(" ، ");
 }
 
 
 /* ==================================================
-   BOOKING
+   BOOK
 ================================================== */
 
 bookButton.addEventListener(
     "click",
-    () => {
+    function () {
 
         const name =
             nameInput.value.trim();
@@ -298,9 +316,7 @@ bookButton.addEventListener(
             phoneInput.value.trim();
 
 
-        /* =========================
-           VALIDATION
-        ========================== */
+        /* CHECK SEATS */
 
         if (
             selectedSeats.length === 0
@@ -308,18 +324,20 @@ bookButton.addEventListener(
 
             showMessage(
                 "من فضلك اختر مقعدًا أولًا.",
-                "error"
+                false
             );
 
             return;
         }
 
 
+        /* CHECK NAME */
+
         if (!name) {
 
             showMessage(
                 "من فضلك اكتب الاسم.",
-                "error"
+                false
             );
 
             nameInput.focus();
@@ -328,11 +346,13 @@ bookButton.addEventListener(
         }
 
 
+        /* CHECK PHONE */
+
         if (!phone) {
 
             showMessage(
                 "من فضلك اكتب رقم الهاتف.",
-                "error"
+                false
             );
 
             phoneInput.focus();
@@ -341,31 +361,31 @@ bookButton.addEventListener(
         }
 
 
-        /* =========================
-           DEMO BOOKING
-        ========================== */
-
-        reservedSeats.push(
-            ...selectedSeats
-        );
-
+        /* SAVE SEATS */
 
         const bookedSeats =
             [...selectedSeats];
 
 
-        showMessage(
-            "تم الحجز بنجاح 🎉",
-            "success"
+        reservedSeats.push(
+            ...bookedSeats
         );
 
+
+        /* MESSAGE */
+
+        showMessage(
+            "تم الحجز بنجاح 🎉",
+            true
+        );
+
+
+        /* REDRAW */
 
         createSeats();
 
 
-        /* =========================
-           DRAW INVITATION
-        ========================== */
+        /* DRAW INVITATION */
 
         drawInvitation(
             name,
@@ -378,15 +398,15 @@ bookButton.addEventListener(
 
 
         invitationSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
+            behavior: "smooth"
         });
 
 
+        /* CLEAR */
+
         selectedSeats = [];
 
-        updateSelectedText();
-
+        updateSelectedSeats();
     }
 );
 
@@ -406,7 +426,6 @@ function drawInvitation(
     const ctx =
         canvas.getContext("2d");
 
-
     const width =
         canvas.width;
 
@@ -414,11 +433,9 @@ function drawInvitation(
         canvas.height;
 
 
-    /* =========================
-       BACKGROUND
-    ========================== */
+    /* BACKGROUND */
 
-    const background =
+    const gradient =
         ctx.createLinearGradient(
             0,
             0,
@@ -426,24 +443,23 @@ function drawInvitation(
             height
         );
 
-    background.addColorStop(
+    gradient.addColorStop(
         0,
         "#f7efe1"
     );
 
-    background.addColorStop(
+    gradient.addColorStop(
         0.5,
         "#fffaf2"
     );
 
-    background.addColorStop(
+    gradient.addColorStop(
         1,
         "#ead9bd"
     );
 
-
     ctx.fillStyle =
-        background;
+        gradient;
 
     ctx.fillRect(
         0,
@@ -453,14 +469,13 @@ function drawInvitation(
     );
 
 
-    /* =========================
-       OUTER BORDER
-    ========================== */
+    /* BORDER */
 
     ctx.strokeStyle =
         "#9a7848";
 
-    ctx.lineWidth = 12;
+    ctx.lineWidth =
+        12;
 
     ctx.strokeRect(
         45,
@@ -473,7 +488,8 @@ function drawInvitation(
     ctx.strokeStyle =
         "#c5a66f";
 
-    ctx.lineWidth = 3;
+    ctx.lineWidth =
+        3;
 
     ctx.strokeRect(
         65,
@@ -483,121 +499,88 @@ function drawInvitation(
     );
 
 
-    /* =========================
-       DECORATIVE CIRCLES
-    ========================== */
+    /* TITLE */
 
-    drawCircle(
-        ctx,
-        120,
-        150,
-        55,
-        "#c5a66f"
-    );
-
-    drawCircle(
-        ctx,
-        width - 120,
-        150,
-        55,
-        "#c5a66f"
-    );
-
-    drawCircle(
-        ctx,
-        120,
-        height - 150,
-        55,
-        "#c5a66f"
-    );
-
-    drawCircle(
-        ctx,
-        width - 120,
-        height - 150,
-        55,
-        "#c5a66f"
-    );
-
-
-    /* =========================
-       TOP
-    ========================== */
-
-    drawCenteredText(
+    centeredText(
         ctx,
         "✦ دعــــوة خــــاصــــة ✦",
         width / 2,
-        260,
+        250,
         "bold 54px Arial",
         "#75552f"
     );
 
 
-    drawCenteredText(
+    centeredText(
         ctx,
         "تتشرف",
         width / 2,
-        380,
+        370,
         "bold 42px Arial",
         "#4c3a28"
     );
 
 
-    /* =========================
-       FAMILY NAME
-    ========================== */
+    /* FAMILY */
 
-    drawCenteredText(
+    centeredText(
         ctx,
         "أسرتي أبطال الإيمان وأسرة شهيدات",
         width / 2,
-        475,
-        "bold 52px Arial",
+        470,
+        "bold 50px Arial",
         "#8b6335"
     );
 
 
-    /* =========================
-       INVITATION TEXT
-    ========================== */
+    /* INVITATION */
 
-    drawCenteredText(
+    centeredText(
         ctx,
         "بدعوة سيادتكم لحضور",
         width / 2,
-        620,
+        610,
         "38px Arial",
         "#4c3a28"
     );
 
 
-    drawCenteredText(
+    centeredText(
         ctx,
         "حفل ختام الأنشطة",
         width / 2,
-        715,
+        710,
         "bold 68px Arial",
         "#75552f"
     );
 
 
-    /* =========================
-       DIVIDER
-    ========================== */
+    /* DIVIDER */
 
-    drawDivider(
-        ctx,
-        width / 2,
+    ctx.strokeStyle =
+        "#b08a54";
+
+    ctx.lineWidth =
+        4;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        width / 2 - 300,
         790
     );
 
+    ctx.lineTo(
+        width / 2 + 300,
+        790
+    );
 
-    /* =========================
-       DATE
-    ========================== */
+    ctx.stroke();
 
-    drawCenteredText(
+
+    /* DATE */
+
+    centeredText(
         ctx,
         "يوم الثلاثاء الموافق",
         width / 2,
@@ -606,8 +589,7 @@ function drawInvitation(
         "#4c3a28"
     );
 
-
-    drawCenteredText(
+    centeredText(
         ctx,
         "1 سبتمبر 2026",
         width / 2,
@@ -617,11 +599,9 @@ function drawInvitation(
     );
 
 
-    /* =========================
-       TIME
-    ========================== */
+    /* TIME */
 
-    drawCenteredText(
+    centeredText(
         ctx,
         "في تمام الساعة السادسة مساءً",
         width / 2,
@@ -631,113 +611,102 @@ function drawInvitation(
     );
 
 
-    /* =========================
-       LOCATION
-    ========================== */
+    /* LOCATION */
 
-    drawCenteredText(
+    centeredText(
         ctx,
         "بمسرح",
         width / 2,
-        1190,
+        1180,
         "34px Arial",
         "#4c3a28"
     );
 
-
-    drawCenteredText(
+    centeredText(
         ctx,
         "كنيسة السيدة العذراء مريم",
         width / 2,
-        1260,
+        1250,
         "bold 43px Arial",
         "#75552f"
     );
 
-
-    drawCenteredText(
+    centeredText(
         ctx,
         "والبابا كيرلس السادس بأغاخان",
         width / 2,
-        1325,
+        1320,
         "bold 39px Arial",
         "#75552f"
     );
 
 
-    /* =========================
-       GUEST NAME BOX
-    ========================== */
+    /* NAME BOX */
 
-    roundRect(
+    roundedBox(
         ctx,
         120,
-        1410,
+        1400,
         width - 240,
         190,
         30,
         "#fffaf2",
-        "#b08a54",
-        5
+        "#b08a54"
     );
 
 
-    drawCenteredText(
+    centeredText(
         ctx,
         "اسم المدعو",
         width / 2,
-        1470,
+        1460,
         "30px Arial",
         "#75552f"
     );
 
 
-    drawCenteredText(
+    centeredText(
         ctx,
         name,
         width / 2,
-        1545,
+        1535,
         "bold 48px Arial",
         "#3e3021"
     );
 
 
-    /* =========================
-       SEATS BOX
-    ========================== */
+    /* SEATS BOX */
 
-    roundRect(
+    roundedBox(
         ctx,
         120,
-        1640,
+        1630,
         width - 240,
         145,
         30,
         "#75552f",
-        "#75552f",
-        0
+        "#75552f"
     );
 
 
-    drawCenteredText(
+    centeredText(
         ctx,
-        `المقاعد: ${seats.join(" ، ")}`,
+        "المقاعد: " +
+        seats.join(" ، "),
         width / 2,
-        1730,
+        1705,
         "bold 42px Arial",
         "#ffffff"
     );
 
 
-    /* =========================
-       FOOTER
-    ========================== */
+    /* FOOTER */
 
-    drawCenteredText(
+    centeredText(
         ctx,
         "نتمنى لكم وقتًا ممتعًا ومباركًا ❤️",
         width / 2,
-        1830,
+        1825,
         "bold 29px Arial",
         "#75552f"
     );
@@ -745,45 +714,10 @@ function drawInvitation(
 
 
 /* ==================================================
-   DRAW CIRCLE
+   CENTER TEXT
 ================================================== */
 
-function drawCircle(
-    ctx,
-    x,
-    y,
-    radius,
-    color
-) {
-
-    ctx.beginPath();
-
-    ctx.arc(
-        x,
-        y,
-        radius,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle =
-        color;
-
-    ctx.globalAlpha =
-        0.15;
-
-    ctx.fill();
-
-    ctx.globalAlpha =
-        1;
-}
-
-
-/* ==================================================
-   CENTERED TEXT
-================================================== */
-
-function drawCenteredText(
+function centeredText(
     ctx,
     text,
     x,
@@ -813,50 +747,10 @@ function drawCenteredText(
 
 
 /* ==================================================
-   DIVIDER
+   ROUNDED BOX
 ================================================== */
 
-function drawDivider(
-    ctx,
-    x,
-    y
-) {
-
-    ctx.strokeStyle =
-        "#b08a54";
-
-    ctx.lineWidth =
-        4;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        x - 300,
-        y
-    );
-
-    ctx.lineTo(
-        x + 300,
-        y
-    );
-
-    ctx.stroke();
-
-    drawCircle(
-        ctx,
-        x,
-        y,
-        10,
-        "#b08a54"
-    );
-}
-
-
-/* ==================================================
-   ROUND RECTANGLE
-================================================== */
-
-function roundRect(
+function roundedBox(
     ctx,
     x,
     y,
@@ -864,8 +758,7 @@ function roundRect(
     height,
     radius,
     fill,
-    stroke,
-    lineWidth
+    stroke
 ) {
 
     ctx.beginPath();
@@ -925,73 +818,50 @@ function roundRect(
 
     ctx.closePath();
 
+    ctx.fillStyle =
+        fill;
 
-    if (fill) {
+    ctx.fill();
 
-        ctx.fillStyle =
-            fill;
+    ctx.strokeStyle =
+        stroke;
 
-        ctx.fill();
-    }
+    ctx.lineWidth =
+        4;
 
-
-    if (stroke && lineWidth > 0) {
-
-        ctx.strokeStyle =
-            stroke;
-
-        ctx.lineWidth =
-            lineWidth;
-
-        ctx.stroke();
-    }
+    ctx.stroke();
 }
 
 
 /* ==================================================
-   DOWNLOAD INVITATION
+   DOWNLOAD
 ================================================== */
 
 downloadInvitation.addEventListener(
     "click",
-    () => {
+    function () {
 
-        try {
-
-            const image =
-                invitationCanvas.toDataURL(
-                    "image/png"
-                );
-
-
-            const link =
-                document.createElement("a");
-
-            link.href =
-                image;
-
-            link.download =
-                "دعوة-حفل-ختام-الانشطة.png";
-
-
-            document.body.appendChild(
-                link
+        const image =
+            invitationCanvas.toDataURL(
+                "image/png"
             );
 
-            link.click();
+        const link =
+            document.createElement("a");
 
-            link.remove();
+        link.href =
+            image;
 
-        } catch (error) {
+        link.download =
+            "دعوة-حفل-ختام-الانشطة.png";
 
-            console.error(
-                error
-            );
+        document.body.appendChild(
+            link
+        );
 
-            alert(
-                "حصل خطأ أثناء تحميل الدعوة."
-            );
-        }
+        link.click();
+
+        link.remove();
     }
 );
 
@@ -1002,22 +872,16 @@ downloadInvitation.addEventListener(
 
 function showMessage(
     message,
-    type
+    success
 ) {
 
     bookingMessage.textContent =
         message;
 
-    if (type === "error") {
-
-        bookingMessage.style.color =
-            "#d32f2f";
-
-    } else {
-
-        bookingMessage.style.color =
-            "#2e7d32";
-    }
+    bookingMessage.style.color =
+        success
+            ? "#2e7d32"
+            : "#d32f2f";
 }
 
 
