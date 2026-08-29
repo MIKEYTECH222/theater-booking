@@ -1,308 +1,586 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: Arial, Tahoma, sans-serif;
-    direction: rtl;
-    min-height: 100vh;
-    background:
-        radial-gradient(
-            circle at top right,
-            #1e1e38 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at bottom left,
-            #171926 0%,
-            transparent 40%
-        ),
-        #0f111a;
-    color: #f3f4f6;
-    padding: 30px 10px 50px;
+    font-family: Arial, Tahoma, sans-serif;
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #dff6ff 0%,
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #fce7ff 0%,
+            transparent 32%
+        ),
+        #f8fbff;
+
+    color: #172033;
+
+    padding: 30px 10px 50px;
 }
+
+
+/* =========================
+   Container
+========================= */
 
 .container {
-    width: 100%;
-    max-width: 1100px;
-    margin: auto;
-    text-align: center;
+    width: 100%;
+    max-width: 1100px;
+
+    margin: auto;
+
+    text-align: center;
 }
 
-/* Header */
+
+/* =========================
+   Header
+========================= */
+
 .hero {
-    margin-bottom: 35px;
+    margin-bottom: 35px;
 }
 
 .badge {
-    display: inline-block;
-    padding: 9px 18px;
-    border-radius: 999px;
-    background: #1e2338;
-    color: #818cf8;
-    border: 1px solid #2e3558;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 14px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+
+    padding: 9px 18px;
+
+    border-radius: 999px;
+
+    background: #ffffff;
+
+    color: #5b5cf0;
+
+    border: 1px solid #e6e8ff;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 14px;
+
+    box-shadow:
+        0 8px 25px rgba(80, 90, 180, 0.08);
 }
 
 h1 {
-    font-size: 38px;
-    margin-bottom: 8px;
-    color: #ffffff;
+    font-size: 42px;
+
+    margin-bottom: 8px;
 }
 
 .subtitle {
-    color: #9ca3af;
-    font-size: 18px;
+    color: #6b7280;
+
+    font-size: 19px;
 }
 
-/* Stage */
+
+/* =========================
+   Stage
+========================= */
+
 .stage {
-    width: 78%;
-    max-width: 760px;
-    margin: 0 auto 38px;
-    padding: 18px;
-    border-radius: 0 0 28px 28px;
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
-    box-shadow: 0 15px 35px rgba(79, 70, 229, 0.4);
+    width: 78%;
+    max-width: 760px;
+
+    margin: 0 auto 38px;
+
+    padding: 18px;
+
+    border-radius: 0 0 28px 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #6366f1
+        );
+
+    color: white;
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 15px 35px rgba(99, 102, 241, 0.25);
 }
+
+
+/* =========================
+   Seats title
+========================= */
 
 .seats-title {
-    margin-bottom: 18px;
-    font-size: 20px;
-    color: #e5e7eb;
+    margin-bottom: 18px;
+
+    font-size: 22px;
+
+    color: #374151;
 }
 
-/* Seats Layout */
+
+/* =========================
+   Seats container
+========================= */
+
 .seats {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 14px;
 }
+
+
+/* =========================
+   Seat row
+========================= */
 
 .row {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 7px;
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 7px;
 }
+
+
+/* =========================
+   Middle aisle
+========================= */
 
 .aisle {
-    width: 55px;
-    min-width: 55px;
-    height: 54px;
+    width: 55px;
+
+    min-width: 55px;
+
+    height: 54px;
 }
 
-/* Seat Component */
+
+/* =========================
+   Seat
+========================= */
+
 .seat {
-    width: 58px;
-    height: 54px;
-    border: none;
-    border-radius: 14px 14px 8px 8px;
-    background: #054625;
-    color: #4ade80;
-    border: 1px solid #166534;
-    font-size: 13px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    width: 58px;
+
+    height: 54px;
+
+    border: none;
+
+    border-radius:
+        14px 14px 8px 8px;
+
+    background: #b8f7cf;
+
+    color: #176b3a;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
+
+
+/* Hover */
 
 .seat:hover:not(:disabled) {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 8px 18px rgba(34, 197, 94, 0.25);
-    background: #047857;
-    color: #ffffff;
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
+    box-shadow:
+        0 8px 18px rgba(34, 197, 94, 0.16);
 }
+
+
+/* Selected */
 
 .seat.selected {
-    background: #1d4ed8;
-    color: #ffffff;
-    border-color: #3b82f6;
-    transform: translateY(-4px);
-    box-shadow: 0 9px 20px rgba(59, 130, 246, 0.35);
+    background: #93c5fd;
+
+    color: #164e82;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 9px 20px rgba(59, 130, 246, 0.18);
 }
+
+
+/* Reserved */
 
 .seat.reserved {
-    background: #450a0a;
-    color: #fca5a5;
-    border: 1px solid #7f1d1d;
-    cursor: not-allowed;
-    opacity: 0.7;
+    background: #fecaca;
+
+    color: #991b1b;
+
+    cursor: not-allowed;
+
+    opacity: 0.82;
 }
 
-.seat.locked {
-    background: #3b0764;
-    color: #d8b4fe;
-    border: 1px solid #6b21a8;
-    cursor: not-allowed;
-    opacity: 0.85;
-}
 
-/* Legend */
+/* =========================
+   Legend
+========================= */
+
 .legend {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px 25px;
-    margin: 35px 0;
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 16px 25px;
+
+    margin: 35px 0;
 }
 
 .legend span {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    color: #d1d5db;
-    font-size: 14px;
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #4b5563;
+
+    font-size: 14px;
 }
 
 .legend i {
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    border-radius: 5px;
+    width: 15px;
+
+    height: 15px;
+
+    display: inline-block;
+
+    border-radius: 5px;
 }
 
-.available { background: #054625; border: 1px solid #166534; }
-.selected-color { background: #1d4ed8; border: 1px solid #3b82f6; }
-.reserved-color { background: #450a0a; border: 1px solid #7f1d1d; }
-.locked-color { background: #3b0764; border: 1px solid #6b21a8; }
+.available {
+    background: #b8f7cf;
+}
 
-/* Booking Box & Form */
+.selected-color {
+    background: #93c5fd;
+}
+
+.reserved-color {
+    background: #fecaca;
+}
+
+
+/* =========================
+   Booking box
+========================= */
+
 .booking-box {
-    max-width: 520px;
-    margin: 25px auto;
-    padding: 28px;
-    border-radius: 24px;
-    background: #181b2a;
-    border: 1px solid #282d45;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    max-width: 520px;
+
+    margin: 25px auto;
+
+    padding: 28px;
+
+    border-radius: 24px;
+
+    background:
+        rgba(255, 255, 255, 0.94);
+
+    border: 1px solid #edf0f7;
+
+    box-shadow:
+        0 15px 45px rgba(80, 90, 180, 0.08);
 }
 
 .booking-box h2 {
-    margin-bottom: 12px;
-    color: #ffffff;
+    margin-bottom: 12px;
 }
 
 #selectedSeat {
-    min-height: 28px;
-    margin-bottom: 20px;
-    color: #9ca3af;
-    line-height: 1.8;
+    min-height: 28px;
+
+    margin-bottom: 20px;
+
+    color: #6b7280;
+
+    line-height: 1.8;
 }
 
+
+/* =========================
+   Inputs
+========================= */
+
 input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 12px;
-    border: 1px solid #2e3558;
-    border-radius: 13px;
-    background: #0f111a;
-    color: #ffffff;
-    font-size: 16px;
-    outline: none;
+    width: 100%;
+
+    padding: 15px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 13px;
+
+    background: #f9fbff;
+
+    color: #172033;
+
+    font-size: 16px;
+
+    outline: none;
 }
 
 input:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    border-color: #93c5fd;
+
+    box-shadow:
+        0 0 0 4px rgba(147, 197, 253, 0.15);
 }
 
 input::placeholder {
-    color: #6b7280;
+    color: #9ca3af;
 }
 
+
+/* =========================
+   Book button
+========================= */
+
 #bookButton {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 13px;
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #8b5cf6
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
 }
 
 #bookButton:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(99, 102, 241, 0.20);
 }
 
 #bookButton:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    opacity: 0.6;
+
+    cursor: not-allowed;
 }
 
-/* Invitation Section */
+
+/* =========================
+   Invitation
+========================= */
+
 .invitation-section {
-    display: none;
-    max-width: 530px;
-    margin: 50px auto;
-    padding: 28px 20px;
-    border-radius: 24px;
-    background: #181b2a;
-    border: 1px solid #282d45;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    display: none;
+
+    max-width: 530px;
+
+    margin: 50px auto;
+
+    padding: 28px 20px;
+
+    border-radius: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #edf0f7;
+
+    box-shadow:
+        0 15px 45px rgba(80, 90, 180, 0.08);
 }
 
-.invitation-section h2 { margin-bottom: 8px; color: #ffffff; }
-.invitation-section p { color: #9ca3af; margin-bottom: 20px; }
+.invitation-section h2 {
+    margin-bottom: 8px;
+}
+
+.invitation-section p {
+    color: #6b7280;
+
+    margin-bottom: 20px;
+}
 
 #invitationCanvas {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-    display: block;
-    margin: 0 auto 20px;
-    border-radius: 16px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+
+    max-width: 360px;
+
+    height: auto;
+
+    display: block;
+
+    margin: 0 auto 20px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 12px 30px rgba(80, 90, 180, 0.15);
 }
 
 #downloadInvitation {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 13px;
-    background: #16a34a;
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s ease;
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: #22c55e;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
 }
 
 #downloadInvitation:hover {
-    background: #15803d;
-    transform: translateY(-2px);
+    background: #16a34a;
+
+    transform:
+        translateY(-2px);
 }
 
-/* Responsive Media Queries */
+
+/* =========================
+   Mobile
+========================= */
+
 @media (max-width: 760px) {
-    body { padding: 20px 5px 40px; }
-    h1 { font-size: 30px; }
-    .subtitle { font-size: 16px; }
-    .stage { width: 92%; font-size: 18px; margin-bottom: 28px; }
-    .row { gap: 4px; }
-    .seat { width: 43px; height: 43px; font-size: 9px; }
-    .aisle { width: 24px; min-width: 24px; height: 43px; }
+
+    body {
+        padding:
+            20px 5px 40px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .stage {
+        width: 92%;
+
+        font-size: 20px;
+
+        margin-bottom: 28px;
+    }
+
+    .row {
+        gap: 4px;
+    }
+
+    .seat {
+        width: 43px;
+
+        height: 43px;
+
+        font-size: 9px;
+    }
+
+    .aisle {
+        width: 24px;
+
+        min-width: 24px;
+
+        height: 43px;
+    }
 }
+
+
+/* =========================
+   Small phones
+========================= */
 
 @media (max-width: 470px) {
-    .row { gap: 3px; }
-    .seat { width: 31px; height: 38px; font-size: 8px; }
-    .aisle { width: 15px; min-width: 15px; height: 38px; }
-    .booking-box { padding: 20px 15px; }
-}
+
+    .row {
+        gap: 3px;
+    }
+
+    .seat {
+        width: 31px;
+
+        height: 38px;
+
+        font-size: 8px;
+    }
+
+    .aisle {
+        width: 15px;
+
+        min-width: 15px;
+
+        height: 38px;
+    }
+
+    .booking-box {
+        padding:
+            20px 15px;
+    }
+} ده الكود  بتاع الSTYLE CSS
