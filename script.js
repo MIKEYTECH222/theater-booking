@@ -357,223 +357,323 @@ function setupSeatSelection() {
 // CREATE INVITATION
 // ============================================
 
-function createInvitation(
-    name,
-    bookedSeats
-) {
+function createInvitation(name, bookedSeats) {
 
-    if (!invitationCanvas) {
-        return;
-    }
+    if (!invitationCanvas) {
+        return;
+    }
 
-    const ctx =
-        invitationCanvas.getContext(
-            "2d"
-        );
+    const ctx = invitationCanvas.getContext("2d");
 
-    const width =
-        invitationCanvas.width;
+    const width = invitationCanvas.width;
+    const height = invitationCanvas.height;
 
-    const height =
-        invitationCanvas.height;
+    // تنظيف الكانفس
+    ctx.clearRect(0, 0, width, height);
 
+    // ========================================
+    // الخلفية - كحلي غامق يفتح تدريجيًا
+    // ========================================
 
-    // Clear
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
+    const background = ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        height
+    );
 
+    background.addColorStop(0, "#07152e");
+    background.addColorStop(0.28, "#102b52");
+    background.addColorStop(0.58, "#27527d");
+    background.addColorStop(0.82, "#6f9dbd");
+    background.addColorStop(1, "#d9edf7");
 
-    // ==================================
-    // Background
-    // ==================================
-
-    const background =
-        ctx.createLinearGradient(
-            0,
-            0,
-            width,
-            height
-        );
-
-    background.addColorStop(
-        0,
-        "#eaf7ff"
-    );
-
-    background.addColorStop(
-        0.5,
-        "#ffffff"
-    );
-
-    background.addColorStop(
-        1,
-        "#fff0fb"
-    );
-
-    ctx.fillStyle =
-        background;
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, width, height);
 
 
-    // ==================================
-    // Decorative circles
-    // ==================================
+    // ========================================
+    // زخارف ناعمة
+    // ========================================
 
-    ctx.globalAlpha =
-        0.45;
+    ctx.globalAlpha = 0.16;
 
-    ctx.fillStyle =
-        "#bfdbfe";
+    ctx.fillStyle = "#ffffff";
 
-    ctx.beginPath();
+    ctx.beginPath();
+    ctx.arc(
+        100,
+        130,
+        110,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
 
-    ctx.arc(
-        130,
-        180,
-        115,
-        0,
-        Math.PI * 2
-    );
+    ctx.beginPath();
+    ctx.arc(
+        980,
+        330,
+        170,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
 
-    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(
+        920,
+        1660,
+        150,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
 
-    ctx.fillStyle =
-        "#f5d0fe";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        920,
-        320,
-        150,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-    ctx.fillStyle =
-        "#bbf7d0";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        900,
-        1610,
-        135,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-    ctx.globalAlpha =
-        1;
+    ctx.globalAlpha = 1;
 
 
-    // ==================================
-    // TEXT
-    // ==================================
+    // ========================================
+    // إعداد النص
+    // ========================================
 
-    ctx.textAlign =
-        "center";
-
-
-    // Family
-    ctx.fillStyle =
-        "#6366f1";
-
-    ctx.font =
-        "bold 48px Arial";
-
-    ctx.fillText(
-        "✨ أسرة السمائيين",
-        width / 2,
-        200
-    );
+    ctx.textAlign = "center";
 
 
-    // Main title
-    ctx.fillStyle =
-        "#172033";
+    // ========================================
+    // اسم الأسرة
+    // ========================================
 
-    ctx.font =
-        "bold 95px Arial";
+    ctx.fillStyle = "#ffffff";
 
-    ctx.fillText(
-        "دعــوة",
-        width / 2,
-        410
-    );
+    ctx.font = "bold 52px Arial";
 
-
-    // Event
-    ctx.fillStyle =
-        "#6b7280";
-
-    ctx.font =
-        "42px Arial";
-
-    ctx.fillText(
-        "حفلة نهاية الأنشطة",
-        width / 2,
-        515
-    );
+    ctx.fillText(
+        "أسرة السمائيين",
+        width / 2,
+        180
+    );
 
 
-    // Welcome
-    ctx.fillStyle =
-        "#172033";
+    // ========================================
+    // العنوان الرئيسي
+    // ========================================
 
-    ctx.font =
-        "bold 48px Arial";
+    ctx.font = "bold 105px Arial";
 
-    ctx.fillText(
-        "أهلاً بك",
-        width / 2,
-        700
-    );
-
-
-    // Name
-    let displayName =
-        name;
-
-    if (
-        displayName.length > 22
-    ) {
-
-        displayName =
-            displayName.substring(
-                0,
-                22
-            ) + "...";
-    }
-
-    ctx.fillStyle =
-        "#6366f1";
-
-    ctx.font =
-        "bold 68px Arial";
-
-    ctx.fillText(
-        displayName,
-        width / 2,
-        820
-    );
+    ctx.fillText(
+        "دعــــوة",
+        width / 2,
+        360
+    );
 
 
-    // ==================================
+    // ========================================
+    // الخط تحت العنوان
+    // ========================================
+
+    ctx.fillStyle = "#dbeafe";
+
+    ctx.fillRect(
+        270,
+        400,
+        540,
+        4
+    );
+
+
+    // ========================================
+    // نص الدعوة
+    // ========================================
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.font = "42px Arial";
+
+    ctx.fillText(
+        "تتشرف أسرتي",
+        width / 2,
+        540
+    );
+
+    ctx.font = "bold 48px Arial";
+
+    ctx.fillText(
+        "أبطال الإيمان وأسرة شهيدات",
+        width / 2,
+        615
+    );
+
+    ctx.font = "42px Arial";
+
+    ctx.fillText(
+        "بدعوة سيادتكم لحضور",
+        width / 2,
+        700
+    );
+
+    ctx.font = "bold 54px Arial";
+
+    ctx.fillText(
+        "حفل ختام الأنشطة",
+        width / 2,
+        780
+    );
+
+
+    // ========================================
+    // الاسم
+    // ========================================
+
+    ctx.fillStyle = "#dbeafe";
+
+    ctx.font = "34px Arial";
+
+    ctx.fillText(
+        "السيد / ة",
+        width / 2,
+        905
+    );
+
+
+    let displayName = name || "";
+
+    if (displayName.length > 22) {
+        displayName =
+            displayName.substring(0, 22) + "...";
+    }
+
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.font = "bold 64px Arial";
+
+    ctx.fillText(
+        displayName,
+        width / 2,
+        990
+    );
+
+
+    // ========================================
+    // بطاقة المقاعد
+    // ========================================
+
+    ctx.fillStyle = "rgba(255,255,255,0.16)";
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        120,
+        1060,
+        width - 240,
+        220,
+        35
+    );
+
+    ctx.fill();
+
+
+    ctx.strokeStyle = "rgba(255,255,255,0.35)";
+
+    ctx.lineWidth = 3;
+
+    ctx.stroke();
+
+
+    // عنوان المقاعد
+    ctx.fillStyle = "#dbeafe";
+
+    ctx.font = "34px Arial";
+
+    ctx.fillText(
+        "رقم / أرقام المقاعد",
+        width / 2,
+        1130
+    );
+
+
+    // المقاعد
+    ctx.fillStyle = "#ffffff";
+
+    ctx.font = "bold 60px Arial";
+
+    ctx.fillText(
+        bookedSeats.join(" • "),
+        width / 2,
+        1225
+    );
+
+
+    // ========================================
+    // التاريخ والوقت
+    // ========================================
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.font = "39px Arial";
+
+    ctx.fillText(
+        "الثلاثاء الموافق 1 سبتمبر 2026",
+        width / 2,
+        1390
+    );
+
+    ctx.fillText(
+        "في تمام الساعة السادسة مساءً",
+        width / 2,
+        1460
+    );
+
+
+    // ========================================
+    // المكان
+    // ========================================
+
+    ctx.font = "34px Arial";
+
+    ctx.fillText(
+        "بمسرح كنيسة السيدة العذراء مريم",
+        width / 2,
+        1570
+    );
+
+    ctx.fillText(
+        "والبابا كيرلس السادس - باكوس",
+        width / 2,
+        1630
+    );
+
+
+    // ========================================
+    // الختام
+    // ========================================
+
+    ctx.fillStyle = "#e0f2fe";
+
+    ctx.font = "bold 44px Arial";
+
+    ctx.fillText(
+        "في انتظار تشريفكم ❤️",
+        width / 2,
+        1760
+    );
+
+
+    // ========================================
+    // Footer
+    // ========================================
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.font = "bold 34px Arial";
+
+    ctx.fillText(
+        "أسرة السمائيين",
+        width / 2,
+        1850
+    );
+}    // ==================================
     // Seats card
     // ==================================
 
