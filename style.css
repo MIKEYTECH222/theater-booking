@@ -1,4 +1,3 @@
-```css
 * {
     box-sizing: border-box;
     margin: 0;
@@ -27,28 +26,39 @@ body {
     color: #20242c;
 }
 
+
+/* =========================
+   CONTAINER
+========================= */
+
 .container {
     width: 100%;
     max-width: 1000px;
 
-    margin: auto;
+    margin: 0 auto;
 
     padding:
         20px 15px 60px;
 }
 
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero {
     text-align: center;
-    padding: 25px 10px 30px;
+
+    padding:
+        25px 10px 30px;
 }
 
 .badge {
     display: inline-block;
 
-    padding: 10px 20px;
+    padding:
+        10px 20px;
+
     margin-bottom: 15px;
 
     background: white;
@@ -56,33 +66,41 @@ body {
     border-radius: 50px;
 
     font-size: 15px;
+
     font-weight: bold;
 
     box-shadow:
-        0 5px 20px rgba(0,0,0,.08);
+        0 5px 20px
+        rgba(0, 0, 0, 0.08);
 }
 
 .hero h1 {
     font-size: 42px;
+
     line-height: 1.3;
 
     margin-bottom: 10px;
+
+    font-weight: 800;
 }
 
 .subtitle {
     font-size: 18px;
-    opacity: .7;
+
+    opacity: 0.7;
 }
 
 
-/* STAGE */
+/* =========================
+   STAGE
+========================= */
 
 .stage {
     width: 90%;
     max-width: 760px;
 
     margin:
-        0 auto 35px;
+        0 auto 30px;
 
     padding: 18px;
 
@@ -95,64 +113,89 @@ body {
     border-radius: 15px;
 
     font-size: 22px;
+
     font-weight: bold;
 
     box-shadow:
-        0 10px 25px rgba(0,0,0,.15);
+        0 10px 25px
+        rgba(0, 0, 0, 0.15);
 }
 
 
-/* SEATS */
+/* =========================
+   SEATS TITLE
+========================= */
 
 .seats-title {
     text-align: center;
 
-    font-size: 27px;
+    font-size: 28px;
+
+    margin-bottom: 8px;
+}
+
+.seats-info {
+    text-align: center;
 
     margin-bottom: 25px;
+
+    color: #666;
+
+    font-size: 15px;
 }
+
+
+/* =========================
+   SEATS CONTAINER
+========================= */
 
 .seats {
     width: 100%;
     max-width: 900px;
 
-    margin: auto;
+    margin: 0 auto;
 
     display: flex;
+
     flex-direction: column;
 
     gap: 14px;
-
-    overflow-x: auto;
 }
 
 
-/* ROW */
+/* =========================
+   SEAT ROW
+========================= */
 
 .seat-row {
     width: 100%;
 
-    min-width: 680px;
-
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     gap: 8px;
 }
 
 
-/* AISLE */
+/* =========================
+   AISLE
+========================= */
 
 .aisle {
     width: 38px;
 
-    flex-shrink: 0;
+    height: 55px;
+
+    flex: 0 0 38px;
 }
 
 
-/* SEAT */
+/* =========================
+   SEAT
+========================= */
 
 .seat {
     width: 55px;
@@ -171,10 +214,15 @@ body {
 
     cursor: pointer;
 
-    font-size: 15px;
+    font-size: 14px;
+
     font-weight: bold;
 
-    transition: .15s ease;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
 }
 
 .seat:hover:not(:disabled) {
@@ -182,7 +230,8 @@ body {
         translateY(-2px);
 
     box-shadow:
-        0 6px 15px rgba(0,0,0,.12);
+        0 6px 15px
+        rgba(0, 0, 0, 0.12);
 }
 
 
@@ -197,7 +246,7 @@ body {
 
     box-shadow:
         0 6px 18px
-        rgba(76,175,80,.30);
+        rgba(76, 175, 80, 0.30);
 }
 
 
@@ -211,38 +260,20 @@ body {
     border-color: #9da3ad;
 
     cursor: not-allowed;
+
+    opacity: 0.95;
 }
 
 
-/* SPECIAL AREA */
-
-.special-area {
-    width: 100%;
-
-    padding: 14px;
-
-    margin-bottom: 4px;
-
-    text-align: center;
-
-    background: #343944;
-
-    color: white;
-
-    border-radius: 14px;
-
-    font-size: 17px;
-
-    font-weight: bold;
-}
-
-
-/* LEGEND */
+/* =========================
+   LEGEND
+========================= */
 
 .legend {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     flex-wrap: wrap;
@@ -272,7 +303,7 @@ body {
     border-radius: 5px;
 
     border:
-        1px solid rgba(0,0,0,.12);
+        1px solid rgba(0, 0, 0, 0.12);
 }
 
 .available {
@@ -287,18 +318,16 @@ body {
     background: #9da3ad;
 }
 
-.locked-color {
-    background: #343944;
-}
 
-
-/* BOOKING */
+/* =========================
+   BOOKING BOX
+========================= */
 
 .booking-box {
     width: 100%;
     max-width: 600px;
 
-    margin: auto;
+    margin: 0 auto;
 
     padding:
         30px 25px;
@@ -310,7 +339,8 @@ body {
     text-align: center;
 
     box-shadow:
-        0 12px 35px rgba(0,0,0,.10);
+        0 12px 35px
+        rgba(0, 0, 0, 0.10);
 }
 
 .booking-box h2 {
@@ -323,7 +353,14 @@ body {
     margin-bottom: 20px;
 
     font-weight: bold;
+
+    color: #333;
 }
+
+
+/* =========================
+   INPUTS
+========================= */
 
 .booking-box input {
     width: 100%;
@@ -342,15 +379,29 @@ body {
 
     outline: none;
 
+    background: white;
+
     font-size: 16px;
+
+    text-align: right;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .booking-box input:focus {
     border-color: #4caf50;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(76, 175, 80, 0.12);
 }
 
 
-/* BUTTON */
+/* =========================
+   BOOK BUTTON
+========================= */
 
 #bookButton {
     width: 100%;
@@ -366,37 +417,56 @@ body {
     color: white;
 
     font-size: 18px;
+
     font-weight: bold;
 
     cursor: pointer;
 
-    transition: .2s;
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
-#bookButton:hover {
+#bookButton:hover:not(:disabled) {
     transform:
         translateY(-2px);
+
+    box-shadow:
+        0 7px 20px
+        rgba(76, 175, 80, 0.25);
+}
+
+#bookButton:active:not(:disabled) {
+    transform:
+        translateY(0);
 }
 
 #bookButton:disabled {
-    opacity: .6;
+    opacity: 0.6;
 
     cursor: wait;
 }
 
 
-/* MESSAGE */
+/* =========================
+   MESSAGE
+========================= */
 
 .booking-message {
     min-height: 24px;
 
     margin-top: 14px;
 
+    font-size: 15px;
+
     font-weight: bold;
 }
 
 
-/* INVITATION */
+/* =========================
+   INVITATION
+========================= */
 
 .invitation-section {
     display: none;
@@ -417,8 +487,14 @@ body {
     text-align: center;
 
     box-shadow:
-        0 12px 40px rgba(0,0,0,.12);
+        0 12px 40px
+        rgba(0, 0, 0, 0.12);
 }
+
+
+/* =========================
+   INVITATION HEADER
+========================= */
 
 .invitation-header {
     margin-bottom: 20px;
@@ -437,8 +513,15 @@ body {
 }
 
 .invitation-section p {
-    opacity: .7;
+    font-size: 16px;
+
+    opacity: 0.7;
 }
+
+
+/* =========================
+   CANVAS
+========================= */
 
 .canvas-wrapper {
     width: 100%;
@@ -462,8 +545,14 @@ body {
     border-radius: 16px;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,.18);
+        0 10px 30px
+        rgba(0, 0, 0, 0.18);
 }
+
+
+/* =========================
+   DOWNLOAD
+========================= */
 
 #downloadInvitation {
     width: 100%;
@@ -471,6 +560,9 @@ body {
     max-width: 540px;
 
     min-height: 54px;
+
+    padding:
+        12px 20px;
 
     border: none;
 
@@ -485,10 +577,25 @@ body {
     font-weight: bold;
 
     cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+#downloadInvitation:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(0, 0, 0, 0.18);
 }
 
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 700px) {
 
@@ -505,6 +612,13 @@ body {
         font-size: 16px;
     }
 
+    .badge {
+        font-size: 13px;
+
+        padding:
+            9px 14px;
+    }
+
     .stage {
         width: 95%;
 
@@ -517,33 +631,41 @@ body {
         font-size: 23px;
     }
 
+    /*
+       يسمح بعرض الصف كاملًا
+       مع إمكانية السحب أفقيًا.
+    */
+
     .seats {
         overflow-x: auto;
+        padding-bottom: 8px;
     }
 
     .seat-row {
-        min-width: 560px;
+        min-width: 700px;
 
         gap: 5px;
     }
 
     .seat {
-        width: 42px;
-        height: 42px;
+        width: 50px;
+        height: 50px;
 
-        flex: 0 0 42px;
+        flex: 0 0 50px;
 
-        border-radius: 9px;
+        border-radius: 10px;
 
         font-size: 12px;
     }
 
     .aisle {
-        width: 17px;
+        width: 25px;
+        flex: 0 0 25px;
+        height: 50px;
     }
 
     .legend {
-        gap: 10px;
+        gap: 11px;
 
         font-size: 12px;
     }
@@ -553,34 +675,46 @@ body {
             23px 15px;
     }
 
+    .booking-box h2 {
+        font-size: 23px;
+    }
+
     .invitation-section {
         padding:
             20px 10px 25px;
     }
+
+    .invitation-section h2 {
+        font-size: 24px;
+    }
+
+    #downloadInvitation {
+        font-size: 16px;
+    }
 }
 
 
-/* SMALL PHONES */
+/* =========================
+   SMALL PHONES
+========================= */
 
 @media (max-width: 400px) {
 
     .seat-row {
-        min-width: 470px;
-
-        gap: 3px;
+        min-width: 620px;
     }
 
     .seat {
-        width: 35px;
-        height: 35px;
+        width: 43px;
+        height: 43px;
 
-        flex: 0 0 35px;
+        flex: 0 0 43px;
 
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .aisle {
-        width: 10px;
+        width: 22px;
+        flex: 0 0 22px;
     }
 }
-```
