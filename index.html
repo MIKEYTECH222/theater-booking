@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حجز مقاعد حفل ختام الأنشطة</title>
     
+    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -85,9 +86,16 @@
         }
 
         .seats-title {
-            margin-bottom: 18px;
+            margin-bottom: 8px;
             font-size: 20px;
             color: #e5e7eb;
+        }
+
+        .limit-notice {
+            font-size: 14px;
+            color: #f59e0b;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
         /* Seats Container */
@@ -259,7 +267,7 @@
         /* Invitation Section */
         .invitation-section {
             display: none;
-            max-width: 530px;
+            max-width: 600px;
             margin: 50px auto;
             padding: 28px 20px;
             border-radius: 24px;
@@ -273,7 +281,7 @@
 
         #invitationCanvas {
             width: 100%;
-            max-width: 450px;
+            max-width: 550px;
             height: auto;
             display: block;
             margin: 0 auto 20px;
@@ -331,7 +339,9 @@
         </div>
 
         <h2 class="seats-title">اختر الكراسي الخاصة بك:</h2>
+        <p class="limit-notice">⚠️ الحد الأقصى للحجز: مقعدين فقط لكل رقم هاتف</p>
 
+        <!-- مكان توليد الكراسي -->
         <div class="seats" id="seatsContainer"></div>
 
         <div class="legend">
@@ -362,15 +372,17 @@
     </div>
 
     <script>
-        // إجبار الكود على التشغيل المباشر عند استكمال تحميل الصفحة
         document.addEventListener("DOMContentLoaded", function () {
             
             const TOTAL_ROWS = 12;
             const SEATS_PER_ROW = 10;
             const LOCKED_SEATS = ["A1", "A2", "A3", "A4", "A5"];
+            const MAX_SEATS_PER_PHONE = 2; // أقصى حد للمقاعد لكل رقم تلفون
 
             let selectedSeats = [];
             let reservedSeats = [];
+            // كائن لتخزين عدد المقاعد المحجوزة لكل رقم هاتف { "0123456789": 2 }
+            let phoneBookings = {};
 
             const seatsContainer = document.getElementById("seatsContainer");
             const selectedSeatText = document.getElementById("selectedSeat");
@@ -381,7 +393,7 @@
             const invitationCanvas = document.getElementById("invitationCanvas");
             const downloadBtn = document.getElementById("downloadInvitation");
 
-            // 1. دالة رسم الكراسي المباشرة
+            // 1. دالة رسم الكراسي
             function renderSeats() {
                 if (!seatsContainer) return;
                 seatsContainer.innerHTML = "";
@@ -421,12 +433,16 @@
                 }
             }
 
-            // 2. دالة التحديد
+            // 2. دالة تحديد الكراسي
             function toggleSeatSelection(seatId, seatBtn) {
                 if (selectedSeats.includes(seatId)) {
                     selectedSeats = selectedSeats.filter(id => id !== seatId);
                     seatBtn.classList.remove("selected");
                 } else {
+                    if (selectedSeats.length >= MAX_SEATS_PER_PHONE) {
+                        alert(`عذراً، لا يمكنك تحديد أكثر من ${MAX_SEATS_PER_PHONE} مقاعد في الحجز الواحدة.`);
+                        return;
+                    }
                     selectedSeats.push(seatId);
                     seatBtn.classList.add("selected");
                 }
@@ -435,7 +451,7 @@
 
             function updateUI() {
                 if (selectedSeats.length > 0) {
-                    selectedSeatText.innerText = `المقاعد المحددة: ${selectedSeats.join(" ، ")}`;
+                    selectedSeatText.innerText = `المقاعد المحددة (${selectedSeats.length}/${MAX_SEATS_PER_PHONE}): ${selectedSeats.join(" ، ")}`;
                 } else {
                     selectedSeatText.innerText = "لم يتم اختيار أي مقعد بعد";
                 }
@@ -453,10 +469,29 @@
             userNameInput.addEventListener("input", validateForm);
             userPhoneInput.addEventListener("input", validateForm);
 
-            // 3. تأكيد الحجز
+            // 3. تأكيد الحجز والتحقق من رقم الهاتف
             bookButton.addEventListener("click", function () {
                 const name = userNameInput.value.trim();
-                if (!name || selectedSeats.length === 0) return;
+                const phone = userPhoneInput.value.trim();
+
+                if (!name || !phone || selectedSeats.length === 0) return;
+
+                // التثبت من كمية المقاعد السابقة التي حجزها هذا الرقم
+                const previousBookedCount = phoneBookings[phone] || 0;
+                const newTotal = previousBookedCount + selectedSeats.length;
+
+                if (newTotal > MAX_SEATS_PER_PHONE) {
+                    const remainingAllowed = MAX_SEATS_PER_PHONE - previousBookedCount;
+                    if (remainingAllowed <= 0) {
+                        alert(`عذراً، رقم الهاتف (${phone}) وصل للحد الأقصى للحجز (${MAX_SEATS_PER_PHONE} مقاعد). لا يمكنك حجز مقاعد أخرى بهذا الرقم.`);
+                    } else {
+                        alert(`عذراً، لقد حجزت سابقاً ${previousBookedCount} مقعد بهذا الرقم. يمكنك حجز ${remainingAllowed} مقعد فقط إضافي.`);
+                    }
+                    return;
+                }
+
+                // تسجيل الحجز لرقم الهاتف
+                phoneBookings[phone] = newTotal;
 
                 createInvitationCard(name, selectedSeats);
                 
@@ -472,13 +507,13 @@
                 bookButton.disabled = true;
             });
 
-            // 4. رسم الدعوة بالـ Canvas
+            // 4. رسم بطاقة الدعوة بنفس تصميم الصورة المرفقة
             function createInvitationCard(name, seats) {
                 if (!invitationCanvas) return;
                 const ctx = invitationCanvas.getContext("2d");
 
                 const bgImage = new Image();
-                bgImage.src = "Artboard 1.png"; // اسم ملف صورة الدعوة
+                bgImage.src = "Artboard 1.png"; 
 
                 bgImage.onload = () => {
                     invitationCanvas.width = bgImage.width;
@@ -487,55 +522,42 @@
                     const w = invitationCanvas.width;
                     const h = invitationCanvas.height;
 
+                    // رسم الخلفية
                     ctx.drawImage(bgImage, 0, 0, w, h);
 
-                    const boxWidth = w * 0.82;
-                    const boxHeight = 180;
-                    const boxX = (w - boxWidth) / 2;
-                    const boxY = h - 230;
-
-                    ctx.fillStyle = "rgba(10, 15, 30, 0.88)";
-                    if (ctx.roundRect) {
-                        ctx.beginPath();
-                        ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 20);
-                        ctx.fill();
-                    } else {
-                        ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
-                    }
-
-                    ctx.strokeStyle = "#f59e0b";
-                    ctx.lineWidth = 4;
-                    ctx.stroke();
-
+                    // كتابة الاسم
                     ctx.textAlign = "center";
-                    ctx.fillStyle = "#ffffff";
-                    ctx.font = "bold 42px Tahoma, Arial";
+                    ctx.fillStyle = "#ffca28"; 
+                    ctx.font = "bold 52px Tahoma, Arial";
                     let displayName = "الاسم: " + name;
-                    if (displayName.length > 32) displayName = displayName.substring(0, 32) + "...";
-                    ctx.fillText(displayName, w / 2, boxY + 65);
+                    if (displayName.length > 30) displayName = displayName.substring(0, 30) + "...";
+                    ctx.fillText(displayName, w / 2, h * 0.53);
 
-                    ctx.fillStyle = "#f59e0b";
-                    ctx.font = "bold 46px Tahoma, Arial";
-                    ctx.fillText("المقاعد المحجوزة: " + seats.join(" - "), w / 2, boxY + 135);
+                    // كتابة أرقام المقاعد
+                    ctx.fillStyle = "#ffffff";
+                    ctx.font = "bold 58px Tahoma, Arial";
+                    const seatLabel = seats.length > 1 ? "رقم الكرسيين: " : "رقم الكرسي: ";
+                    ctx.fillText(seatLabel + seats.join(" - "), w / 2, h * 0.61);
                 };
 
-                // حالة عدم تحميل الصورة، ترسم خلفية احتياطية
                 bgImage.onerror = () => {
-                    invitationCanvas.width = 800;
-                    invitationCanvas.height = 500;
-                    ctx.fillStyle = "#0f111a";
-                    ctx.fillRect(0, 0, 800, 500);
+                    invitationCanvas.width = 1000;
+                    invitationCanvas.height = 560;
+                    ctx.fillStyle = "#030a21";
+                    ctx.fillRect(0, 0, 1000, 560);
                     ctx.textAlign = "center";
+                    ctx.fillStyle = "#ffca28";
+                    ctx.font = "bold 36px Tahoma";
+                    ctx.fillText("كنيسة العذراء مريم والبابا كيرلس السادس باغاجان", 500, 120);
+                    ctx.fillText("حفل ختام الأنشطة 2026", 500, 200);
                     ctx.fillStyle = "#ffffff";
-                    ctx.font = "bold 30px Arial";
-                    ctx.fillText("دعوة حضور - كنيسة العذراء مريم والبابا كيرلس", 400, 150);
-                    ctx.fillText("الاسم: " + name, 400, 250);
-                    ctx.fillStyle = "#f59e0b";
-                    ctx.fillText("المقاعد: " + seats.join(" - "), 400, 330);
+                    ctx.fillText("الاسم: " + name, 500, 320);
+                    ctx.fillStyle = "#ffca28";
+                    ctx.fillText("المقاعد المحجوزة: " + seats.join(" - "), 500, 420);
                 };
             }
 
-            // 5. تحميل الصورة
+            // 5. تحميل بطاقة الدعوة
             downloadBtn.addEventListener("click", function () {
                 const link = document.createElement("a");
                 link.download = `دعوة_حضور.png`;
@@ -543,7 +565,7 @@
                 link.click();
             });
 
-            // تشغيل دالة الرسم فوراً عند فتح الصفحة
+            // بدء التشغيل
             renderSeats();
         });
     </script>
