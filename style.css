@@ -1,256 +1,279 @@
+```css
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
-    font-family: Arial, Tahoma, sans-serif;
+html {
+    scroll-behavior: smooth;
+}
 
+body {
     min-height: 100vh;
 
+    font-family:
+        Arial,
+        Tahoma,
+        sans-serif;
+
     background:
-        radial-gradient(
-            circle at top left,
-            #dff6ff 0%,
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            #fce7ff 0%,
-            transparent 32%
-        ),
-        #f8fbff;
+        linear-gradient(
+            135deg,
+            #f5f7fb,
+            #e8ecf5
+        );
 
-    color: #172033;
-
-    padding: 30px 10px 50px;
+    color: #20242c;
 }
 
 
 /* =========================
-   Container
+   CONTAINER
 ========================= */
 
 .container {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1000px;
 
     margin: auto;
 
-    text-align: center;
+    padding:
+        20px 15px 60px;
 }
 
 
 /* =========================
-   Header
+   HERO
 ========================= */
 
 .hero {
-    margin-bottom: 35px;
+    text-align: center;
+
+    padding:
+        25px 10px 30px;
 }
 
 .badge {
     display: inline-block;
 
-    padding: 9px 18px;
+    padding:
+        10px 20px;
 
-    border-radius: 999px;
+    margin-bottom: 15px;
 
-    background: #ffffff;
+    background: white;
 
-    color: #5b5cf0;
+    border-radius: 50px;
 
-    border: 1px solid #e6e8ff;
-
-    font-size: 14px;
+    font-size: 15px;
 
     font-weight: bold;
 
-    margin-bottom: 14px;
-
     box-shadow:
-        0 8px 25px rgba(80, 90, 180, 0.08);
+        0 5px 20px rgba(0,0,0,.08);
 }
 
-h1 {
+.hero h1 {
     font-size: 42px;
 
-    margin-bottom: 8px;
+    line-height: 1.3;
+
+    margin-bottom: 10px;
 }
 
 .subtitle {
-    color: #6b7280;
+    font-size: 18px;
 
-    font-size: 19px;
+    opacity: .7;
 }
 
 
 /* =========================
-   Stage
+   STAGE
 ========================= */
 
 .stage {
-    width: 78%;
+    width: 90%;
     max-width: 760px;
 
-    margin: 0 auto 38px;
+    margin:
+        0 auto 35px;
 
     padding: 18px;
 
-    border-radius: 0 0 28px 28px;
+    text-align: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #8b5cf6,
-            #6366f1
-        );
+    background: #20242c;
 
     color: white;
 
-    font-size: 23px;
+    border-radius: 15px;
+
+    font-size: 22px;
 
     font-weight: bold;
 
     box-shadow:
-        0 15px 35px rgba(99, 102, 241, 0.25);
+        0 10px 25px rgba(0,0,0,.15);
 }
 
 
 /* =========================
-   Seats title
+   SEATS TITLE
 ========================= */
 
 .seats-title {
-    margin-bottom: 18px;
+    text-align: center;
 
-    font-size: 22px;
+    font-size: 27px;
 
-    color: #374151;
+    margin-bottom: 25px;
 }
 
 
 /* =========================
-   Seats container
+   SEATS
 ========================= */
 
 .seats {
     width: 100%;
+    max-width: 900px;
+
+    margin: auto;
 
     display: flex;
 
     flex-direction: column;
-
-    align-items: center;
 
     gap: 14px;
 }
 
 
 /* =========================
-   Seat row
+   ROW
 ========================= */
 
-.row {
-    width: 100%;
-
+.seat-row {
     display: flex;
 
     justify-content: center;
 
     align-items: center;
 
-    gap: 7px;
+    gap: 9px;
+
+    width: 100%;
 }
 
 
 /* =========================
-   Middle aisle
+   AISLE
 ========================= */
 
 .aisle {
-    width: 55px;
+    width: 38px;
 
-    min-width: 55px;
-
-    height: 54px;
+    flex-shrink: 0;
 }
 
 
 /* =========================
-   Seat
+   SEAT
 ========================= */
 
 .seat {
-    width: 58px;
+    width: 55px;
+    height: 55px;
 
-    height: 54px;
+    border:
+        2px solid #d5d9e1;
 
-    border: none;
+    border-radius: 12px;
 
-    border-radius:
-        14px 14px 8px 8px;
+    background: white;
 
-    background: #b8f7cf;
-
-    color: #176b3a;
-
-    font-size: 13px;
-
-    font-weight: bold;
+    color: #20242c;
 
     cursor: pointer;
 
+    font-size: 15px;
+
+    font-weight: bold;
+
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
 }
-
-
-/* Hover */
 
 .seat:hover:not(:disabled) {
     transform:
-        translateY(-4px)
-        scale(1.03);
+        translateY(-2px);
 
     box-shadow:
-        0 8px 18px rgba(34, 197, 94, 0.16);
+        0 6px 15px rgba(0,0,0,.12);
 }
 
 
-/* Selected */
+/* SELECTED */
 
 .seat.selected {
-    background: #93c5fd;
+    background: #4caf50;
 
-    color: #164e82;
+    color: white;
 
-    transform:
-        translateY(-4px);
+    border-color: #4caf50;
 
     box-shadow:
-        0 9px 20px rgba(59, 130, 246, 0.18);
+        0 6px 18px
+        rgba(76,175,80,.30);
 }
 
 
-/* Reserved */
+/* RESERVED */
 
 .seat.reserved {
-    background: #fecaca;
+    background: #9da3ad;
 
-    color: #991b1b;
+    color: white;
+
+    border-color: #9da3ad;
 
     cursor: not-allowed;
-
-    opacity: 0.82;
 }
 
 
 /* =========================
-   Legend
+   SPECIAL AREA
+========================= */
+
+.special-area {
+    width: 100%;
+
+    max-width: 900px;
+
+    margin:
+        0 auto 12px;
+
+    padding: 15px;
+
+    text-align: center;
+
+    background: #343944;
+
+    color: white;
+
+    border-radius: 14px;
+
+    font-weight: bold;
+
+    font-size: 17px;
+}
+
+
+/* =========================
+   LEGEND
 ========================= */
 
 .legend {
@@ -262,9 +285,12 @@ h1 {
 
     flex-wrap: wrap;
 
-    gap: 16px 25px;
+    gap: 18px;
 
-    margin: 35px 0;
+    margin:
+        25px auto 35px;
+
+    font-size: 14px;
 }
 
 .legend span {
@@ -273,314 +299,394 @@ h1 {
     align-items: center;
 
     gap: 7px;
-
-    color: #4b5563;
-
-    font-size: 14px;
 }
 
 .legend i {
-    width: 15px;
-
-    height: 15px;
+    width: 18px;
+    height: 18px;
 
     display: inline-block;
 
     border-radius: 5px;
+
+    border:
+        1px solid rgba(0,0,0,.12);
 }
 
 .available {
-    background: #b8f7cf;
+    background: white;
 }
 
 .selected-color {
-    background: #93c5fd;
+    background: #4caf50;
 }
 
-.reserved-color {
-    background: #fecaca;
+.reserved {
+    background: #9da3ad;
+}
+
+.locked-color {
+    background: #343944;
 }
 
 
 /* =========================
-   Booking box
+   BOOKING BOX
 ========================= */
 
 .booking-box {
-    max-width: 520px;
+    width: 100%;
+    max-width: 600px;
 
-    margin: 25px auto;
+    margin: auto;
 
-    padding: 28px;
+    padding:
+        30px 25px;
 
-    border-radius: 24px;
+    background: white;
 
-    background:
-        rgba(255, 255, 255, 0.94);
+    border-radius: 20px;
 
-    border: 1px solid #edf0f7;
+    text-align: center;
 
     box-shadow:
-        0 15px 45px rgba(80, 90, 180, 0.08);
+        0 12px 35px rgba(0,0,0,.10);
 }
 
 .booking-box h2 {
-    margin-bottom: 12px;
+    font-size: 26px;
+
+    margin-bottom: 15px;
 }
 
 #selectedSeat {
-    min-height: 28px;
-
     margin-bottom: 20px;
 
-    color: #6b7280;
-
-    line-height: 1.8;
+    font-weight: bold;
 }
 
 
 /* =========================
-   Inputs
+   INPUTS
 ========================= */
 
-input {
+.booking-box input {
     width: 100%;
 
-    padding: 15px;
+    height: 52px;
 
-    margin-bottom: 12px;
+    margin-bottom: 13px;
 
-    border: 1px solid #e5e7eb;
+    padding:
+        0 16px;
 
-    border-radius: 13px;
+    border:
+        2px solid #e0e3e9;
 
-    background: #f9fbff;
+    border-radius: 12px;
 
-    color: #172033;
+    outline: none;
 
     font-size: 16px;
 
-    outline: none;
+    text-align: right;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
 }
 
-input:focus {
-    border-color: #93c5fd;
+.booking-box input:focus {
+    border-color: #4caf50;
 
     box-shadow:
-        0 0 0 4px rgba(147, 197, 253, 0.15);
-}
-
-input::placeholder {
-    color: #9ca3af;
+        0 0 0 3px
+        rgba(76,175,80,.12);
 }
 
 
 /* =========================
-   Book button
+   BOOK BUTTON
 ========================= */
 
 #bookButton {
     width: 100%;
 
-    padding: 15px;
+    height: 54px;
 
     border: none;
 
-    border-radius: 13px;
+    border-radius: 12px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #6366f1,
-            #8b5cf6
-        );
+    background: #4caf50;
 
     color: white;
 
-    font-size: 17px;
+    font-size: 18px;
 
     font-weight: bold;
 
     cursor: pointer;
 
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        opacity 0.2s ease;
+    transition: .2s;
 }
 
-#bookButton:hover:not(:disabled) {
+#bookButton:hover {
     transform:
         translateY(-2px);
 
     box-shadow:
-        0 10px 25px rgba(99, 102, 241, 0.20);
+        0 7px 20px
+        rgba(76,175,80,.25);
 }
 
 #bookButton:disabled {
-    opacity: 0.6;
+    opacity: .6;
 
-    cursor: not-allowed;
+    cursor: wait;
+
+    transform: none;
+
+    box-shadow: none;
 }
 
 
 /* =========================
-   Invitation
+   MESSAGE
+========================= */
+
+.booking-message {
+    min-height: 24px;
+
+    margin-top: 14px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   INVITATION
 ========================= */
 
 .invitation-section {
     display: none;
 
-    max-width: 530px;
+    width: 100%;
+    max-width: 620px;
 
-    margin: 50px auto;
+    margin:
+        45px auto 0;
 
-    padding: 28px 20px;
+    padding:
+        25px 15px 30px;
 
-    border-radius: 24px;
+    background: white;
 
-    background: #ffffff;
+    border-radius: 22px;
 
-    border: 1px solid #edf0f7;
+    text-align: center;
 
     box-shadow:
-        0 15px 45px rgba(80, 90, 180, 0.08);
+        0 12px 40px
+        rgba(0,0,0,.12);
+}
+
+.invitation-header {
+    margin-bottom: 20px;
+}
+
+.invitation-icon {
+    font-size: 38px;
+
+    margin-bottom: 5px;
 }
 
 .invitation-section h2 {
-    margin-bottom: 8px;
+    font-size: 28px;
+
+    margin-bottom: 7px;
 }
 
 .invitation-section p {
-    color: #6b7280;
+    opacity: .7;
+}
+
+
+/* =========================
+   CANVAS
+========================= */
+
+.canvas-wrapper {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
 
     margin-bottom: 20px;
 }
 
 #invitationCanvas {
+    display: block;
+
     width: 100%;
 
-    max-width: 360px;
+    max-width: 540px;
 
     height: auto;
 
-    display: block;
-
-    margin: 0 auto 20px;
-
-    border-radius: 20px;
+    border-radius: 16px;
 
     box-shadow:
-        0 12px 30px rgba(80, 90, 180, 0.15);
+        0 10px 30px
+        rgba(0,0,0,.18);
 }
+
+
+/* =========================
+   DOWNLOAD
+========================= */
 
 #downloadInvitation {
     width: 100%;
 
-    padding: 15px;
+    max-width: 540px;
+
+    min-height: 54px;
 
     border: none;
 
     border-radius: 13px;
 
-    background: #22c55e;
+    background: #20242c;
 
     color: white;
 
-    font-size: 17px;
+    font-size: 18px;
 
     font-weight: bold;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition: .2s;
 }
 
 #downloadInvitation:hover {
-    background: #16a34a;
-
     transform:
         translateY(-2px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(0,0,0,.18);
 }
 
 
 /* =========================
-   Mobile
+   MOBILE
 ========================= */
 
-@media (max-width: 760px) {
+@media (max-width: 700px) {
 
-    body {
+    .container {
         padding:
-            20px 5px 40px;
+            15px 8px 45px;
     }
 
-    h1 {
-        font-size: 30px;
+    .hero h1 {
+        font-size: 31px;
     }
 
     .subtitle {
         font-size: 16px;
     }
 
-    .stage {
-        width: 92%;
+    .badge {
+        font-size: 13px;
 
-        font-size: 20px;
-
-        margin-bottom: 28px;
+        padding:
+            9px 14px;
     }
 
-    .row {
-        gap: 4px;
+    .stage {
+        width: 95%;
+
+        padding: 15px;
+
+        font-size: 18px;
+    }
+
+    .seats-title {
+        font-size: 23px;
+    }
+
+    .seat-row {
+        gap: 5px;
     }
 
     .seat {
-        width: 43px;
+        width: 42px;
+        height: 42px;
 
-        height: 43px;
+        border-radius: 9px;
 
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .aisle {
-        width: 24px;
+        width: 17px;
+    }
 
-        min-width: 24px;
+    .legend {
+        gap: 10px;
 
-        height: 43px;
+        font-size: 12px;
+    }
+
+    .booking-box {
+        padding:
+            23px 15px;
+    }
+
+    .booking-box h2 {
+        font-size: 23px;
+    }
+
+    .invitation-section {
+        margin-top: 35px;
+
+        padding:
+            20px 10px 25px;
+    }
+
+    .invitation-section h2 {
+        font-size: 24px;
+    }
+
+    #downloadInvitation {
+        font-size: 16px;
     }
 }
 
 
 /* =========================
-   Small phones
+   VERY SMALL
 ========================= */
 
-@media (max-width: 470px) {
-
-    .row {
-        gap: 3px;
-    }
+@media (max-width: 400px) {
 
     .seat {
-        width: 31px;
+        width: 35px;
+        height: 35px;
 
-        height: 38px;
+        font-size: 10px;
+    }
 
-        font-size: 8px;
+    .seat-row {
+        gap: 4px;
     }
 
     .aisle {
-        width: 15px;
-
-        min-width: 15px;
-
-        height: 38px;
-    }
-
-    .booking-box {
-        padding:
-            20px 15px;
+        width: 11px;
     }
 }
+```
