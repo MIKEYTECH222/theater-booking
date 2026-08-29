@@ -20,17 +20,12 @@ body {
     background:
         linear-gradient(
             135deg,
-            #f5f7fb,
+            #f4f6fb,
             #e8ecf5
         );
 
     color: #20242c;
 }
-
-
-/* =========================
-   CONTAINER
-========================= */
 
 .container {
     width: 100%;
@@ -115,12 +110,13 @@ body {
     font-weight: bold;
 
     box-shadow:
-        0 10px 25px rgba(0,0,0,.15);
+        0 10px 25px
+        rgba(0,0,0,.15);
 }
 
 
 /* =========================
-   SEATS TITLE
+   SEATS
 ========================= */
 
 .seats-title {
@@ -130,11 +126,6 @@ body {
 
     margin-bottom: 25px;
 }
-
-
-/* =========================
-   SEATS
-========================= */
 
 .seats {
     width: 100%;
@@ -149,27 +140,17 @@ body {
     gap: 14px;
 }
 
-
-/* =========================
-   ROW
-========================= */
-
 .seat-row {
+    width: 100%;
+
     display: flex;
 
     justify-content: center;
 
     align-items: center;
 
-    gap: 9px;
-
-    width: 100%;
+    gap: 8px;
 }
-
-
-/* =========================
-   AISLE
-========================= */
 
 .aisle {
     width: 38px;
@@ -202,9 +183,7 @@ body {
     font-weight: bold;
 
     transition:
-        transform .15s ease,
-        box-shadow .15s ease,
-        background .15s ease;
+        .15s ease;
 }
 
 .seat:hover:not(:disabled) {
@@ -212,7 +191,8 @@ body {
         translateY(-2px);
 
     box-shadow:
-        0 6px 15px rgba(0,0,0,.12);
+        0 6px 15px
+        rgba(0,0,0,.12);
 }
 
 
@@ -244,19 +224,14 @@ body {
 }
 
 
-/* =========================
-   SPECIAL AREA
-========================= */
+/* SPECIAL */
 
 .special-area {
     width: 100%;
 
-    max-width: 900px;
+    padding: 14px;
 
-    margin:
-        0 auto 12px;
-
-    padding: 15px;
+    margin-bottom: 4px;
 
     text-align: center;
 
@@ -266,9 +241,9 @@ body {
 
     border-radius: 14px;
 
-    font-weight: bold;
-
     font-size: 17px;
+
+    font-weight: bold;
 }
 
 
@@ -331,7 +306,7 @@ body {
 
 
 /* =========================
-   BOOKING BOX
+   BOOKING
 ========================= */
 
 .booking-box {
@@ -350,7 +325,8 @@ body {
     text-align: center;
 
     box-shadow:
-        0 12px 35px rgba(0,0,0,.10);
+        0 12px 35px
+        rgba(0,0,0,.10);
 }
 
 .booking-box h2 {
@@ -364,11 +340,6 @@ body {
 
     font-weight: bold;
 }
-
-
-/* =========================
-   INPUTS
-========================= */
 
 .booking-box input {
     width: 100%;
@@ -388,26 +359,14 @@ body {
     outline: none;
 
     font-size: 16px;
-
-    text-align: right;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease;
 }
 
 .booking-box input:focus {
     border-color: #4caf50;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(76,175,80,.12);
 }
 
 
-/* =========================
-   BOOK BUTTON
-========================= */
+/* BUTTON */
 
 #bookButton {
     width: 100%;
@@ -434,26 +393,13 @@ body {
 #bookButton:hover {
     transform:
         translateY(-2px);
-
-    box-shadow:
-        0 7px 20px
-        rgba(76,175,80,.25);
 }
 
 #bookButton:disabled {
     opacity: .6;
 
     cursor: wait;
-
-    transform: none;
-
-    box-shadow: none;
 }
-
-
-/* =========================
-   MESSAGE
-========================= */
 
 .booking-message {
     min-height: 24px;
@@ -511,11 +457,6 @@ body {
     opacity: .7;
 }
 
-
-/* =========================
-   CANVAS
-========================= */
-
 .canvas-wrapper {
     width: 100%;
 
@@ -542,11 +483,6 @@ body {
         rgba(0,0,0,.18);
 }
 
-
-/* =========================
-   DOWNLOAD
-========================= */
-
 #downloadInvitation {
     width: 100%;
 
@@ -567,17 +503,6 @@ body {
     font-weight: bold;
 
     cursor: pointer;
-
-    transition: .2s;
-}
-
-#downloadInvitation:hover {
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 8px 22px
-        rgba(0,0,0,.18);
 }
 
 
@@ -589,7 +514,7 @@ body {
 
     .container {
         padding:
-            15px 8px 45px;
+            15px 7px 45px;
     }
 
     .hero h1 {
@@ -600,19 +525,12 @@ body {
         font-size: 16px;
     }
 
-    .badge {
-        font-size: 13px;
-
-        padding:
-            9px 14px;
-    }
-
     .stage {
         width: 95%;
 
-        padding: 15px;
-
         font-size: 18px;
+
+        padding: 15px;
     }
 
     .seats-title {
@@ -647,29 +565,15 @@ body {
             23px 15px;
     }
 
-    .booking-box h2 {
-        font-size: 23px;
-    }
-
     .invitation-section {
-        margin-top: 35px;
-
         padding:
             20px 10px 25px;
-    }
-
-    .invitation-section h2 {
-        font-size: 24px;
-    }
-
-    #downloadInvitation {
-        font-size: 16px;
     }
 }
 
 
 /* =========================
-   VERY SMALL
+   SMALL PHONES
 ========================= */
 
 @media (max-width: 400px) {
@@ -682,11 +586,11 @@ body {
     }
 
     .seat-row {
-        gap: 4px;
+        gap: 3px;
     }
 
     .aisle {
-        width: 11px;
+        width: 10px;
     }
 }
 ```
