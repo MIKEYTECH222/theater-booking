@@ -4,8 +4,318 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حجز مقاعد حفل ختام الأنشطة</title>
-    <link rel="stylesheet" href="style.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Tahoma, sans-serif;
+            direction: rtl;
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    #1e1e38 0%,
+                    transparent 40%
+                ),
+                radial-gradient(
+                    circle at bottom left,
+                    #171926 0%,
+                    transparent 40%
+                ),
+                #0f111a;
+            color: #f3f4f6;
+            padding: 30px 10px 50px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            text-align: center;
+        }
+
+        /* Header */
+        .hero {
+            margin-bottom: 35px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 9px 18px;
+            border-radius: 999px;
+            background: #1e2338;
+            color: #818cf8;
+            border: 1px solid #2e3558;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 38px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            color: #9ca3af;
+            font-size: 18px;
+        }
+
+        /* Stage */
+        .stage {
+            width: 78%;
+            max-width: 760px;
+            margin: 0 auto 38px;
+            padding: 18px;
+            border-radius: 0 0 28px 28px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.4);
+        }
+
+        .seats-title {
+            margin-bottom: 18px;
+            font-size: 20px;
+            color: #e5e7eb;
+        }
+
+        /* Seats Container */
+        .seats {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .row {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .aisle {
+            width: 55px;
+            min-width: 55px;
+            height: 54px;
+        }
+
+        /* Seat Styling */
+        .seat {
+            width: 58px;
+            height: 54px;
+            border: none;
+            border-radius: 14px 14px 8px 8px;
+            background: #054625;
+            color: #4ade80;
+            border: 1px solid #166534;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .seat:hover:not(:disabled) {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 18px rgba(34, 197, 94, 0.25);
+            background: #047857;
+            color: #ffffff;
+        }
+
+        .seat.selected {
+            background: #1d4ed8;
+            color: #ffffff;
+            border-color: #3b82f6;
+            transform: translateY(-4px);
+            box-shadow: 0 9px 20px rgba(59, 130, 246, 0.35);
+        }
+
+        .seat.reserved {
+            background: #450a0a;
+            color: #fca5a5;
+            border: 1px solid #7f1d1d;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .seat.locked {
+            background: #3b0764;
+            color: #d8b4fe;
+            border: 1px solid #6b21a8;
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px 25px;
+            margin: 35px 0;
+        }
+
+        .legend span {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        .legend i {
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        .available { background: #054625; border: 1px solid #166534; }
+        .selected-color { background: #1d4ed8; border: 1px solid #3b82f6; }
+        .reserved-color { background: #450a0a; border: 1px solid #7f1d1d; }
+        .locked-color { background: #3b0764; border: 1px solid #6b21a8; }
+
+        /* Booking Form */
+        .booking-box {
+            max-width: 520px;
+            margin: 25px auto;
+            padding: 28px;
+            border-radius: 24px;
+            background: #181b2a;
+            border: 1px solid #282d45;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+        }
+
+        .booking-box h2 {
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        #selectedSeat {
+            min-height: 28px;
+            margin-bottom: 20px;
+            color: #9ca3af;
+            line-height: 1.8;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid #2e3558;
+            border-radius: 13px;
+            background: #0f111a;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        }
+
+        input::placeholder {
+            color: #6b7280;
+        }
+
+        #bookButton {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        #bookButton:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        #bookButton:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Invitation Section */
+        .invitation-section {
+            display: none;
+            max-width: 530px;
+            margin: 50px auto;
+            padding: 28px 20px;
+            border-radius: 24px;
+            background: #181b2a;
+            border: 1px solid #282d45;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+        }
+
+        .invitation-section h2 { margin-bottom: 8px; color: #ffffff; }
+        .invitation-section p { color: #9ca3af; margin-bottom: 20px; }
+
+        #invitationCanvas {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        #downloadInvitation {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 13px;
+            background: #16a34a;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        #downloadInvitation:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 760px) {
+            body { padding: 20px 5px 40px; }
+            h1 { font-size: 30px; }
+            .subtitle { font-size: 16px; }
+            .stage { width: 92%; font-size: 18px; margin-bottom: 28px; }
+            .row { gap: 4px; }
+            .seat { width: 43px; height: 43px; font-size: 9px; }
+            .aisle { width: 24px; min-width: 24px; height: 43px; }
+        }
+
+        @media (max-width: 470px) {
+            .row { gap: 3px; }
+            .seat { width: 31px; height: 38px; font-size: 8px; }
+            .aisle { width: 15px; min-width: 15px; height: 38px; }
+            .booking-box { padding: 20px 15px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -22,14 +332,13 @@
 
         <h2 class="seats-title">اختر الكراسي الخاصة بك:</h2>
 
-        <div class="seats" id="seatsContainer">
-            </div>
+        <div class="seats" id="seatsContainer"></div>
 
         <div class="legend">
             <span><i class="available"></i> متاح</span>
             <span><i class="selected-color"></i> محدد</span>
             <span><i class="reserved-color"></i> محجوز</span>
-            <span><i class="locked-color"></i> مخصص (آباء كاهنة/ضيوف)</span>
+            <span><i class="locked-color"></i> مخصص</span>
         </div>
 
         <div class="booking-box">
@@ -52,6 +361,191 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // إجبار الكود على التشغيل المباشر عند استكمال تحميل الصفحة
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            const TOTAL_ROWS = 12;
+            const SEATS_PER_ROW = 10;
+            const LOCKED_SEATS = ["A1", "A2", "A3", "A4", "A5"];
+
+            let selectedSeats = [];
+            let reservedSeats = [];
+
+            const seatsContainer = document.getElementById("seatsContainer");
+            const selectedSeatText = document.getElementById("selectedSeat");
+            const userNameInput = document.getElementById("userName");
+            const userPhoneInput = document.getElementById("userPhone");
+            const bookButton = document.getElementById("bookButton");
+            const invitationSection = document.getElementById("invitationSection");
+            const invitationCanvas = document.getElementById("invitationCanvas");
+            const downloadBtn = document.getElementById("downloadInvitation");
+
+            // 1. دالة رسم الكراسي المباشرة
+            function renderSeats() {
+                if (!seatsContainer) return;
+                seatsContainer.innerHTML = "";
+                
+                const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+
+                for (let i = 0; i < TOTAL_ROWS; i++) {
+                    const rowLetter = rowLetters[i];
+                    const rowDiv = document.createElement("div");
+                    rowDiv.classList.add("row");
+
+                    for (let j = 1; j <= SEATS_PER_ROW; j++) {
+                        if (j === 6) {
+                            const aisle = document.createElement("div");
+                            aisle.classList.add("aisle");
+                            rowDiv.appendChild(aisle);
+                        }
+
+                        const seatId = `${rowLetter}${j}`;
+                        const seatBtn = document.createElement("button");
+                        seatBtn.classList.add("seat");
+                        seatBtn.innerText = seatId;
+
+                        if (LOCKED_SEATS.includes(seatId)) {
+                            seatBtn.classList.add("locked");
+                            seatBtn.disabled = true;
+                        } else if (reservedSeats.includes(seatId)) {
+                            seatBtn.classList.add("reserved");
+                            seatBtn.disabled = true;
+                        } else {
+                            seatBtn.addEventListener("click", () => toggleSeatSelection(seatId, seatBtn));
+                        }
+
+                        rowDiv.appendChild(seatBtn);
+                    }
+                    seatsContainer.appendChild(rowDiv);
+                }
+            }
+
+            // 2. دالة التحديد
+            function toggleSeatSelection(seatId, seatBtn) {
+                if (selectedSeats.includes(seatId)) {
+                    selectedSeats = selectedSeats.filter(id => id !== seatId);
+                    seatBtn.classList.remove("selected");
+                } else {
+                    selectedSeats.push(seatId);
+                    seatBtn.classList.add("selected");
+                }
+                updateUI();
+            }
+
+            function updateUI() {
+                if (selectedSeats.length > 0) {
+                    selectedSeatText.innerText = `المقاعد المحددة: ${selectedSeats.join(" ، ")}`;
+                } else {
+                    selectedSeatText.innerText = "لم يتم اختيار أي مقعد بعد";
+                }
+                validateForm();
+            }
+
+            function validateForm() {
+                const isNameValid = userNameInput.value.trim().length >= 3;
+                const isPhoneValid = userPhoneInput.value.trim().length >= 10;
+                const hasSeats = selectedSeats.length > 0;
+
+                bookButton.disabled = !(isNameValid && isPhoneValid && hasSeats);
+            }
+
+            userNameInput.addEventListener("input", validateForm);
+            userPhoneInput.addEventListener("input", validateForm);
+
+            // 3. تأكيد الحجز
+            bookButton.addEventListener("click", function () {
+                const name = userNameInput.value.trim();
+                if (!name || selectedSeats.length === 0) return;
+
+                createInvitationCard(name, selectedSeats);
+                
+                invitationSection.style.display = "block";
+                invitationSection.scrollIntoView({ behavior: "smooth" });
+
+                reservedSeats.push(...selectedSeats);
+                selectedSeats = [];
+                renderSeats();
+                userNameInput.value = "";
+                userPhoneInput.value = "";
+                selectedSeatText.innerText = "تم الحجز بنجاح!";
+                bookButton.disabled = true;
+            });
+
+            // 4. رسم الدعوة بالـ Canvas
+            function createInvitationCard(name, seats) {
+                if (!invitationCanvas) return;
+                const ctx = invitationCanvas.getContext("2d");
+
+                const bgImage = new Image();
+                bgImage.src = "Artboard 1.png"; // اسم ملف صورة الدعوة
+
+                bgImage.onload = () => {
+                    invitationCanvas.width = bgImage.width;
+                    invitationCanvas.height = bgImage.height;
+
+                    const w = invitationCanvas.width;
+                    const h = invitationCanvas.height;
+
+                    ctx.drawImage(bgImage, 0, 0, w, h);
+
+                    const boxWidth = w * 0.82;
+                    const boxHeight = 180;
+                    const boxX = (w - boxWidth) / 2;
+                    const boxY = h - 230;
+
+                    ctx.fillStyle = "rgba(10, 15, 30, 0.88)";
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 20);
+                        ctx.fill();
+                    } else {
+                        ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
+                    }
+
+                    ctx.strokeStyle = "#f59e0b";
+                    ctx.lineWidth = 4;
+                    ctx.stroke();
+
+                    ctx.textAlign = "center";
+                    ctx.fillStyle = "#ffffff";
+                    ctx.font = "bold 42px Tahoma, Arial";
+                    let displayName = "الاسم: " + name;
+                    if (displayName.length > 32) displayName = displayName.substring(0, 32) + "...";
+                    ctx.fillText(displayName, w / 2, boxY + 65);
+
+                    ctx.fillStyle = "#f59e0b";
+                    ctx.font = "bold 46px Tahoma, Arial";
+                    ctx.fillText("المقاعد المحجوزة: " + seats.join(" - "), w / 2, boxY + 135);
+                };
+
+                // حالة عدم تحميل الصورة، ترسم خلفية احتياطية
+                bgImage.onerror = () => {
+                    invitationCanvas.width = 800;
+                    invitationCanvas.height = 500;
+                    ctx.fillStyle = "#0f111a";
+                    ctx.fillRect(0, 0, 800, 500);
+                    ctx.textAlign = "center";
+                    ctx.fillStyle = "#ffffff";
+                    ctx.font = "bold 30px Arial";
+                    ctx.fillText("دعوة حضور - كنيسة العذراء مريم والبابا كيرلس", 400, 150);
+                    ctx.fillText("الاسم: " + name, 400, 250);
+                    ctx.fillStyle = "#f59e0b";
+                    ctx.fillText("المقاعد: " + seats.join(" - "), 400, 330);
+                };
+            }
+
+            // 5. تحميل الصورة
+            downloadBtn.addEventListener("click", function () {
+                const link = document.createElement("a");
+                link.download = `دعوة_حضور.png`;
+                link.href = invitationCanvas.toDataURL("image/png");
+                link.click();
+            });
+
+            // تشغيل دالة الرسم فوراً عند فتح الصفحة
+            renderSeats();
+        });
+    </script>
 </body>
 </html>
