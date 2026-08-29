@@ -14,53 +14,22 @@ const SUPABASE_KEY =
    SETTINGS
 ===================================================== */
 
-/*
-   9 صفوف
-
-   كل صف:
-   5 كراسي | ممر | 6 كراسي
-
-   = 11 كرسي في الصف
-
-   9 × 11 = 99 كرسي
-*/
-
 const ROWS = 9;
-
 const LEFT_SEATS = 5;
-
 const RIGHT_SEATS = 6;
-
 const MAX_SEATS = 2;
 
-
-/*
-   المنطقة الخاصة بالآباء الكهنة
-
-   A1 إلى A11
-*/
-
 const SPECIAL_SEATS = [
-    "A1",
-    "A2",
-    "A3",
-    "A4",
-    "A5",
-    "A6",
-    "A7",
-    "A8",
-    "A9",
-    "A10",
-    "A11"
+    "A1", "A2", "A3", "A4", "A5", "A6",
+    "A7", "A8", "A9", "A10", "A11"
 ];
 
 
 /* =====================================================
-   VARIABLES
+   STATE
 ===================================================== */
 
 let selectedSeats = [];
-
 let reservedSeats = [];
 
 
@@ -97,35 +66,34 @@ const downloadInvitation =
 
 
 /* =====================================================
+   CHECK ELEMENTS
+===================================================== */
+
+if (!seatsContainer) {
+    console.error("Element #seats غير موجود في index.html");
+}
+
+
+/* =====================================================
    SUPABASE REQUEST
 ===================================================== */
 
-async function supabaseRequest(
-    endpoint,
-    options = {}
-) {
+async function supabaseRequest(endpoint, options = {}) {
 
-    const response =
-        await fetch(
-            `${SUPABASE_URL}/rest/v1/${endpoint}`,
-            {
-                ...options,
+    const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/${endpoint}`,
+        {
+            ...options,
 
-                headers: {
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": `Bearer ${SUPABASE_KEY}`,
+                "Content-Type": "application/json",
 
-                    "apikey":
-                        SUPABASE_KEY,
-
-                    "Authorization":
-                        `Bearer ${SUPABASE_KEY}`,
-
-                    "Content-Type":
-                        "application/json",
-
-                    ...(options.headers || {})
-                }
+                ...(options.headers || {})
             }
-        );
+        }
+    );
 
 
     if (!response.ok) {
@@ -134,16 +102,12 @@ async function supabaseRequest(
             await response.text();
 
         throw new Error(
-            errorText ||
-            `HTTP ${response.status}`
+            errorText || `HTTP ${response.status}`
         );
     }
 
 
-    if (
-        response.status === 204
-    ) {
-
+    if (response.status === 204) {
         return null;
     }
 
@@ -153,66 +117,25 @@ async function supabaseRequest(
 
 
 /* =====================================================
-   LOAD RESERVED SEATS
-===================================================== */
-
-async function loadReservedSeats() {
-
-    try {
-
-        const data =
-            await supabaseRequest(
-                "bookings?select=seat"
-            );
-
-
-        reservedSeats =
-            data
-                .map(
-                    row => String(row.seat)
-                )
-                .filter(Boolean);
-
-
-        createSeats();
-
-
-    } catch (error) {
-
-        console.error(
-            "Supabase Error:",
-            error
-        );
-
-
-        createSeats();
-
-
-        showMessage(
-            "حدث خطأ في تحميل الحجوزات من قاعدة البيانات.",
-            false
-        );
-    }
-}
-
-
-/* =====================================================
    CREATE ALL SEATS
 ===================================================== */
 
 function createSeats() {
 
+    if (!seatsContainer) {
+        return;
+    }
+
+
     seatsContainer.innerHTML = "";
 
 
-    /* ================================================
+    /* =================================================
        SPECIAL AREA
     ================================================= */
 
     const specialTitle =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     specialTitle.className =
         "special-area";
@@ -220,33 +143,36 @@ function createSeats() {
     specialTitle.textContent =
         "🔒 خاص بالآباء الكهنة";
 
-
     seatsContainer.appendChild(
         specialTitle
     );
 
 
     const specialRow =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     specialRow.className =
         "seat-row";
 
 
-    SPECIAL_SEATS.forEach(
-        seatId => {
+    for (
+        let i = 0;
+        i < SPECIAL_SEATS.length;
+        i++
+    ) {
 
-            specialRow.appendChild(
-                createSeat(
-                    seatId,
-                    seatId
-                )
+        const seatId =
+            SPECIAL_SEATS[i];
+
+        const seat =
+            createSpecialSeat(
+                seatId
             );
 
-        }
-    );
+        specialRow.appendChild(
+            seat
+        );
+    }
 
 
     seatsContainer.appendChild(
@@ -254,8 +180,8 @@ function createSeats() {
     );
 
 
-    /* ================================================
-       NORMAL SEATS
+    /* =================================================
+       NORMAL ROWS
     ================================================= */
 
     for (
@@ -265,15 +191,15 @@ function createSeats() {
     ) {
 
         const rowElement =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         rowElement.className =
             "seat-row";
 
 
-        /* LEFT */
+        /* ---------------------------------------------
+           LEFT SIDE - 5
+        --------------------------------------------- */
 
         for (
             let number = 1;
@@ -284,7 +210,6 @@ function createSeats() {
             const seatId =
                 `${row}-${number}`;
 
-
             rowElement.appendChild(
                 createSeat(
                     seatId,
@@ -294,12 +219,12 @@ function createSeats() {
         }
 
 
-        /* AISLE */
+        /* ---------------------------------------------
+           AISLE
+        --------------------------------------------- */
 
         const aisle =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         aisle.className =
             "aisle";
@@ -309,7 +234,9 @@ function createSeats() {
         );
 
 
-        /* RIGHT */
+        /* ---------------------------------------------
+           RIGHT SIDE - 6
+        --------------------------------------------- */
 
         for (
             let number = 1;
@@ -317,18 +244,16 @@ function createSeats() {
             number++
         ) {
 
-            const actualNumber =
+            const seatNumber =
                 LEFT_SEATS + number;
 
-
             const seatId =
-                `${row}-${actualNumber}`;
-
+                `${row}-${seatNumber}`;
 
             rowElement.appendChild(
                 createSeat(
                     seatId,
-                    actualNumber
+                    seatNumber
                 )
             );
         }
@@ -342,42 +267,58 @@ function createSeats() {
 
 
 /* =====================================================
-   CREATE ONE SEAT
+   CREATE SPECIAL SEAT
 ===================================================== */
 
-function createSeat(
-    seatId,
-    label
-) {
+function createSpecialSeat(seatId) {
 
     const button =
-        document.createElement(
-            "button"
-        );
+        document.createElement("button");
+
+    button.type = "button";
+
+    button.className =
+        "seat reserved";
+
+    button.textContent =
+        seatId;
+
+    button.disabled = true;
+
+    button.title =
+        "خاص بالآباء الكهنة";
+
+    return button;
+}
 
 
-    button.type =
-        "button";
+/* =====================================================
+   CREATE NORMAL SEAT
+===================================================== */
 
+function createSeat(seatId, label) {
+
+    const button =
+        document.createElement("button");
+
+    button.type = "button";
 
     button.className =
         "seat";
 
-
     button.textContent =
         label;
-
 
     button.dataset.seat =
         seatId;
 
 
-    /* RESERVED */
+    /* ---------------------------------------------
+       RESERVED
+    --------------------------------------------- */
 
     if (
-        reservedSeats.includes(
-            seatId
-        )
+        reservedSeats.includes(seatId)
     ) {
 
         button.classList.add(
@@ -390,32 +331,12 @@ function createSeat(
     }
 
 
-    /*
-       منطقة A ممنوعة للحجز
-    */
+    /* ---------------------------------------------
+       SELECTED
+    --------------------------------------------- */
 
     if (
-        SPECIAL_SEATS.includes(
-            seatId
-        )
-    ) {
-
-        button.classList.add(
-            "reserved"
-        );
-
-        button.disabled = true;
-
-        return button;
-    }
-
-
-    /* SELECTED */
-
-    if (
-        selectedSeats.includes(
-            seatId
-        )
+        selectedSeats.includes(seatId)
     ) {
 
         button.classList.add(
@@ -424,9 +345,13 @@ function createSeat(
     }
 
 
+    /* ---------------------------------------------
+       CLICK
+    --------------------------------------------- */
+
     button.addEventListener(
         "click",
-        function () {
+        () => {
 
             toggleSeat(
                 seatId,
@@ -455,22 +380,20 @@ function toggleSeat(
         );
 
 
-    /* REMOVE */
+    /* ---------------------------------------------
+       REMOVE
+    --------------------------------------------- */
 
-    if (
-        index !== -1
-    ) {
+    if (index !== -1) {
 
         selectedSeats.splice(
             index,
             1
         );
 
-
         button.classList.remove(
             "selected"
         );
-
 
         updateSelectedText();
 
@@ -478,7 +401,9 @@ function toggleSeat(
     }
 
 
-    /* MAX 2 */
+    /* ---------------------------------------------
+       MAXIMUM 2
+    --------------------------------------------- */
 
     if (
         selectedSeats.length >=
@@ -494,27 +419,34 @@ function toggleSeat(
     }
 
 
-    /* ADD */
+    /* ---------------------------------------------
+       ADD
+    --------------------------------------------- */
 
     selectedSeats.push(
         seatId
     );
 
-
     button.classList.add(
         "selected"
     );
-
 
     updateSelectedText();
 }
 
 
 /* =====================================================
-   UPDATE SELECTED SEATS TEXT
+   UPDATE SELECTED SEATS
 ===================================================== */
 
 function updateSelectedText() {
+
+    if (
+        !selectedSeatText
+    ) {
+        return;
+    }
+
 
     if (
         selectedSeats.length === 0
@@ -533,13 +465,67 @@ function updateSelectedText() {
 
 
 /* =====================================================
+   LOAD RESERVED SEATS
+===================================================== */
+
+async function loadReservedSeats() {
+
+    try {
+
+        const data =
+            await supabaseRequest(
+                "bookings?select=seat"
+            );
+
+
+        reservedSeats =
+            Array.isArray(data)
+                ? data
+                    .map(
+                        row => String(row.seat)
+                    )
+                    .filter(Boolean)
+                : [];
+
+
+        createSeats();
+
+
+    } catch (error) {
+
+        console.error(
+            "Supabase Error:",
+            error
+        );
+
+
+        /*
+           حتى لو Supabase فيه مشكلة
+           الكراسي تظهر عادي
+        */
+
+        createSeats();
+
+
+        showMessage(
+            "تعذر تحميل الحجوزات من قاعدة البيانات.",
+            false
+        );
+    }
+}
+
+
+/* =====================================================
    BOOK BUTTON
 ===================================================== */
 
-bookButton.addEventListener(
-    "click",
-    bookSeats
-);
+if (bookButton) {
+
+    bookButton.addEventListener(
+        "click",
+        bookSeats
+    );
+}
 
 
 /* =====================================================
@@ -549,14 +535,19 @@ bookButton.addEventListener(
 async function bookSeats() {
 
     const name =
-        nameInput.value.trim();
-
+        nameInput
+            ? nameInput.value.trim()
+            : "";
 
     const phone =
-        phoneInput.value.trim();
+        phoneInput
+            ? phoneInput.value.trim()
+            : "";
 
 
-    /* CHECK SEATS */
+    /* ---------------------------------------------
+       CHECK SEATS
+    --------------------------------------------- */
 
     if (
         selectedSeats.length === 0
@@ -571,7 +562,9 @@ async function bookSeats() {
     }
 
 
-    /* CHECK NAME */
+    /* ---------------------------------------------
+       CHECK NAME
+    --------------------------------------------- */
 
     if (!name) {
 
@@ -580,13 +573,17 @@ async function bookSeats() {
             false
         );
 
-        nameInput.focus();
+        if (nameInput) {
+            nameInput.focus();
+        }
 
         return;
     }
 
 
-    /* CHECK PHONE */
+    /* ---------------------------------------------
+       CHECK PHONE
+    --------------------------------------------- */
 
     if (!phone) {
 
@@ -595,19 +592,17 @@ async function bookSeats() {
             false
         );
 
-        phoneInput.focus();
+        if (phoneInput) {
+            phoneInput.focus();
+        }
 
         return;
     }
 
 
-    /*
-       السماح بالأرقام فقط تقريبًا
-    */
-
     const cleanPhone =
         phone.replace(
-            /[\s\-()]/g,
+            /[\s\-()+]/g,
             ""
         );
 
@@ -621,16 +616,19 @@ async function bookSeats() {
             false
         );
 
-        phoneInput.focus();
+        if (phoneInput) {
+            phoneInput.focus();
+        }
 
         return;
     }
 
 
-    /* DISABLE */
+    /* ---------------------------------------------
+       BUTTON
+    --------------------------------------------- */
 
-    bookButton.disabled =
-        true;
+    bookButton.disabled = true;
 
     bookButton.textContent =
         "جاري الحجز...";
@@ -638,9 +636,9 @@ async function bookSeats() {
 
     try {
 
-        /* ============================================
-           GET LATEST BOOKINGS
-        ============================================ */
+        /* =========================================
+           GET CURRENT BOOKINGS
+        ========================================= */
 
         const latest =
             await supabaseRequest(
@@ -649,15 +647,16 @@ async function bookSeats() {
 
 
         const latestReserved =
-            latest.map(
-                item =>
-                    String(item.seat)
-            );
+            Array.isArray(latest)
+                ? latest.map(
+                    row => String(row.seat)
+                )
+                : [];
 
 
-        /* ============================================
+        /* =========================================
            CHECK CONFLICT
-        ============================================ */
+        ========================================= */
 
         const conflicts =
             selectedSeats.filter(
@@ -676,9 +675,6 @@ async function bookSeats() {
                 latestReserved;
 
 
-            createSeats();
-
-
             selectedSeats =
                 selectedSeats.filter(
                     seat =>
@@ -687,6 +683,8 @@ async function bookSeats() {
                         )
                 );
 
+
+            createSeats();
 
             updateSelectedText();
 
@@ -697,22 +695,16 @@ async function bookSeats() {
         }
 
 
-        /* ============================================
-           INSERT BOOKINGS
-        ============================================ */
+        /* =========================================
+           INSERT
+        ========================================= */
 
         const rows =
             selectedSeats.map(
                 seat => ({
-
-                    name:
-                        name,
-
-                    phone:
-                        cleanPhone,
-
-                    seat:
-                        seat
+                    name: name,
+                    phone: cleanPhone,
+                    seat: seat
                 })
             );
 
@@ -723,7 +715,6 @@ async function bookSeats() {
                 method: "POST",
 
                 headers: {
-
                     "Prefer":
                         "return=minimal"
                 },
@@ -736,9 +727,9 @@ async function bookSeats() {
         );
 
 
-        /* ============================================
+        /* =========================================
            SAVE BOOKED SEATS
-        ============================================ */
+        ========================================= */
 
         const bookedSeats =
             [...selectedSeats];
@@ -749,9 +740,9 @@ async function bookSeats() {
         );
 
 
-        /* ============================================
-           CLEAR SELECTION
-        ============================================ */
+        /* =========================================
+           CLEAR
+        ========================================= */
 
         selectedSeats = [];
 
@@ -761,9 +752,9 @@ async function bookSeats() {
         updateSelectedText();
 
 
-        /* ============================================
+        /* =========================================
            SUCCESS
-        ============================================ */
+        ========================================= */
 
         showMessage(
             "تم الحجز بنجاح 🎉",
@@ -771,24 +762,14 @@ async function bookSeats() {
         );
 
 
-        /* ============================================
-           DRAW INVITATION
-        ============================================ */
+        /* =========================================
+           INVITATION
+        ========================================= */
 
         drawInvitation(
             name,
             bookedSeats
         );
-
-
-        invitationSection.style.display =
-            "block";
-
-
-        invitationSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
 
 
     } catch (error) {
@@ -811,7 +792,6 @@ async function bookSeats() {
         bookButton.disabled =
             false;
 
-
         bookButton.textContent =
             "تأكيد الحجز";
     }
@@ -827,27 +807,31 @@ function drawInvitation(
     seats
 ) {
 
-    const canvas =
-        invitationCanvas;
+    if (
+        !invitationCanvas
+    ) {
+        return;
+    }
 
 
     const ctx =
-        canvas.getContext(
+        invitationCanvas.getContext(
             "2d"
         );
 
 
     const W =
-        canvas.width;
-
+        invitationCanvas.width;
 
     const H =
-        canvas.height;
+        invitationCanvas.height;
 
 
-    /* BACKGROUND */
+    /* ---------------------------------------------
+       BACKGROUND
+    --------------------------------------------- */
 
-    const gradient =
+    const bg =
         ctx.createLinearGradient(
             0,
             0,
@@ -856,26 +840,26 @@ function drawInvitation(
         );
 
 
-    gradient.addColorStop(
+    bg.addColorStop(
         0,
-        "#f2e5cf"
+        "#f1e2c8"
     );
 
 
-    gradient.addColorStop(
+    bg.addColorStop(
         0.5,
-        "#fffaf1"
+        "#fffaf0"
     );
 
 
-    gradient.addColorStop(
+    bg.addColorStop(
         1,
-        "#e5cfaa"
+        "#e4cda6"
     );
 
 
     ctx.fillStyle =
-        gradient;
+        bg;
 
 
     ctx.fillRect(
@@ -886,15 +870,15 @@ function drawInvitation(
     );
 
 
-    /* OUTER BORDER */
+    /* ---------------------------------------------
+       BORDER
+    --------------------------------------------- */
 
     ctx.strokeStyle =
         "#967344";
 
-
     ctx.lineWidth =
         12;
-
 
     ctx.strokeRect(
         45,
@@ -904,15 +888,11 @@ function drawInvitation(
     );
 
 
-    /* INNER BORDER */
-
     ctx.strokeStyle =
-        "#c4a16a";
-
+        "#c5a66f";
 
     ctx.lineWidth =
         3;
-
 
     ctx.strokeRect(
         70,
@@ -922,13 +902,15 @@ function drawInvitation(
     );
 
 
-    /* TITLE */
+    /* ---------------------------------------------
+       TITLE
+    --------------------------------------------- */
 
     centerText(
         ctx,
         "✦ دعــــوة خــــاصــــة ✦",
         W / 2,
-        245,
+        240,
         "bold 54px Arial",
         "#72532d"
     );
@@ -949,7 +931,7 @@ function drawInvitation(
         "أسرتي أبطال الإيمان وأسرة شهيدات",
         W / 2,
         470,
-        "bold 48px Arial",
+        "bold 46px Arial",
         "#8a6335"
     );
 
@@ -958,7 +940,7 @@ function drawInvitation(
         ctx,
         "بدعوة سيادتكم لحضور",
         W / 2,
-        605,
+        600,
         "38px Arial",
         "#4b3a29"
     );
@@ -969,12 +951,14 @@ function drawInvitation(
         "حفل ختام الأنشطة",
         W / 2,
         705,
-        "bold 68px Arial",
+        "bold 66px Arial",
         "#72532d"
     );
 
 
-    /* LINE */
+    /* ---------------------------------------------
+       DIVIDER
+    --------------------------------------------- */
 
     ctx.strokeStyle =
         "#b28b57";
@@ -982,32 +966,30 @@ function drawInvitation(
     ctx.lineWidth =
         4;
 
-
     ctx.beginPath();
 
-
     ctx.moveTo(
-        W / 2 - 290,
+        W / 2 - 280,
         790
     );
-
 
     ctx.lineTo(
-        W / 2 + 290,
+        W / 2 + 280,
         790
     );
-
 
     ctx.stroke();
 
 
-    /* DATE */
+    /* ---------------------------------------------
+       DATE
+    --------------------------------------------- */
 
     centerText(
         ctx,
         "يوم الثلاثاء الموافق",
         W / 2,
-        900,
+        890,
         "34px Arial",
         "#4b3a29"
     );
@@ -1017,42 +999,36 @@ function drawInvitation(
         ctx,
         "1 سبتمبر 2026",
         W / 2,
-        980,
+        970,
         "bold 52px Arial",
         "#8a6335"
     );
 
 
-    /* TIME */
+    /* ---------------------------------------------
+       TIME
+    --------------------------------------------- */
 
     centerText(
         ctx,
         "في تمام الساعة السادسة مساءً",
         W / 2,
-        1080,
+        1070,
         "bold 38px Arial",
         "#4b3a29"
     );
 
 
-    /* LOCATION */
+    /* ---------------------------------------------
+       LOCATION
+    --------------------------------------------- */
 
     centerText(
         ctx,
-        "بمسرح",
+        "بمسرح كنيسة السيدة العذراء مريم",
         W / 2,
-        1180,
-        "34px Arial",
-        "#4b3a29"
-    );
-
-
-    centerText(
-        ctx,
-        "كنيسة السيدة العذراء مريم",
-        W / 2,
-        1250,
-        "bold 43px Arial",
+        1170,
+        "bold 39px Arial",
         "#72532d"
     );
 
@@ -1061,18 +1037,20 @@ function drawInvitation(
         ctx,
         "والبابا كيرلس السادس بأغاخان",
         W / 2,
-        1320,
-        "bold 39px Arial",
+        1240,
+        "bold 38px Arial",
         "#72532d"
     );
 
 
-    /* NAME BOX */
+    /* ---------------------------------------------
+       NAME BOX
+    --------------------------------------------- */
 
     roundedBox(
         ctx,
         120,
-        1390,
+        1380,
         W - 240,
         200,
         30,
@@ -1085,7 +1063,7 @@ function drawInvitation(
         ctx,
         "اسم المدعو",
         W / 2,
-        1450,
+        1440,
         "30px Arial",
         "#72532d"
     );
@@ -1095,20 +1073,22 @@ function drawInvitation(
         ctx,
         name,
         W / 2,
-        1535,
+        1525,
         "bold 48px Arial",
         "#3e3021"
     );
 
 
-    /* SEATS BOX */
+    /* ---------------------------------------------
+       SEATS
+    --------------------------------------------- */
 
     roundedBox(
         ctx,
         120,
-        1630,
+        1620,
         W - 240,
-        150,
+        155,
         30,
         "#72532d",
         "#72532d"
@@ -1119,22 +1099,43 @@ function drawInvitation(
         ctx,
         `المقاعد: ${seats.join(" ، ")}`,
         W / 2,
-        1705,
+        1698,
         "bold 42px Arial",
         "#ffffff"
     );
 
 
-    /* FOOTER */
+    /* ---------------------------------------------
+       FOOTER
+    --------------------------------------------- */
 
     centerText(
         ctx,
         "نتمنى لكم وقتًا ممتعًا ومباركًا ❤️",
         W / 2,
-        1830,
+        1825,
         "bold 29px Arial",
         "#72532d"
     );
+
+
+    /* ---------------------------------------------
+       SHOW INVITATION
+    --------------------------------------------- */
+
+    if (
+        invitationSection
+    ) {
+
+        invitationSection.style.display =
+            "block";
+
+
+        invitationSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
 }
 
 
@@ -1154,18 +1155,14 @@ function centerText(
     ctx.font =
         font;
 
-
     ctx.fillStyle =
         color;
-
 
     ctx.textAlign =
         "center";
 
-
     ctx.textBaseline =
         "middle";
-
 
     ctx.fillText(
         text,
@@ -1191,7 +1188,6 @@ function roundedBox(
 ) {
 
     ctx.beginPath();
-
 
     ctx.moveTo(
         x + radius,
@@ -1278,60 +1274,59 @@ function roundedBox(
    DOWNLOAD INVITATION
 ===================================================== */
 
-downloadInvitation.addEventListener(
-    "click",
-    function () {
+if (downloadInvitation) {
 
-        const image =
-            invitationCanvas.toDataURL(
-                "image/png"
-            );
+    downloadInvitation.addEventListener(
+        "click",
+        function () {
 
+            try {
 
-        const link =
-            document.createElement(
-                "a"
-            );
+                const image =
+                    invitationCanvas.toDataURL(
+                        "image/png"
+                    );
 
 
-        link.href =
-            image;
+                const link =
+                    document.createElement(
+                        "a"
+                    );
 
 
-        link.download =
-            "دعوة-حفل-ختام-الانشطة.png";
+                link.href =
+                    image;
 
 
-        document.body.appendChild(
-            link
-        );
+                link.download =
+                    "دعوة-حفل-ختام-الانشطة.png";
 
 
-        link.click();
+                document.body.appendChild(
+                    link
+                );
 
 
-        link.remove();
-    }
-);
+                link.click();
 
 
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-function showMessage(
-    message,
-    success
-) {
-
-    bookingMessage.textContent =
-        message;
+                link.remove();
 
 
-    bookingMessage.style.color =
-        success
-            ? "#2e7d32"
-            : "#d32f2f";
+            } catch (error) {
+
+                console.error(
+                    "Download Error:",
+                    error
+                );
+
+
+                alert(
+                    "حدث خطأ أثناء تحميل الدعوة."
+                );
+            }
+        }
+    );
 }
 
 
@@ -1339,7 +1334,14 @@ function showMessage(
    START
 ===================================================== */
 
+/*
+   أولًا نرسم الكراسي فورًا.
+   بعد ذلك نحمل الحجوزات من Supabase.
+*/
+
 createSeats();
 
 loadReservedSeats();
+
+updateSelectedText();
 ```
