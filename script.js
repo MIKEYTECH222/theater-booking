@@ -22,7 +22,7 @@ const LEFT_SEATS = 5;
 
 const RIGHT_SEATS = 6;
 
-const MAX_SEATS = 2;
+const MAX_SEATS = 3;
 
 
 /* =====================================================
