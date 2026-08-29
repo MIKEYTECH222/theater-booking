@@ -6,10 +6,8 @@
 
 body {
     font-family: Arial, Tahoma, sans-serif;
-    direction: rtl; /* دعم اللغة العربية */
+    direction: rtl;
     min-height: 100vh;
-
-    /* خلفية داكنة متدرجة وبسيطة */
     background:
         radial-gradient(
             circle at top right,
@@ -22,16 +20,9 @@ body {
             transparent 40%
         ),
         #0f111a;
-
     color: #f3f4f6;
-
     padding: 30px 10px 50px;
 }
-
-
-/* =========================
-   Container
-========================= */
 
 .container {
     width: 100%;
@@ -40,11 +31,7 @@ body {
     text-align: center;
 }
 
-
-/* =========================
-   Header
-========================= */
-
+/* Header */
 .hero {
     margin-bottom: 35px;
 }
@@ -63,54 +50,37 @@ body {
 }
 
 h1 {
-    font-size: 42px;
+    font-size: 38px;
     margin-bottom: 8px;
     color: #ffffff;
 }
 
 .subtitle {
     color: #9ca3af;
-    font-size: 19px;
+    font-size: 18px;
 }
 
-
-/* =========================
-   Stage / المسرح أو الهيكل
-========================= */
-
+/* Stage */
 .stage {
     width: 78%;
     max-width: 760px;
     margin: 0 auto 38px;
     padding: 18px;
     border-radius: 0 0 28px 28px;
-    background: linear-gradient(
-        135deg,
-        #6366f1,
-        #4f46e5
-    );
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
     color: white;
-    font-size: 23px;
+    font-size: 22px;
     font-weight: bold;
     box-shadow: 0 15px 35px rgba(79, 70, 229, 0.4);
 }
 
-
-/* =========================
-   Seats title
-========================= */
-
 .seats-title {
     margin-bottom: 18px;
-    font-size: 22px;
+    font-size: 20px;
     color: #e5e7eb;
 }
 
-
-/* =========================
-   Seats container
-========================= */
-
+/* Seats Layout */
 .seats {
     width: 100%;
     display: flex;
@@ -118,11 +88,6 @@ h1 {
     align-items: center;
     gap: 14px;
 }
-
-
-/* =========================
-   Seat row
-========================= */
 
 .row {
     width: 100%;
@@ -132,40 +97,27 @@ h1 {
     gap: 7px;
 }
 
-
-/* =========================
-   Middle aisle
-========================= */
-
 .aisle {
     width: 55px;
     min-width: 55px;
     height: 54px;
 }
 
-
-/* =========================
-   Seat
-========================= */
-
+/* Seat Component */
 .seat {
     width: 58px;
     height: 54px;
     border: none;
     border-radius: 14px 14px 8px 8px;
-    
-    /* متاح - أخضر داكن ناعم */
     background: #054625;
     color: #4ade80;
     border: 1px solid #166534;
-
     font-size: 13px;
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-/* Hover */
 .seat:hover:not(:disabled) {
     transform: translateY(-4px) scale(1.03);
     box-shadow: 0 8px 18px rgba(34, 197, 94, 0.25);
@@ -173,7 +125,6 @@ h1 {
     color: #ffffff;
 }
 
-/* Selected (محدد) */
 .seat.selected {
     background: #1d4ed8;
     color: #ffffff;
@@ -182,7 +133,6 @@ h1 {
     box-shadow: 0 9px 20px rgba(59, 130, 246, 0.35);
 }
 
-/* Reserved (محجوز) */
 .seat.reserved {
     background: #450a0a;
     color: #fca5a5;
@@ -191,7 +141,6 @@ h1 {
     opacity: 0.7;
 }
 
-/* Locked (خاص/كهنة) */
 .seat.locked {
     background: #3b0764;
     color: #d8b4fe;
@@ -200,11 +149,7 @@ h1 {
     opacity: 0.85;
 }
 
-
-/* =========================
-   Legend
-========================= */
-
+/* Legend */
 .legend {
     display: flex;
     justify-content: center;
@@ -229,31 +174,12 @@ h1 {
     border-radius: 5px;
 }
 
-.available {
-    background: #054625;
-    border: 1px solid #166534;
-}
+.available { background: #054625; border: 1px solid #166534; }
+.selected-color { background: #1d4ed8; border: 1px solid #3b82f6; }
+.reserved-color { background: #450a0a; border: 1px solid #7f1d1d; }
+.locked-color { background: #3b0764; border: 1px solid #6b21a8; }
 
-.selected-color {
-    background: #1d4ed8;
-    border: 1px solid #3b82f6;
-}
-
-.reserved-color {
-    background: #450a0a;
-    border: 1px solid #7f1d1d;
-}
-
-.locked-color {
-    background: #3b0764;
-    border: 1px solid #6b21a8;
-}
-
-
-/* =========================
-   Booking box
-========================= */
-
+/* Booking Box & Form */
 .booking-box {
     max-width: 520px;
     margin: 25px auto;
@@ -272,4 +198,111 @@ h1 {
 #selectedSeat {
     min-height: 28px;
     margin-bottom: 20px;
-    color
+    color: #9ca3af;
+    line-height: 1.8;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 12px;
+    border: 1px solid #2e3558;
+    border-radius: 13px;
+    background: #0f111a;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+input::placeholder {
+    color: #6b7280;
+}
+
+#bookButton {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+#bookButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+}
+
+#bookButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Invitation Section */
+.invitation-section {
+    display: none;
+    max-width: 530px;
+    margin: 50px auto;
+    padding: 28px 20px;
+    border-radius: 24px;
+    background: #181b2a;
+    border: 1px solid #282d45;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+}
+
+.invitation-section h2 { margin-bottom: 8px; color: #ffffff; }
+.invitation-section p { color: #9ca3af; margin-bottom: 20px; }
+
+#invitationCanvas {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+#downloadInvitation {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 13px;
+    background: #16a34a;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#downloadInvitation:hover {
+    background: #15803d;
+    transform: translateY(-2px);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 760px) {
+    body { padding: 20px 5px 40px; }
+    h1 { font-size: 30px; }
+    .subtitle { font-size: 16px; }
+    .stage { width: 92%; font-size: 18px; margin-bottom: 28px; }
+    .row { gap: 4px; }
+    .seat { width: 43px; height: 43px; font-size: 9px; }
+    .aisle { width: 24px; min-width: 24px; height: 43px; }
+}
+
+@media (max-width: 470px) {
+    .row { gap: 3px; }
+    .seat { width: 31px; height: 38px; font-size: 8px; }
+    .aisle { width: 15px; min-width: 15px; height: 38px; }
+    .booking-box { padding: 20px 15px; }
+}
