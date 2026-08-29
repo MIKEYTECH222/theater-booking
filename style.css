@@ -1,8 +1,4 @@
 ```css
-/* ==================================================
-   RESET
-================================================== */
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -29,29 +25,22 @@ body {
         );
 
     color: #20242c;
-
-    direction: rtl;
 }
-
-
-/* ==================================================
-   CONTAINER
-================================================== */
 
 .container {
     width: 100%;
     max-width: 1000px;
 
-    margin: 0 auto;
+    margin: auto;
 
     padding:
         25px 20px 50px;
 }
 
 
-/* ==================================================
+/* =========================
    HERO
-================================================== */
+========================= */
 
 .hero {
     text-align: center;
@@ -68,41 +57,34 @@ body {
 
     margin-bottom: 15px;
 
-    background:
-        rgba(255, 255, 255, 0.85);
-
-    border:
-        1px solid rgba(0, 0, 0, 0.08);
+    background: white;
 
     border-radius: 50px;
 
     font-size: 16px;
+
     font-weight: bold;
 
     box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.08);
+        0 5px 20px rgba(0,0,0,.08);
 }
 
 .hero h1 {
     font-size: 42px;
 
-    line-height: 1.3;
-
     margin-bottom: 10px;
-
-    font-weight: 800;
 }
 
 .subtitle {
     font-size: 19px;
 
-    opacity: 0.75;
+    opacity: .7;
 }
 
 
-/* ==================================================
+/* =========================
    STAGE
-================================================== */
+========================= */
 
 .stage {
     width: 90%;
@@ -124,15 +106,12 @@ body {
     font-size: 22px;
 
     font-weight: bold;
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.18);
 }
 
 
-/* ==================================================
-   SEATS TITLE
-================================================== */
+/* =========================
+   SEATS
+========================= */
 
 .seats-title {
     text-align: center;
@@ -142,17 +121,11 @@ body {
     margin-bottom: 25px;
 }
 
-
-/* ==================================================
-   SEATS
-================================================== */
-
 .seats {
     width: 100%;
     max-width: 850px;
 
-    margin:
-        0 auto 25px;
+    margin: auto;
 
     display: flex;
 
@@ -160,11 +133,6 @@ body {
 
     gap: 13px;
 }
-
-
-/* ==================================================
-   SEAT ROW
-================================================== */
 
 .seat-row {
     display: flex;
@@ -174,25 +142,13 @@ body {
     align-items: center;
 
     gap: 10px;
-
-    width: 100%;
 }
-
-
-/* ==================================================
-   AISLE
-================================================== */
 
 .aisle {
     width: 35px;
 
     flex-shrink: 0;
 }
-
-
-/* ==================================================
-   SEAT
-================================================== */
 
 .seat {
     width: 55px;
@@ -203,7 +159,7 @@ body {
 
     border-radius: 12px;
 
-    background: #ffffff;
+    background: white;
 
     cursor: pointer;
 
@@ -211,33 +167,13 @@ body {
 
     font-weight: bold;
 
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        background 0.15s ease;
+    transition: .15s;
 }
 
 .seat:hover {
     transform:
         translateY(-2px);
-
-    box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.12);
 }
-
-
-/* ==================================================
-   AVAILABLE
-================================================== */
-
-.seat.available {
-    background: #ffffff;
-}
-
-
-/* ==================================================
-   SELECTED
-================================================== */
 
 .seat.selected {
     background: #4caf50;
@@ -247,13 +183,9 @@ body {
     border-color: #4caf50;
 
     box-shadow:
-        0 6px 18px rgba(76, 175, 80, 0.30);
+        0 6px 18px
+        rgba(76,175,80,.3);
 }
-
-
-/* ==================================================
-   RESERVED
-================================================== */
 
 .seat.reserved {
     background: #9da3ad;
@@ -264,11 +196,6 @@ body {
 
     cursor: not-allowed;
 }
-
-
-/* ==================================================
-   LOCKED
-================================================== */
 
 .seat.locked {
     background: #343944;
@@ -281,35 +208,9 @@ body {
 }
 
 
-/* ==================================================
-   SPECIAL AREA
-================================================== */
-
-.special-area {
-    width: 100%;
-
-    padding:
-        15px 10px;
-
-    margin-bottom: 5px;
-
-    text-align: center;
-
-    background: #343944;
-
-    color: white;
-
-    border-radius: 14px;
-
-    font-size: 17px;
-
-    font-weight: bold;
-}
-
-
-/* ==================================================
+/* =========================
    LEGEND
-================================================== */
+========================= */
 
 .legend {
     display: flex;
@@ -324,8 +225,6 @@ body {
 
     margin:
         25px auto 35px;
-
-    font-size: 15px;
 }
 
 .legend span {
@@ -343,13 +242,11 @@ body {
     display: inline-block;
 
     border-radius: 5px;
-
-    border:
-        1px solid rgba(0, 0, 0, 0.1);
 }
 
 .available {
-    background: #ffffff;
+    background: white;
+    border: 1px solid #ccc;
 }
 
 .selected-color {
@@ -365,26 +262,26 @@ body {
 }
 
 
-/* ==================================================
-   BOOKING BOX
-================================================== */
+/* =========================
+   BOOKING
+========================= */
 
 .booking-box {
     width: 100%;
     max-width: 600px;
 
-    margin: 0 auto;
+    margin: auto;
 
     padding:
         30px 25px;
 
-    background:
-        rgba(255, 255, 255, 0.95);
+    background: white;
 
     border-radius: 20px;
 
     box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.10);
+        0 12px 35px
+        rgba(0,0,0,.1);
 
     text-align: center;
 }
@@ -398,15 +295,8 @@ body {
 #selectedSeat {
     margin-bottom: 20px;
 
-    font-size: 17px;
-
     font-weight: bold;
 }
-
-
-/* ==================================================
-   INPUTS
-================================================== */
 
 .booking-box input {
     width: 100%;
@@ -425,35 +315,17 @@ body {
 
     outline: none;
 
-    background: white;
-
     font-size: 16px;
-
-    text-align: right;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
 }
 
 .booking-box input:focus {
     border-color: #4caf50;
-
-    box-shadow:
-        0 0 0 3px rgba(76, 175, 80, 0.12);
 }
-
-
-/* ==================================================
-   BOOK BUTTON
-================================================== */
 
 #bookButton {
     width: 100%;
 
     height: 54px;
-
-    margin-top: 5px;
 
     border: none;
 
@@ -468,45 +340,20 @@ body {
     font-weight: bold;
 
     cursor: pointer;
-
-    transition:
-        transform 0.15s ease,
-        opacity 0.15s ease,
-        box-shadow 0.15s ease;
 }
 
-#bookButton:hover {
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 7px 20px rgba(76, 175, 80, 0.25);
-}
-
-#bookButton:active {
-    transform:
-        translateY(0);
-}
-
-
-/* ==================================================
-   BOOKING MESSAGE
-================================================== */
-
-.booking-message {
+#bookingMessage {
     margin-top: 15px;
 
     min-height: 22px;
-
-    font-size: 15px;
 
     font-weight: bold;
 }
 
 
-/* ==================================================
+/* =========================
    INVITATION
-================================================== */
+========================= */
 
 .invitation-section {
     display: none;
@@ -522,19 +369,14 @@ body {
 
     text-align: center;
 
-    background:
-        rgba(255, 255, 255, 0.95);
+    background: white;
 
     border-radius: 22px;
 
     box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.12);
+        0 12px 40px
+        rgba(0,0,0,.12);
 }
-
-
-/* ==================================================
-   INVITATION HEADER
-================================================== */
 
 .invitation-header {
     margin-bottom: 22px;
@@ -542,8 +384,6 @@ body {
 
 .invitation-icon {
     font-size: 38px;
-
-    margin-bottom: 5px;
 }
 
 .invitation-section h2 {
@@ -553,15 +393,8 @@ body {
 }
 
 .invitation-section p {
-    font-size: 16px;
-
-    opacity: 0.7;
+    opacity: .7;
 }
-
-
-/* ==================================================
-   CANVAS
-================================================== */
 
 .canvas-wrapper {
     width: 100%;
@@ -569,8 +402,6 @@ body {
     display: flex;
 
     justify-content: center;
-
-    overflow: hidden;
 
     margin-bottom: 20px;
 }
@@ -586,16 +417,10 @@ body {
 
     border-radius: 16px;
 
-    background: white;
-
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.18);
+        0 10px 30px
+        rgba(0,0,0,.18);
 }
-
-
-/* ==================================================
-   DOWNLOAD
-================================================== */
 
 #downloadInvitation {
     width: 100%;
@@ -603,9 +428,6 @@ body {
     max-width: 540px;
 
     min-height: 54px;
-
-    padding:
-        12px 20px;
 
     border: none;
 
@@ -620,24 +442,12 @@ body {
     font-weight: bold;
 
     cursor: pointer;
-
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-#downloadInvitation:hover {
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.18);
 }
 
 
-/* ==================================================
+/* =========================
    MOBILE
-================================================== */
+========================= */
 
 @media (max-width: 700px) {
 
@@ -646,23 +456,12 @@ body {
             15px 10px 40px;
     }
 
-    .hero {
-        padding-top: 20px;
-    }
-
     .hero h1 {
         font-size: 31px;
     }
 
     .subtitle {
         font-size: 16px;
-    }
-
-    .badge {
-        font-size: 14px;
-
-        padding:
-            9px 15px;
     }
 
     .stage {
@@ -675,10 +474,6 @@ body {
 
     .seats-title {
         font-size: 23px;
-    }
-
-    .seats {
-        gap: 10px;
     }
 
     .seat-row {
@@ -709,38 +504,16 @@ body {
             23px 15px;
     }
 
-    .booking-box h2 {
-        font-size: 23px;
-    }
-
     .invitation-section {
         padding:
             20px 10px 25px;
-
-        margin-top: 35px;
-    }
-
-    .invitation-section h2 {
-        font-size: 24px;
-    }
-
-    .invitation-icon {
-        font-size: 32px;
-    }
-
-    #invitationCanvas {
-        border-radius: 11px;
-    }
-
-    #downloadInvitation {
-        font-size: 16px;
     }
 }
 
 
-/* ==================================================
-   SMALL PHONES
-================================================== */
+/* =========================
+   VERY SMALL PHONES
+========================= */
 
 @media (max-width: 400px) {
 
@@ -757,12 +530,6 @@ body {
 
     .aisle {
         width: 12px;
-    }
-
-    .legend {
-        font-size: 12px;
-
-        gap: 9px;
     }
 }
 ```
