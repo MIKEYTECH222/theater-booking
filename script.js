@@ -1,15 +1,21 @@
 // ============================================
 // 1. SUPABASE CONFIGURATION
 // ============================================
+// ضع بيانات Supabase الخاصة بك هنا عند الربط
 const SUPABASE_URL = "YOUR_SUPABASE_URL";
 const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabaseClient = null;
+
+// التحقق من وجود مفاتيح Supabase بشكل صحيح
+if (SUPABASE_URL !== "YOUR_SUPABASE_URL" && typeof supabase !== "undefined") {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
 // ============================================
 // 2. STATE & CONFIGURATION
 // ============================================
-const TOTAL_ROWS = 12; // عدد الصفوف
+const TOTAL_ROWS = 12; // عدد الصفوف (من A إلى L)
 const SEATS_PER_ROW = 10; // 5 يمين و 5 شمال
 const LOCKED_SEATS = ["A1", "A2", "A3", "A4", "A5"]; // مقاعد الآباء الكهنة/الضيوف
 
@@ -30,7 +36,11 @@ const downloadBtn = document.getElementById("downloadInvitation");
 // 3. GENERATE & LOAD SEATS
 // ============================================
 async function initSeats() {
-    await fetchReservedSeats();
+    // حاول جلب الكراسي من Supabase إذا كانت المفاتيح موجودة
+    if (supabaseClient) {
+        await fetchReservedSeats();
+    }
+    // رسم الكراسي فوراً وبشكل مضمون
     renderSeats();
 }
 
@@ -43,12 +53,14 @@ async function fetchReservedSeats() {
         if (error) throw error;
         reservedSeats = data ? data.map(b => b.seat_number) : [];
     } catch (err) {
-        console.error("خطأ في جلب الكراسي المحجوزة:", err.message);
+        console.warn("تنبيه: لم يتم الجلب من Supabase (تأكد من إعداد المفاتيح والجدول):", err.message);
     }
 }
 
 function renderSeats() {
+    if (!seatsContainer) return;
     seatsContainer.innerHTML = "";
+    
     const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
 
     for (let i = 0; i < TOTAL_ROWS; i++) {
@@ -124,7 +136,7 @@ userNameInput.addEventListener("input", validateForm);
 userPhoneInput.addEventListener("input", validateForm);
 
 // ============================================
-// 5. BOOKING SUBMISSION (SUPABASE)
+// 5. BOOKING SUBMISSION
 // ============================================
 bookButton.addEventListener("click", async () => {
     const name = userNameInput.value.trim();
@@ -135,50 +147,50 @@ bookButton.addEventListener("click", async () => {
     bookButton.disabled = true;
     bookButton.innerText = "جاري الحجز...";
 
-    try {
-        const insertData = selectedSeats.map(seat => ({
-            user_name: name,
-            user_phone: phone,
-            seat_number: seat
-        }));
+    if (supabaseClient) {
+        try {
+            const insertData = selectedSeats.map(seat => ({
+                user_name: name,
+                user_phone: phone,
+                seat_number: seat
+            }));
 
-        const { error } = await supabaseClient.from("bookings").insert(insertData);
-
-        if (error) throw error;
-
-        // نجاح الحجز
-        alert("تم الحجز بنجاح!");
-        createInvitationCard(name, selectedSeats);
-        
-        invitationSection.style.display = "block";
-        invitationSection.scrollIntoView({ behavior: "smooth" });
-
-        // إعادة تهيئة
-        reservedSeats.push(...selectedSeats);
-        selectedSeats = [];
-        renderSeats();
-        userNameInput.value = "";
-        userPhoneInput.value = "";
-        selectedSeatText.innerText = "تم الحجز بنجاح!";
-        bookButton.innerText = "تأكيد الحجز";
-
-    } catch (err) {
-        alert("حدث خطأ أثناء الحجز، ربما تم حجز أحد المقاعد مؤخراً.");
-        console.error(err);
-        bookButton.innerText = "تأكيد الحجز";
-        bookButton.disabled = false;
+            const { error } = await supabaseClient.from("bookings").insert(insertData);
+            if (error) throw error;
+        } catch (err) {
+            alert("حدث خطأ أثناء الحجز في قاعدة البيانات.");
+            console.error(err);
+            bookButton.innerText = "تأكيد الحجز";
+            bookButton.disabled = false;
+            return;
+        }
     }
+
+    // نجاح الحجز وإنشاء الدعوة
+    createInvitationCard(name, selectedSeats);
+    
+    invitationSection.style.display = "block";
+    invitationSection.scrollIntoView({ behavior: "smooth" });
+
+    // إعادة تهيئة
+    reservedSeats.push(...selectedSeats);
+    selectedSeats = [];
+    renderSeats();
+    userNameInput.value = "";
+    userPhoneInput.value = "";
+    selectedSeatText.innerText = "تم الحجز بنجاح!";
+    bookButton.innerText = "تأكيد الحجز";
 });
 
 // ============================================
-// 6. GENERATE INVITATION ON CANVAS (CUSTOM DESIGN)
+// 6. GENERATE INVITATION ON CANVAS
 // ============================================
 function createInvitationCard(name, seats) {
     if (!invitationCanvas) return;
     const ctx = invitationCanvas.getContext("2d");
 
     const bgImage = new Image();
-    bgImage.src = "Artboard 1.png"; // مسار صورة الدعوة الخاصة بالكنيسة
+    bgImage.src = "Artboard 1.png"; // تأكد من وجود ملف الصورة بنفس الاسم
 
     bgImage.onload = () => {
         invitationCanvas.width = bgImage.width;
@@ -187,10 +199,10 @@ function createInvitationCard(name, seats) {
         const w = invitationCanvas.width;
         const h = invitationCanvas.height;
 
-        // 1. رسم صورة الدعوة الأصلية
+        // رسم خلفية الدعوة
         ctx.drawImage(bgImage, 0, 0, w, h);
 
-        // 2. إضافة إطار الحجز السفلي الأنيق
+        // إضافة صندوق البيانات السفلي
         const boxWidth = w * 0.82;
         const boxHeight = 180;
         const boxX = (w - boxWidth) / 2;
@@ -205,11 +217,11 @@ function createInvitationCard(name, seats) {
             ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
         }
 
-        ctx.strokeStyle = "#f59e0b"; // إطار ذهبي
+        ctx.strokeStyle = "#f59e0b";
         ctx.lineWidth = 4;
         ctx.stroke();
 
-        // 3. كتابة اسم الحاضر
+        // الاسم
         ctx.textAlign = "center";
         ctx.fillStyle = "#ffffff";
         ctx.font = "bold 42px Tahoma, Arial";
@@ -217,7 +229,7 @@ function createInvitationCard(name, seats) {
         if (displayName.length > 32) displayName = displayName.substring(0, 32) + "...";
         ctx.fillText(displayName, w / 2, boxY + 65);
 
-        // 4. كتابة المقاعد
+        // المقاعد
         ctx.fillStyle = "#f59e0b";
         ctx.font = "bold 46px Tahoma, Arial";
         ctx.fillText("المقاعد المحجوزة: " + seats.join(" - "), w / 2, boxY + 135);
@@ -229,10 +241,10 @@ function createInvitationCard(name, seats) {
 // ============================================
 downloadBtn.addEventListener("click", () => {
     const link = document.createElement("a");
-    link.download = `دعوة_حضور_${userNameInput.value || "حفل_الختام"}.png`;
+    link.download = `دعوة_حضور.png`;
     link.href = invitationCanvas.toDataURL("image/png");
     link.click();
 });
 
-// تشغيل عند فتح الصفحة
+// بدء التشغيل
 initSeats();
