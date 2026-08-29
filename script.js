@@ -3,8 +3,7 @@
 // ============================================
 
 // عدد الصفوف
-// أنت زودت صف → 10 صفوف
-const ROWS = 11;
+const ROWS = 9;
 
 // عدد الكراسي في الشمال
 const LEFT_SEATS = 5;
@@ -18,18 +17,18 @@ const RIGHT_SEATS = 6;
 // ============================================
 
 const SUPABASE_URL =
-    "https://vxcqzmyhsrwfnxztbxdl.supabase.co";
+    "https://vxcqzmyhsrwfnxztbxdl.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_GK-t6OfY2KjSlOcmneNwfQ_fKTWAn53";
+    "sb_publishable_GK-t6OfY2KjSlOcmneNwfQ_fKTWAn53";
 
 const BOOKINGS_URL =
-    SUPABASE_URL + "/rest/v1/bookings";
+    SUPABASE_URL + "/rest/v1/bookings";
 
 const headers = {
-    "apikey": SUPABASE_KEY,
-    "Authorization": "Bearer " + SUPABASE_KEY,
-    "Content-Type": "application/json"
+    "apikey": SUPABASE_KEY,
+    "Authorization": "Bearer " + SUPABASE_KEY,
+    "Content-Type": "application/json"
 };
 
 
@@ -38,22 +37,22 @@ const headers = {
 // ============================================
 
 const seatsContainer =
-    document.getElementById("seats");
+    document.getElementById("seats");
 
 const selectedSeatText =
-    document.getElementById("selectedSeat");
+    document.getElementById("selectedSeat");
 
 const bookButton =
-    document.getElementById("bookButton");
+    document.getElementById("bookButton");
 
 const invitationSection =
-    document.getElementById("invitationSection");
+    document.getElementById("invitationSection");
 
 const invitationCanvas =
-    document.getElementById("invitationCanvas");
+    document.getElementById("invitationCanvas");
 
 const downloadInvitation =
-    document.getElementById("downloadInvitation");
+    document.getElementById("downloadInvitation");
 
 
 // ============================================
@@ -69,110 +68,110 @@ let selectedSeats = [];
 
 function createSeats() {
 
-    seatsContainer.innerHTML = "";
+    seatsContainer.innerHTML = "";
 
-    for (
-        let rowIndex = 0;
-        rowIndex < ROWS;
-        rowIndex++
-    ) {
+    for (
+        let rowIndex = 0;
+        rowIndex < ROWS;
+        rowIndex++
+    ) {
 
-        // A, B, C, D...
-        const letter =
-            String.fromCharCode(
-                65 + rowIndex
-            );
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "row";
+        // A, B, C, D...
+        const letter =
+            String.fromCharCode(
+                65 + rowIndex
+            );
 
 
-        // ==================================
-        // LEFT SIDE
-        // ==================================
+        const row =
+            document.createElement("div");
 
-        for (
-            let number = 1;
-            number <= LEFT_SEATS;
-            number++
-        ) {
-
-            const seat =
-                document.createElement("button");
-
-            seat.type = "button";
-
-            seat.className =
-                "seat";
-
-            seat.dataset.seat =
-                letter + number;
-
-            seat.textContent =
-                letter + number;
-
-            row.appendChild(
-                seat
-            );
-        }
+        row.className =
+            "row";
 
 
-        // ==================================
-        // AISLE
-        // ==================================
+        // ==================================
+        // LEFT SIDE = 6
+        // ==================================
 
-        const aisle =
-            document.createElement("div");
+        for (
+            let number = 1;
+            number <= LEFT_SEATS;
+            number++
+        ) {
 
-        aisle.className =
-            "aisle";
+            const seat =
+                document.createElement("button");
 
-        row.appendChild(
-            aisle
-        );
+            seat.className =
+                "seat";
 
+            seat.dataset.seat =
+                letter + number;
 
-        // ==================================
-        // RIGHT SIDE
-        // ==================================
+            seat.textContent =
+                letter + number;
 
-        for (
-            let number = 1;
-            number <= RIGHT_SEATS;
-            number++
-        ) {
-
-            const seat =
-                document.createElement("button");
-
-            seat.type = "button";
-
-            seat.className =
-                "seat";
-
-            const seatNumber =
-                LEFT_SEATS + number;
-
-            seat.dataset.seat =
-                letter + seatNumber;
-
-            seat.textContent =
-                letter + seatNumber;
-
-            row.appendChild(
-                seat
-            );
-        }
+            row.appendChild(
+                seat
+            );
+        }
 
 
-        // إضافة الصف بالكامل
-        seatsContainer.appendChild(
-            row
-        );
-    }
+        // ==================================
+        // AISLE
+        // ==================================
+
+        const aisle =
+            document.createElement("div");
+
+        aisle.className =
+            "aisle";
+
+        row.appendChild(
+            aisle
+        );
+
+
+        // ==================================
+        // RIGHT SIDE = 5
+        // ==================================
+
+        for (
+            let number = 1;
+            number <= RIGHT_SEATS;
+            number++
+        ) {
+
+            const seat =
+                document.createElement("button");
+
+            seat.className =
+                "seat";
+
+
+            const seatNumber =
+                LEFT_SEATS + number;
+
+
+            seat.dataset.seat =
+                letter + seatNumber;
+
+            seat.textContent =
+                letter + seatNumber;
+
+
+            row.appendChild(
+                seat
+            );
+        }
+
+
+        // Add complete row
+        seatsContainer.appendChild(
+            row
+        );
+    }
 }
 
 
@@ -182,19 +181,20 @@ function createSeats() {
 
 function updateSelectedSeatsText() {
 
-    if (
-        selectedSeats.length === 0
-    ) {
+    if (
+        selectedSeats.length === 0
+    ) {
 
-        selectedSeatText.textContent =
-            "لم يتم اختيار أي مقعد";
+        selectedSeatText.textContent =
+            "لم يتم اختيار أي مقعد";
 
-        return;
-    }
+        return;
+    }
 
-    selectedSeatText.textContent =
-        "المقاعد المختارة: " +
-        selectedSeats.join(" - ");
+
+    selectedSeatText.textContent =
+        "المقاعد المختارة: " +
+        selectedSeats.join(" - ");
 }
 
 
@@ -204,63 +204,69 @@ function updateSelectedSeatsText() {
 
 async function loadReservedSeats() {
 
-    try {
+    try {
 
-        const response =
-            await fetch(
-                BOOKINGS_URL +
-                "?select=seat",
-                {
-                    method: "GET",
-                    headers: headers
-                }
-            );
+        const response =
+            await fetch(
+                BOOKINGS_URL +
+                "?select=seat",
+                {
+                    method: "GET",
+                    headers: headers
+                }
+            );
 
-        if (!response.ok) {
 
-            throw new Error(
-                "HTTP " +
-                response.status
-            );
-        }
+        if (!response.ok) {
 
-        const bookings =
-            await response.json();
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+        }
 
-        bookings.forEach(
-            (booking) => {
 
-                const seat =
-                    document.querySelector(
-                        '.seat[data-seat="' +
-                        booking.seat +
-                        '"]'
-                    );
+        const bookings =
+            await response.json();
 
-                if (!seat) {
-                    return;
-                }
 
-                seat.classList.remove(
-                    "selected"
-                );
+        bookings.forEach(
+            (booking) => {
 
-                seat.classList.add(
-                    "reserved"
-                );
+                const seat =
+                    document.querySelector(
+                        '.seat[data-seat="' +
+                        booking.seat +
+                        '"]'
+                    );
 
-                seat.disabled =
-                    true;
-            }
-        );
 
-    } catch (error) {
+                if (!seat) {
+                    return;
+                }
 
-        console.error(
-            "Error loading reserved seats:",
-            error
-        );
-    }
+
+                seat.classList.remove(
+                    "selected"
+                );
+
+                seat.classList.add(
+                    "reserved"
+                );
+
+                seat.disabled =
+                    true;
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading reserved seats:",
+            error
+        );
+    }
 }
 
 
@@ -270,86 +276,71 @@ async function loadReservedSeats() {
 
 function setupSeatSelection() {
 
-    const seats =
-        document.querySelectorAll(
-            ".seat"
-        );
-
-    seats.forEach(
-        (seat) => {
-
-            seat.addEventListener(
-                "click",
-                () => {
-
-                    // لو الكرسي محجوز
-                    if (
-                        seat.classList.contains(
-                            "reserved"
-                        )
-                    ) {
-                        return;
-                    }
-
-                    const seatNumber =
-                        seat.dataset.seat;
+    const seats =
+        document.querySelectorAll(".seat");
 
 
-                    // =================================
-                    // UNSELECT
-                    // =================================
+    seats.forEach(
+        (seat) => {
 
-                    if (
-                        selectedSeats.includes(
-                            seatNumber
-                        )
-                    ) {
+            seat.addEventListener(
+                "click",
+                () => {
 
-                        selectedSeats =
-                            selectedSeats.filter(
-                                (item) =>
-                                    item !==
-                                    seatNumber
-                            );
-
-                        seat.classList.remove(
-                            "selected"
-                        );
-                    }
+                    // لو محجوز
+                    if (
+                        seat.classList.contains(
+                            "reserved"
+                        )
+                    ) {
+                        return;
+                    }
 
 
-                    // =================================
-                    // SELECT
-                    // =================================
+                    const seatNumber =
+                        seat.dataset.seat;
 
-                    else {
 
-                        // أقصى اختيار في الحجز الواحد
-                        if (
-                            selectedSeats.length >= 2
-                        ) {
+                    // إلغاء الاختيار
+                    if (
+                        selectedSeats.includes(
+                            seatNumber
+                        )
+                    ) {
 
-                            alert(
-                                "مسموح باختيار كرسيين فقط."
-                            );
+                        selectedSeats =
+                            selectedSeats.filter(
+                                (item) =>
+                                    item !==
+                                    seatNumber
+                            );
 
-                            return;
-                        }
 
-                        selectedSeats.push(
-                            seatNumber
-                        );
+                        seat.classList.remove(
+                            "selected"
+                        );
+                    }
 
-                        seat.classList.add(
-                            "selected"
-                        );
-                    }
 
-                    updateSelectedSeatsText();
-                }
-            );
-        }
-    );
+                    // اختيار
+                    else {
+
+                        selectedSeats.push(
+                            seatNumber
+                        );
+
+
+                        seat.classList.add(
+                            "selected"
+                        );
+                    }
+
+
+                    updateSelectedSeatsText();
+                }
+            );
+        }
+    );
 }
 
 
@@ -357,422 +348,369 @@ function setupSeatSelection() {
 // CREATE INVITATION
 // ============================================
 
-function createInvitation(name, bookedSeats) {
+function createInvitation(
+    name,
+    bookedSeats
+) {
 
     if (!invitationCanvas) {
         return;
     }
 
-    const ctx = invitationCanvas.getContext("2d");
 
-    const width = invitationCanvas.width;
-    const height = invitationCanvas.height;
+    const ctx =
+        invitationCanvas.getContext(
+            "2d"
+        );
 
-    // تنظيف الكانفس
-    ctx.clearRect(0, 0, width, height);
 
-    // ========================================
-    // الخلفية - كحلي غامق يفتح تدريجيًا
-    // ========================================
+    const width =
+        invitationCanvas.width;
 
-    const background = ctx.createLinearGradient(
+    const height =
+        invitationCanvas.height;
+
+
+    // Clear
+    ctx.clearRect(
         0,
         0,
-        0,
+        width,
         height
     );
 
-    background.addColorStop(0, "#07152e");
-    background.addColorStop(0.28, "#102b52");
-    background.addColorStop(0.58, "#27527d");
-    background.addColorStop(0.82, "#6f9dbd");
-    background.addColorStop(1, "#d9edf7");
 
-    ctx.fillStyle = background;
-    ctx.fillRect(0, 0, width, height);
+    // ==================================
+    // Background
+    // ==================================
+
+    const background =
+        ctx.createLinearGradient(
+            0,
+            0,
+            width,
+            height
+        );
 
 
-    // ========================================
-    // زخارف ناعمة
-    // ========================================
+    background.addColorStop(
+        0,
+        "#eaf7ff"
+    );
 
-    ctx.globalAlpha = 0.16;
+    background.addColorStop(
+        0.5,
+        "#ffffff"
+    );
 
-    ctx.fillStyle = "#ffffff";
+    background.addColorStop(
+        1,
+        "#fff0fb"
+    );
+
+
+    ctx.fillStyle =
+        background;
+
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    // ==================================
+    // Decorative circles
+    // ==================================
+
+    ctx.globalAlpha =
+        0.45;
+
+
+    ctx.fillStyle =
+        "#bfdbfe";
+
 
     ctx.beginPath();
+
+
     ctx.arc(
-        100,
         130,
-        110,
+        180,
+        115,
         0,
         Math.PI * 2
     );
+
+
     ctx.fill();
 
-    ctx.beginPath();
-    ctx.arc(
-        980,
-        330,
-        170,
-        0,
-        Math.PI * 2
-    );
-    ctx.fill();
+
+    ctx.fillStyle =
+        "#f5d0fe";
+
 
     ctx.beginPath();
+
+
     ctx.arc(
         920,
-        1660,
+        320,
         150,
         0,
         Math.PI * 2
     );
+
+
     ctx.fill();
 
-    ctx.globalAlpha = 1;
+
+    ctx.fillStyle =
+        "#bbf7d0";
 
 
-    // ========================================
-    // إعداد النص
-    // ========================================
-
-    ctx.textAlign = "center";
+    ctx.beginPath();
 
 
-    // ========================================
-    // اسم الأسرة
-    // ========================================
+    ctx.arc(
+        900,
+        1610,
+        135,
+        0,
+        Math.PI * 2
+    );
 
-    ctx.fillStyle = "#ffffff";
 
-    ctx.font = "bold 52px Arial";
+    ctx.fill();
+
+
+    ctx.globalAlpha =
+        1;
+
+
+    // ==================================
+    // Text
+    // ==================================
+
+    ctx.textAlign =
+        "center";
+
+
+    // Family
+    ctx.fillStyle =
+        "#6366f1";
+
+
+    ctx.font =
+        "bold 48px Arial";
+
 
     ctx.fillText(
-        "أسرة السمائيين",
+        "✨ أسرة السمائيين",
         width / 2,
-        180
+        200
     );
 
 
-    // ========================================
-    // العنوان الرئيسي
-    // ========================================
+    // Main title
+    ctx.fillStyle =
+        "#172033";
 
-    ctx.font = "bold 105px Arial";
+
+    ctx.font =
+        "bold 95px Arial";
+
 
     ctx.fillText(
-        "دعــــوة",
+        "دعــوة",
         width / 2,
-        360
+        410
     );
 
 
-    // ========================================
-    // الخط تحت العنوان
-    // ========================================
-
-    ctx.fillStyle = "#dbeafe";
-
-    ctx.fillRect(
-        270,
-        400,
-        540,
-        4
-    );
+    // Event
+    ctx.fillStyle =
+        "#6b7280";
 
 
-    // ========================================
-    // نص الدعوة
-    // ========================================
+    ctx.font =
+        "42px Arial";
 
-    ctx.fillStyle = "#ffffff";
-
-    ctx.font = "42px Arial";
 
     ctx.fillText(
-        "تتشرف أسرتي",
+        "حفلة نهاية الأنشطة",
         width / 2,
-        540
+        515
     );
 
-    ctx.font = "bold 48px Arial";
+
+    // Welcome
+    ctx.fillStyle =
+        "#172033";
+
+
+    ctx.font =
+        "bold 48px Arial";
+
 
     ctx.fillText(
-        "أبطال الإيمان وأسرة شهيدات",
-        width / 2,
-        615
-    );
-
-    ctx.font = "42px Arial";
-
-    ctx.fillText(
-        "بدعوة سيادتكم لحضور",
+        "أهلاً بك",
         width / 2,
         700
     );
 
-    ctx.font = "bold 54px Arial";
 
-    ctx.fillText(
-        "حفل ختام الأنشطة",
-        width / 2,
-        780
-    );
+    // Name
+    let displayName =
+        name;
 
 
-    // ========================================
-    // الاسم
-    // ========================================
+    if (
+        displayName.length > 22
+    ) {
 
-    ctx.fillStyle = "#dbeafe";
-
-    ctx.font = "34px Arial";
-
-    ctx.fillText(
-        "السيد / ة",
-        width / 2,
-        905
-    );
-
-
-    let displayName = name || "";
-
-    if (displayName.length > 22) {
         displayName =
-            displayName.substring(0, 22) + "...";
+            displayName.substring(
+                0,
+                22
+            ) + "...";
     }
 
 
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle =
+        "#6366f1";
 
-    ctx.font = "bold 64px Arial";
+
+    ctx.font =
+        "bold 68px Arial";
+
 
     ctx.fillText(
         displayName,
         width / 2,
-        990
+        820
     );
 
 
-    // ========================================
-    // بطاقة المقاعد
-    // ========================================
+    // ==================================
+    // Seats card
+    // ==================================
 
-    ctx.fillStyle = "rgba(255,255,255,0.16)";
+    ctx.fillStyle =
+        "#ffffff";
 
-    ctx.beginPath();
 
-    ctx.roundRect(
-        120,
-        1060,
-        width - 240,
-        220,
-        35
+    ctx.globalAlpha =
+        0.92;
+
+
+    ctx.fillRect(
+        100,
+        950,
+        width - 200,
+        300
     );
 
-    ctx.fill();
+
+    ctx.globalAlpha =
+        1;
 
 
-    ctx.strokeStyle = "rgba(255,255,255,0.35)";
-
-    ctx.lineWidth = 3;
-
-    ctx.stroke();
+    ctx.strokeStyle =
+        "#e5e7eb";
 
 
-    // عنوان المقاعد
-    ctx.fillStyle = "#dbeafe";
+    ctx.lineWidth =
+        3;
 
-    ctx.font = "34px Arial";
+
+    ctx.strokeRect(
+        100,
+        950,
+        width - 200,
+        300
+    );
+
+
+    // Seats title
+    ctx.fillStyle =
+        "#6b7280";
+
+
+    ctx.font =
+        "38px Arial";
+
 
     ctx.fillText(
-        "رقم / أرقام المقاعد",
+        "المقاعد المحجوزة",
         width / 2,
-        1130
+        1035
     );
 
 
-    // المقاعد
-    ctx.fillStyle = "#ffffff";
+    // Seats
+    ctx.fillStyle =
+        "#22c55e";
 
-    ctx.font = "bold 60px Arial";
+
+    ctx.font =
+        "bold 55px Arial";
+
 
     ctx.fillText(
         bookedSeats.join(" • "),
         width / 2,
-        1225
+        1155
     );
 
 
-    // ========================================
-    // التاريخ والوقت
-    // ========================================
+    // Bottom message
+    ctx.fillStyle =
+        "#172033";
 
-    ctx.fillStyle = "#ffffff";
 
-    ctx.font = "39px Arial";
+    ctx.font =
+        "bold 43px Arial";
+
 
     ctx.fillText(
-        "الثلاثاء الموافق 1 سبتمبر 2026",
+        "مستنيينكم ❤️",
         width / 2,
-        1390
+        1450
     );
+
+
+    ctx.fillStyle =
+        "#6b7280";
+
+
+    ctx.font =
+        "35px Arial";
+
 
     ctx.fillText(
-        "في تمام الساعة السادسة مساءً",
+        "نتمنى لكم وقتًا رائعًا معنا ✨",
         width / 2,
-        1460
+        1525
     );
 
 
-    // ========================================
-    // المكان
-    // ========================================
-
-    ctx.font = "34px Arial";
-
-    ctx.fillText(
-        "بمسرح كنيسة السيدة العذراء مريم",
-        width / 2,
-        1570
-    );
-
-    ctx.fillText(
-        "والبابا كيرلس السادس - باكوس",
-        width / 2,
-        1630
-    );
-
-
-    // ========================================
-    // الختام
-    // ========================================
-
-    ctx.fillStyle = "#e0f2fe";
-
-    ctx.font = "bold 44px Arial";
-
-    ctx.fillText(
-        "في انتظار تشريفكم ❤️",
-        width / 2,
-        1760
-    );
-
-
-    // ========================================
     // Footer
-    // ========================================
+    ctx.fillStyle =
+        "#6366f1";
 
-    ctx.fillStyle = "#ffffff";
 
-    ctx.font = "bold 34px Arial";
+    ctx.font =
+        "bold 35px Arial";
+
 
     ctx.fillText(
         "أسرة السمائيين",
         width / 2,
-        1850
+        1750
     );
-}    // ==================================
-    // Seats card
-    // ==================================
-
-    ctx.fillStyle =
-        "#ffffff";
-
-    ctx.globalAlpha =
-        0.92;
-
-    ctx.fillRect(
-        100,
-        950,
-        width - 200,
-        300
-    );
-
-    ctx.globalAlpha =
-        1;
-
-    ctx.strokeStyle =
-        "#e5e7eb";
-
-    ctx.lineWidth =
-        3;
-
-    ctx.strokeRect(
-        100,
-        950,
-        width - 200,
-        300
-    );
-
-
-    // Seats title
-    ctx.fillStyle =
-        "#6b7280";
-
-    ctx.font =
-        "38px Arial";
-
-    ctx.fillText(
-        "المقاعد المحجوزة",
-        width / 2,
-        1035
-    );
-
-
-    // Seats
-    ctx.fillStyle =
-        "#22c55e";
-
-    ctx.font =
-        "bold 55px Arial";
-
-    ctx.fillText(
-        bookedSeats.join(" • "),
-        width / 2,
-        1155
-    );
-
-
-    // Bottom message
-    ctx.fillStyle =
-        "#172033";
-
-    ctx.font =
-        "bold 43px Arial";
-
-    ctx.fillText(
-        "مستنيينكم ❤️",
-        width / 2,
-        1450
-    );
-
-    ctx.fillStyle =
-        "#6b7280";
-
-    ctx.font =
-        "35px Arial";
-
-    ctx.fillText(
-        "نتمنى لكم وقتًا رائعًا معنا ✨",
-        width / 2,
-        1525
-    );
-
-
-    // Footer
-    ctx.fillStyle =
-        "#6366f1";
-
-    ctx.font =
-        "bold 35px Arial";
-
-    ctx.fillText(
-        "أسرة السمائيين",
-        width / 2,
-        1750
-    );
 }
 
 
@@ -782,30 +720,32 @@ function createInvitation(name, bookedSeats) {
 
 if (downloadInvitation) {
 
-    downloadInvitation.addEventListener(
-        "click",
-        () => {
+    downloadInvitation.addEventListener(
+        "click",
+        () => {
 
-            if (!invitationCanvas) {
-                return;
-            }
+            if (!invitationCanvas) {
+                return;
+            }
 
-            const link =
-                document.createElement(
-                    "a"
-                );
 
-            link.download =
-                "دعوة-أسرة-السمائيين.png";
+            const link =
+                document.createElement("a");
 
-            link.href =
-                invitationCanvas.toDataURL(
-                    "image/png"
-                );
 
-            link.click();
-        }
-    );
+            link.download =
+                "دعوة-أسرة-السمائيين.png";
+
+
+            link.href =
+                invitationCanvas.toDataURL(
+                    "image/png"
+                );
+
+
+            link.click();
+        }
+    );
 }
 
 
@@ -815,345 +755,285 @@ if (downloadInvitation) {
 
 if (bookButton) {
 
-    bookButton.addEventListener(
-        "click",
-        async () => {
+    bookButton.addEventListener(
+        "click",
+        async () => {
 
-            const name =
-                document
-                    .getElementById("name")
-                    .value
-                    .trim();
+            const name =
+                document
+                    .getElementById("name")
+                    .value
+                    .trim();
 
-            const phone =
-                document
-                    .getElementById("phone")
-                    .value
-                    .trim();
 
+            const phone =
+                document
+                    .getElementById("phone")
+                    .value
+                    .trim();
 
-            // =================================
-            // VALIDATION
-            // =================================
 
-            if (
-                selectedSeats.length === 0
-            ) {
+            // No seats
+            if (
+                selectedSeats.length === 0
+            ) {
 
-                alert(
-                    "من فضلك اختر كرسيًا واحدًا على الأقل."
-                );
+                alert(
+                    "من فضلك اختر مقعدًا واحدًا على الأقل."
+                );
 
-                return;
-            }
+                return;
+            }
 
 
-            if (
-                selectedSeats.length > 2
-            ) {
+            // No name
+            if (!name) {
 
-                alert(
-                    "مسموح بكرسيين فقط لكل رقم هاتف."
-                );
+                alert(
+                    "من فضلك اكتب الاسم."
+                );
 
-                return;
-            }
+                return;
+            }
 
 
-            if (!name) {
+            // No phone
+            if (!phone) {
 
-                alert(
-                    "من فضلك اكتب الاسم."
-                );
+                alert(
+                    "من فضلك اكتب رقم الهاتف."
+                );
 
-                return;
-            }
+                return;
+            }
 
 
-            if (!phone) {
+            // Loading
+            bookButton.disabled =
+                true;
 
-                alert(
-                    "من فضلك اكتب رقم الهاتف."
-                );
 
-                return;
-            }
+            bookButton.textContent =
+                "جاري الحجز...";
 
 
-            // =================================
-            // LOADING
-            // =================================
+            try {
 
-            bookButton.disabled =
-                true;
+                // Prepare bookings
+                const bookings =
+                    selectedSeats.map(
+                        (seat) => ({
+                            seat: seat,
+                            name: name,
+                            phone: phone
+                        })
+                    );
 
-            bookButton.textContent =
-                "جاري الحجز...";
 
+                // Send to Supabase
+                const response =
+                    await fetch(
+                        BOOKINGS_URL,
+                        {
+                            method: "POST",
 
-            try {
+                            headers: {
+                                ...headers,
 
-                // =================================
-                // CALL book_seats RPC
-                // =================================
+                                "Prefer":
+                                    "return=representation"
+                            },
 
-                const response =
-                    await fetch(
-                        SUPABASE_URL +
-                        "/rest/v1/rpc/book_seats",
-                        {
-                            method: "POST",
+                            body:
+                                JSON.stringify(
+                                    bookings
+                                )
+                        }
+                    );
 
-                            headers: {
-                                "apikey":
-                                    SUPABASE_KEY,
 
-                                "Authorization":
-                                    "Bearer " +
-                                    SUPABASE_KEY,
+                const result =
+                    await response.json();
 
-                                "Content-Type":
-                                    "application/json"
-                            },
 
-                            body:
-                                JSON.stringify({
-                                    p_name:
-                                        name,
+                // =================================
+                // Error
+                // =================================
 
-                                    p_phone:
-                                        phone,
+                if (!response.ok) {
 
-                                    p_seats:
-                                        selectedSeats
-                                })
-                        }
-                    );
+                    console.error(
+                        "Supabase error:",
+                        result
+                    );
 
 
-                // قراءة الرد
-                const resultText =
-                    await response.text();
+                    const errorText =
+                        JSON.stringify(
+                            result
+                        ).toLowerCase();
 
 
-                console.log(
-                    "Supabase status:",
-                    response.status
-                );
+                    // Duplicate seat
+                    if (
+                        response.status === 409 ||
+                        errorText.includes(
+                            "duplicate"
+                        ) ||
+                        errorText.includes(
+                            "unique"
+                        )
+                    ) {
 
-                console.log(
-                    "Supabase response:",
-                    resultText
-                );
+                        alert(
+                            "واحد أو أكثر من المقاعد التي اخترتها اتحجز بالفعل."
+                        );
 
 
-                // =================================
-                // ERROR
-                // =================================
+                        await loadReservedSeats();
 
-                if (!response.ok) {
 
-                    const errorText =
-                        resultText.toLowerCase();
+                        selectedSeats =
+                            [];
 
 
-                    // حد الهاتف
-                    if (
-                        errorText.includes(
-                            "phone_limit"
-                        )
-                    ) {
+                        document
+                            .querySelectorAll(
+                                ".seat.selected"
+                            )
+                            .forEach(
+                                (seat) => {
 
-                        alert(
-                            "الرقم ده وصل للحد الأقصى.\n\n" +
-                            "مسموح بكرسيين فقط لكل رقم هاتف."
-                        );
+                                    seat.classList.remove(
+                                        "selected"
+                                    );
+                                }
+                            );
 
-                        return;
-                    }
 
+                        updateSelectedSeatsText();
 
-                    // كرسي محجوز
-                    if (
-                        errorText.includes(
-                            "seat_taken"
-                        ) ||
-                        errorText.includes(
-                            "duplicate"
-                        ) ||
-                        errorText.includes(
-                            "unique"
-                        ) ||
-                        response.status === 409
-                    ) {
 
-                        alert(
-                            "واحد أو أكثر من الكراسي التي اخترتها اتحجز بالفعل."
-                        );
+                        return;
+                    }
 
 
-                        await loadReservedSeats();
+                    throw new Error(
+                        "Booking failed"
+                    );
+                }
 
 
-                        selectedSeats = [];
+                // =================================
+                // Success
+                // =================================
 
+                const bookedSeats =
+                    [...selectedSeats];
 
-                        document
-                            .querySelectorAll(
-                                ".seat.selected"
-                            )
-                            .forEach(
-                                (seat) => {
 
-                                    seat.classList.remove(
-                                        "selected"
-                                    );
-                                }
-                            );
+                // Convert to reserved
+                bookedSeats.forEach(
+                    (seatNumber) => {
 
+                        const seat =
+                            document.querySelector(
+                                '.seat[data-seat="' +
+                                seatNumber +
+                                '"]'
+                            );
 
-                        updateSelectedSeatsText();
 
+                        if (seat) {
 
-                        return;
-                    }
+                            seat.classList.remove(
+                                "selected"
+                            );
 
+                            seat.classList.add(
+                                "reserved"
+                            );
 
-                    // لا يوجد كراسي
-                    if (
-                        errorText.includes(
-                            "no_seats"
-                        )
-                    ) {
+                            seat.disabled =
+                                true;
+                        }
+                    }
+                );
 
-                        alert(
-                            "من فضلك اختر كرسيًا."
-                        );
 
-                        return;
-                    }
+                // Create invitation
+                createInvitation(
+                    name,
+                    bookedSeats
+                );
 
 
-                    // أي خطأ آخر
-                    console.error(
-                        "Supabase booking error:",
-                        resultText
-                    );
+                // Show invitation
+                if (
+                    invitationSection
+                ) {
 
+                    invitationSection.style.display =
+                        "block";
 
-                    alert(
-                        "حصل خطأ من Supabase:\n\n" +
-                        resultText
-                    );
 
-                    return;
-                }
+                    invitationSection.scrollIntoView({
+                        behavior: "smooth"
+                    });
+                }
 
 
-                // =================================
-                // SUCCESS
-                // =================================
+                // Clear selection
+                selectedSeats =
+                    [];
 
-                const bookedSeats =
-                    [...selectedSeats];
 
+                // Clear inputs
+                document
+                    .getElementById("name")
+                    .value =
+                    "";
 
-                // تحويل الكراسي إلى محجوزة
-                bookedSeats.forEach(
-                    (seatNumber) => {
 
-                        const seat =
-                            document.querySelector(
-                                '.seat[data-seat="' +
-                                seatNumber +
-                                '"]'
-                            );
+                document
+                    .getElementById("phone")
+                    .value =
+                    "";
 
-                        if (seat) {
 
-                            seat.classList.remove(
-                                "selected"
-                            );
+                updateSelectedSeatsText();
 
-                            seat.classList.add(
-                                "reserved"
-                            );
 
-                            seat.disabled =
-                                true;
-                        }
-                    }
-                );
+                alert(
+                    "تم الحجز بنجاح 🎉\n\n" +
+                    "دعوتك جاهزة للتحميل!"
+                );
 
 
-                // إنشاء الدعوة
-                createInvitation(
-                    name,
-                    bookedSeats
-                );
+            } catch (error) {
 
+                console.error(
+                    "Booking error:",
+                    error
+                );
 
-                // إظهار الدعوة
-                if (
-                    invitationSection
-                ) {
 
-                    invitationSection.style.display =
-                        "block";
+                alert(
+                    "حصل خطأ أثناء الحجز."
+                );
 
-                    invitationSection.scrollIntoView({
-                        behavior:
-                            "smooth"
-                    });
-                }
 
+            } finally {
 
-                // تصفير الاختيار
-                selectedSeats = [];
+                bookButton.disabled =
+                    false;
 
 
-                // مسح البيانات
-                document
-                    .getElementById("name")
-                    .value = "";
-
-                document
-                    .getElementById("phone")
-                    .value = "";
-
-
-                updateSelectedSeatsText();
-
-
-                alert(
-                    "تم الحجز بنجاح 🎉\n\n" +
-                    "دعوتك جاهزة للتحميل!"
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Booking error:",
-                    error
-                );
-
-                alert(
-                    "حصل خطأ أثناء الحجز:\n\n" +
-                    error.message
-                );
-
-
-            } finally {
-
-                bookButton.disabled =
-                    false;
-
-                bookButton.textContent =
-                    "تأكيد الحجز";
-            }
-        }
-    );
+                bookButton.textContent =
+                    "تأكيد الحجز";
+            }
+        }
+    );
 }
 
 
@@ -1165,4 +1045,4 @@ createSeats();
 
 setupSeatSelection();
 
-loadReservedSeats(); 
+loadReservedSeats();
