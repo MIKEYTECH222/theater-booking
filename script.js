@@ -660,7 +660,7 @@ async function bookSeats() {
     ) {
 
         showMessage(
-            "مسموح بحجز مقعدين فقط.",
+            "مسموح بحجز 3 مقاعد فقط.",
             false
         );
 
@@ -1213,7 +1213,7 @@ function drawInvitation(
 
     invitationText(
         ctx,
-        "في تمام الساعة السادسة مساءً",
+        "في تمام الساعة السادسة و النصف مساءً",
         W / 2,
         1075,
         "bold 38px Arial",
