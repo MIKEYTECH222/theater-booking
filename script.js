@@ -1126,7 +1126,7 @@ function drawInvitation(
 
     invitationText(
         ctx,
-        "أسرتي أبطال الإيمان وأسرة شهيدات",
+        "أسرتي أبطال الإيمان و شهيدات",
         W / 2,
         460,
         "bold 46px Arial",
